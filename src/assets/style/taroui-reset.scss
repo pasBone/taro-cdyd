@@ -1,7 +1,24 @@
+/** 去掉按钮边框 */
 .at-button {
     button{
         &::after{
             border: none;
+        }
+    }
+}
+.at-button--primary{
+    border: none;
+}
+
+/**自定义toast样式 */
+.cdyd-toast{
+    .toast-body-content{
+        display: flex;
+        .toast-body-content__icon{
+            font-size: 40rpx;
+        }
+        .toast-body-content__info{
+            margin-top: 0;
         }
     }
 }
