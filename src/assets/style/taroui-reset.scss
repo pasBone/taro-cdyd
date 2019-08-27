@@ -1,0 +1,7 @@
+.at-button {
+    button{
+        &::after{
+            border: none;
+        }
+    }
+}
