@@ -4,7 +4,7 @@
     background-position: 50%;
     .logo{
         margin: 0 auto;
-        padding-top: 132px;
+        padding-top: 200px;
         height: 266px;
         width: 266px;
         display: block;
@@ -35,6 +35,9 @@
                 }
             }
             .send-code{
+                text-align: right;
+                display: block;
+                min-width: 250px;
                 padding-right: 33px;
                 color: #2f86f6;
             }
