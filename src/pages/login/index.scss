@@ -1,0 +1,17 @@
+.loginView{
+    min-height: 100vh;
+    background-size: cover;
+    background-position: 50%;
+    .logo{
+        margin: 0 auto;
+        padding-top: 132px;
+        height: 266px;
+        width: 266px;
+        display: block;
+        .logo-img{
+            border: 1px solid red;
+            height: 100%;
+            width: 100%;
+        }
+    }
+}
