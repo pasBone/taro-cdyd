@@ -1,0 +1,19 @@
+@import './../common-variables.scss';
+/**登录按钮渐变色*/
+$loginBtnBgColor: linear-gradient(90deg, #15c9a7 0%, #00a586 100%),
+linear-gradient(#ffffff, #ffffff);
+/** 扫码充电按钮渐变色*/
+$chargeBatteryBgColor: linear-gradient(90deg, #15c9a7 0%, #00a586 100%),
+linear-gradient(#de551a, #de551a);
+/**字体主色*/
+$fontColor: #1dad92;
+/**按钮主色*/
+$themeColor: #1dad92;
+/**计费规则表头*/
+$rechargeRulesHeaderBgColor: rgb(174, 225, 215);
+/**计费规则表格表体*/
+$rechargeRulesBodyBgColor: rgb(219, 242, 237);
+/** 电桩详情页面使用状态tag*/
+$useTag2BgColor: #def1e6;
+/** 充电圆环填充边框色*/
+$charginBallStroke: #5996ec;
