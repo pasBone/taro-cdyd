@@ -30,20 +30,6 @@ class LoginView extends Component {
     }
   }
 
-  componentWillMount() { }
-
-  componentWillReact() {
-    console.log('componentWillReact')
-  }
-
-  componentDidMount() { }
-
-  componentWillUnmount() { }
-
-  componentDidShow() { }
-
-  componentDidHide() { }
-
   /** 手机号码赋值 */
   onTelChange = (tel: string) => {
     this.setState({ tel })
