@@ -20,6 +20,7 @@ var config = {
     '@/api': path.resolve(__dirname, '..', 'src/api'),
     '@/store': path.resolve(__dirname, '..', 'src/store'),
     '@/types': path.resolve(__dirname, '..', 'src/types'),
+    '@/components': path.resolve(__dirname, '..', 'src/components')
   },
   plugins: {
     babel: {
