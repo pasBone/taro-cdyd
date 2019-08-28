@@ -1,5 +1,3 @@
-import { View, Button } from "@tarojs/components";
-import { useState } from "@tarojs/taro";
 import { AtToast } from 'taro-ui';
 
 interface IToastProps {
