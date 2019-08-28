@@ -1,6 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import { Provider } from '@tarojs/mobx'
-import Index from './pages/login/index'
+import Login from './pages/login/index'
 import counterStore from './store/counter'
 import './app.scss'
 
@@ -25,7 +25,8 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/login/index'
+      'pages/login/index',
+      'pages/hooks-demo/index'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -48,7 +49,7 @@ class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <Index />
+        <Login />
       </Provider>
     )
   }
