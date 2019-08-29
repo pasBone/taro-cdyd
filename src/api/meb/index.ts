@@ -1,4 +1,9 @@
 import { StringOrNumber } from "@/types";
+import { post } from '@/utils/http';
+
+export const mebApi = {
+    login: post<mebApi.LoginReq, mebApi.LoginRes>('/login')
+}
 
 export namespace mebApi {
 
@@ -13,7 +18,6 @@ export namespace mebApi {
         /** 验证码 */
         code: StringOrNumber
     }
-
 
     export interface LoginReq extends ValidationCodeReq {
         /** 登录途径（1表示APP， 2表示微信公众号） */
