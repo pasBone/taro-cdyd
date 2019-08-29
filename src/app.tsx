@@ -1,7 +1,7 @@
 import Taro, { Component, Config } from '@tarojs/taro'
-import { Provider } from '@tarojs/mobx'
+import { Provider } from '@tarojs/redux'
 import Login from './pages/login/index'
-import counterStore from './store/counter'
+import configStore from './store'
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -10,9 +10,7 @@ import './app.scss'
 //   require('nerv-devtools')
 // }
 
-const store = {
-  counterStore
-}
+const store = configStore();
 
 class App extends Component {
 
