@@ -1,7 +1,7 @@
 import { AtToast } from 'taro-ui';
 
-interface IToastProps {
-    /** 是否显示 */
+export interface ToastProps {
+    /** 是否显示toast */
     show: boolean,
     /** 元素的内容 */
     text: string,
@@ -19,17 +19,12 @@ interface IToastProps {
     handleClose?: () => void | false | true;
 }
 
-const defaultProps = {
+export const Toast: Taro.FC<ToastProps> = toast => {
+    return <AtToast className='cdyd-toast' isOpened={toast.show} text={toast.text} icon={`${toast.icon}`} duration={toast.duration} onClose={toast.handleClose}></AtToast>
+}
+
+Toast.defaultProps = {
     icon: 'alert-circle',
-    duration: 3000,
+    duration: 2500,
     hasMask: true
 }
-
-function ToastView(props: { toast: IToastProps }) {
-    const toast = { ...defaultProps, ...props.toast }
-    return (
-        <AtToast className='cdyd-toast' isOpened={toast.show} text={toast.text} icon={`${toast.icon}`} duration={toast.duration} onClose={toast.handleClose}></AtToast>
-    );
-}
-
-export default ToastView;
