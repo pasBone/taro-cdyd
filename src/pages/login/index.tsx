@@ -1,8 +1,8 @@
 import { mebApi } from '@/api/meb';
 import { IMAGE_MAP } from '@/assets'
-import Toast from '@/components/toast';
+import { Toast } from '@/components/toast';
 import { AtButton, AtInput } from 'taro-ui';
-import Taro, { useState } from '@tarojs/taro'
+import Taro, { useState, useEffect } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { DEFAULT_REG_WAY, REG_MAP } from '@/constant';
 import './index.scss'
@@ -29,7 +29,7 @@ const LoginView: Taro.FC = () => {
 
   const [form, setFormState] = useState(getFormState());
   const [toast, setToastState] = useState(getToastState());
-
+  const [loading, setLoadingState] = useState(false);
 
   /** 手机号码赋值 */
   const onTelChange = (tel: string) => {
@@ -53,16 +53,27 @@ const LoginView: Taro.FC = () => {
 
   const validateForm = () => {
     if (!validateTel()) {
-      return setToastState({
+      setToastState({
         show: true,
         text: '请输入正确的手机号码'
-      })
+      });
+      return false;
     }
+
     if (!validateCode()) {
-      return setToastState({
+      setToastState({
         show: true,
         text: '验证码格式错误'
-      })
+      });
+      return false;
+    }
+    return true;
+  }
+
+  const submit = () => {
+    if (loading) return;
+    if (true === validateForm()) {
+      setLoadingState(true);
     }
   }
 
@@ -100,12 +111,12 @@ const LoginView: Taro.FC = () => {
         </View>
       </View>
 
-      <AtButton className='login-btn' onClick={validateForm} type='primary'>登录</AtButton>
+      <AtButton loading={loading} disabled={loading} className='login-btn' onClick={submit} type='primary'>登录</AtButton>
 
-      <Toast toast={{ show: toast.show, text: toast.text }} />
+      <Toast show={toast.show} text={toast.text} handleClose={() => setToastState({ show: false, text: '' })} />
+
     </View>
   )
 }
 
-
-export default LoginView
+export default LoginView;
