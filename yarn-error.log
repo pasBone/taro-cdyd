@@ -1,8 +1,8 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add taro-ui/dist/style/components/button.scss --silent --no-progress
+  C:\Program Files\nodejs\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add query-string
 
 PATH: 
-  C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;E:\develop\taro\node_modules\.bin;C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;E:\develop\taro\node_modules\.bin;C:\Program Files\nodejs\node_modules\npm\node_modules\npm-lifecycle\node-gyp-bin;E:\develop\taro\node_modules\.bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Administrator\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\usr\bin;D:\software\mysql-8.0.15-winx64\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;D:\software\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\BypassRuntm;D:\software\Fiddler
+  C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Administrator\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\usr\bin;D:\software\mysql-8.0.15-winx64\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;D:\software\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\BypassRuntm;D:\software\Fiddler
 
 Yarn version: 
   1.15.2
@@ -14,17 +14,7 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.npm.taobao.org/taro-ui%2fdist/style/components/button.scss: [not_found] document not found
-      at Request.params.callback [as _callback] (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66058:18)
-      at Request.self.callback (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129541:22)
-      at Request.emit (events.js:189:13)
-      at Request.<anonymous> (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130513:10)
-      at Request.emit (events.js:189:13)
-      at Gunzip.<anonymous> (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130435:12)
-      at Object.onceWrapper (events.js:277:13)
-      at Gunzip.emit (events.js:194:15)
-      at endReadableNT (_stream_readable.js:1125:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: EBUSY: resource busy or locked, copyfile 'C:\Users\Administrator\AppData\Local\Yarn\Cache\v4\npm-split-on-first-1.1.0-f610afeee3b12bce1d0c30425e76398b78249a5f\node_modules\split-on-first\readme.md' -> 'E:\develop\taro\node_modules\split-on-first\readme.md'
 
 npm manifest: 
   {
@@ -56,6 +46,7 @@ npm manifest:
     "author": "",
     "license": "MIT",
     "dependencies": {
+      "@tarojs/async-await": "^1.3.15",
       "@tarojs/components": "1.3.14",
       "@tarojs/redux": "^1.3.15",
       "@tarojs/redux-h5": "^1.3.15",
@@ -71,7 +62,9 @@ npm manifest:
       "nervjs": "^1.4.0",
       "redux": "^4.0.4",
       "redux-logger": "^3.0.6",
-      "redux-thunk": "^2.3.0"
+      "redux-thunk": "^2.3.0",
+      "taro-ui": "^2.2.2",
+      "typesafe-actions": "^4.4.2"
     },
     "devDependencies": {
       "@tarojs/plugin-babel": "1.3.14",
@@ -371,6 +364,14 @@ Lockfile:
       component-type "^1.2.1"
       join-component "^1.1.0"
   
+  "@tarojs/async-await@^1.3.15":
+    version "1.3.15"
+    resolved "https://registry.npm.taobao.org/@tarojs/async-await/download/@tarojs/async-await-1.3.15.tgz#2d3e28c43ad36753d4bbe50d03aa701a25f25b6b"
+    integrity sha1-LT4oxDrTZ1PUu+UNA6pwGiXyW2s=
+    dependencies:
+      promise-polyfill "^7.1.2"
+      regenerator-runtime "^0.11.1"
+  
   "@tarojs/components@1.3.14":
     version "1.3.14"
     resolved "https://registry.npm.taobao.org/@tarojs/components/download/@tarojs/components-1.3.14.tgz#4f79a8979c2df96eb38a323124709ccc2cb64886"
@@ -640,11 +641,24 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-8.10.52.tgz?cache=0&sync_timestamp=1566325318079&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-8.10.52.tgz#ef0ca1809994e20186090408b8cb7f2a6877d5f9"
     integrity sha1-7wyhgJmU4gGGCQQIuMt/Kmh31fk=
   
+  "@types/prop-types@*":
+    version "15.7.1"
+    resolved "https://registry.npm.taobao.org/@types/prop-types/download/@types/prop-types-15.7.1.tgz#f1a11e7babb0c3cad68100be381d1e064c68f1f6"
+    integrity sha1-8aEee6uww8rWgQC+OB0eBkxo8fY=
+  
   "@types/react@16.3.14":
     version "16.3.14"
     resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.3.14.tgz#f90ac6834de172e13ecca430dcb6814744225d36"
     integrity sha1-+QrGg03hcuE+zKQw3LaBR0QiXTY=
     dependencies:
+      csstype "^2.2.0"
+  
+  "@types/react@^16.7.3":
+    version "16.9.2"
+    resolved "https://registry.npm.taobao.org/@types/react/download/@types/react-16.9.2.tgz#6d1765431a1ad1877979013906731aae373de268"
+    integrity sha1-bRdlQxoa0Yd5eQE5BnMarjc94mg=
+    dependencies:
+      "@types/prop-types" "*"
       csstype "^2.2.0"
   
   "@types/webpack-env@^1.13.6":
@@ -2000,6 +2014,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/binary-extensions/download/binary-extensions-1.13.1.tgz#598afe54755b2868a5330d2aff9d4ebb53209b65"
     integrity sha1-WYr+VHVbKGilMw0q/51Ou1Mgm2U=
   
+  bind-decorator@^1.0.11:
+    version "1.0.11"
+    resolved "https://registry.npm.taobao.org/bind-decorator/download/bind-decorator-1.0.11.tgz#e41bc06a1f65dd9cec476c91c5daf3978488252f"
+    integrity sha1-5BvAah9l3ZzsR2yRxdrzl4SIJS8=
+  
   block-stream@*:
     version "0.0.9"
     resolved "https://registry.npm.taobao.org/block-stream/download/block-stream-0.0.9.tgz#13ebfe778a03205cfe03751481ebb4b3300c126a"
@@ -2522,7 +2541,7 @@ Lockfile:
       isobject "^3.0.0"
       static-extend "^0.1.1"
   
-  classnames@^2.2.5:
+  classnames@^2.2.5, classnames@^2.2.6:
     version "2.2.6"
     resolved "https://registry.npm.taobao.org/classnames/download/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
     integrity sha1-Q5Nb/90pHzJtrQogUwmzjQD2UM4=
@@ -3087,6 +3106,11 @@ Lockfile:
     version "0.1.4"
     resolved "https://registry.npm.taobao.org/date-now/download/date-now-0.1.4.tgz#eaf439fd4d4848ad74e5cc7dbef200672b9e345b"
     integrity sha1-6vQ5/U1ISK105cx9vvIAZyueNFs=
+  
+  dayjs@^1.7.7:
+    version "1.8.16"
+    resolved "https://registry.npm.taobao.org/dayjs/download/dayjs-1.8.16.tgz#2a3771de537255191b947957af2fd90012e71e64"
+    integrity sha1-Kjdx3lNyVRkblHlXry/ZABLnHmQ=
   
   debug@*, debug@4, debug@^4.0.1, debug@^4.1.0:
     version "4.1.1"
@@ -7795,6 +7819,11 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/promise-inflight/download/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
     integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
   
+  promise-polyfill@^7.1.2:
+    version "7.1.2"
+    resolved "https://registry.npm.taobao.org/promise-polyfill/download/promise-polyfill-7.1.2.tgz#ab05301d8c28536301622d69227632269a70ca3b"
+    integrity sha1-qwUwHYwoU2MBYi1pInYyJppwyjs=
+  
   promise-polyfill@^8.1.3:
     version "8.1.3"
     resolved "https://registry.npm.taobao.org/promise-polyfill/download/promise-polyfill-8.1.3.tgz#8c99b3cf53f3a91c68226ffde7bde81d7f904116"
@@ -8239,7 +8268,7 @@ Lockfile:
     resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.10.5.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.10.5.tgz#336c3efc1220adcedda2c9fab67b5a7955a33658"
     integrity sha1-M2w+/BIgrc7dosn6tntaeVWjNlg=
   
-  regenerator-runtime@^0.11.0:
+  regenerator-runtime@^0.11.0, regenerator-runtime@^0.11.1:
     version "0.11.1"
     resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fregenerator-runtime%2Fdownload%2Fregenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
     integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
@@ -9628,6 +9657,18 @@ Lockfile:
       safe-buffer "^5.1.2"
       yallist "^3.0.3"
   
+  taro-ui@^2.2.2:
+    version "2.2.2"
+    resolved "https://registry.npm.taobao.org/taro-ui/download/taro-ui-2.2.2.tgz#485847ed2ac2343c394477b25bbea439e0adc03d"
+    integrity sha1-SFhH7SrCNDw5RHeyW76kOeCtwD0=
+    dependencies:
+      "@types/react" "^16.7.3"
+      bind-decorator "^1.0.11"
+      classnames "^2.2.6"
+      dayjs "^1.7.7"
+      lodash "^4.17.10"
+      prop-types "^15.6.2"
+  
   terser-webpack-plugin@^1.1.0:
     version "1.4.1"
     resolved "https://registry.npm.taobao.org/terser-webpack-plugin/download/terser-webpack-plugin-1.4.1.tgz#61b18e40eaee5be97e771cdbb10ed1280888c2b4"
@@ -9894,6 +9935,11 @@ Lockfile:
     version "0.0.6"
     resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
     integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+  
+  typesafe-actions@^4.4.2:
+    version "4.4.2"
+    resolved "https://registry.npm.taobao.org/typesafe-actions/download/typesafe-actions-4.4.2.tgz#8f817c479d12130b5ebb442032968b2a18929e1a"
+    integrity sha1-j4F8R50SEwteu0QgMpaLKhiSnho=
   
   typescript@^3.0.1:
     version "3.6.2"
