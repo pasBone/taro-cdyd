@@ -5,6 +5,7 @@ import { AtButton, AtInput } from 'taro-ui';
 import Taro, { useState, useEffect } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { DEFAULT_REG_WAY, REG_MAP } from '@/constant';
+
 import './index.scss'
 
 

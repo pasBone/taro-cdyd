@@ -1,4 +1,5 @@
 import Taro, { Component, Config } from '@tarojs/taro'
+import '@tarojs/async-await'
 import { Provider } from '@tarojs/redux'
 import Login from './pages/login/index'
 import configStore from './store'
@@ -24,7 +25,8 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/login/index',
-      'pages/hooks-demo/index'
+      'pages/demo/hooks-redux/index',
+      'pages/demo/hooks/index',
     ],
     window: {
       backgroundTextStyle: 'light',
