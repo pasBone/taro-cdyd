@@ -2,7 +2,7 @@ import Taro, { Component, Config } from '@tarojs/taro'
 import '@tarojs/async-await'
 import { Provider } from '@tarojs/redux'
 import Login from './pages/login/index'
-import configStore from './store'
+import store from './store'
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -10,8 +10,6 @@ import './app.scss'
 // if (process.env.NODE_ENV !== 'production' && process.env.TARO_ENV === 'h5')  {
 //   require('nerv-devtools')
 // }
-
-const store = configStore();
 
 class App extends Component {
 
