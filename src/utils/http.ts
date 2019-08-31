@@ -2,7 +2,7 @@ import qs from "query-string"
 import { Observable, of, throwError } from "rxjs"
 import { fromFetch } from "rxjs/fetch"
 import { catchError, filter, switchMap, tap } from "rxjs/operators"
-import { OPERATE_CODE, Res } from "src/types"
+import { OPERATE_CODE, Res } from "@/types"
 import { OPERATOR_CODE } from '@/constant';
 
 
