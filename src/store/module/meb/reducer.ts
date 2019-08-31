@@ -1,20 +1,10 @@
-const INITIAL_STATE = {
-    num: 0
-}
+import { combineReducers } from "redux"
+import { createReducer } from "typesafe-actions"
+import { loginActionaAsync } from "./action"
 
-export default function counter(state = INITIAL_STATE, action) {
-    switch (action.type) {
-        case ADD:
-            return {
-                ...state,
-                num: state.num + 1
-            }
-        case MINUS:
-            return {
-                ...state,
-                num: state.num - 1
-            }
-        default:
-            return state
-    }
-}
+export const userInfo = createReducer({})
+    .handleAction(loginActionaAsync.request, (state, action) => action.payload)
+
+export const mebReducer = combineReducers({
+    userInfo,
+})
