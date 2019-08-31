@@ -1,13 +1,33 @@
-import { createStore, applyMiddleware } from 'redux'
-import thunkMiddleware from 'redux-thunk'
-import { createLogger } from 'redux-logger'
-import rootReducer from './root-reducer'
+import { createStore, applyMiddleware } from 'redux';
+import { createEpicMiddleware } from 'redux-observable';
+import { RootAction, RootState } from 'typesafe-actions';
 
-const middleware = [
-    thunkMiddleware,
-    createLogger()
-]
+import { composeEnhancers } from '@/utils/common';
+import { rootReducers } from './root-reducer';
+import rootEpic from './root-epic';
+import { RootServices } from './root-services';
 
-export default function configStore() {
-    return createStore(rootReducer, applyMiddleware(...middleware))
-}
+export const epicMiddleware = createEpicMiddleware<
+  RootAction,
+  RootAction,
+  RootState,
+  typeof RootServices
+>({
+  dependencies: RootServices,
+});
+
+// configure middlewares
+const middlewares = [epicMiddleware];
+// compose enhancers
+const enhancer = composeEnhancers(applyMiddleware(...middlewares));
+
+// rehydrate state on app start
+const initialState = {};
+
+// create store
+const store = createStore(rootReducers, initialState, enhancer);
+
+epicMiddleware.run(rootEpic);
+
+// export store singleton instance
+export default store;
