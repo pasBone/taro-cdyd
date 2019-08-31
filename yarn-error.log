@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add query-string
+  C:\Program Files\nodejs\node.exe C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add typesafe-actions 5.0.0-3
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\Administrator\bin;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\nodejs;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\Git\usr\bin;D:\software\mysql-8.0.15-winx64\bin;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;D:\software\Microsoft VS Code\bin;C:\Users\Administrator\AppData\Roaming\npm;C:\Users\Administrator\AppData\Local\BypassRuntm;D:\software\Fiddler
@@ -14,7 +14,17 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: EBUSY: resource busy or locked, copyfile 'C:\Users\Administrator\AppData\Local\Yarn\Cache\v4\npm-split-on-first-1.1.0-f610afeee3b12bce1d0c30425e76398b78249a5f\node_modules\split-on-first\readme.md' -> 'E:\develop\taro\node_modules\split-on-first\readme.md'
+  Error: https://registry.npm.taobao.org/5.0.0-3: Not found
+      at Request.params.callback [as _callback] (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:66058:18)
+      at Request.self.callback (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:129541:22)
+      at Request.emit (events.js:189:13)
+      at Request.<anonymous> (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130513:10)
+      at Request.emit (events.js:189:13)
+      at IncomingMessage.<anonymous> (C:\Users\Administrator\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:130435:12)
+      at Object.onceWrapper (events.js:277:13)
+      at IncomingMessage.emit (events.js:194:15)
+      at endReadableNT (_stream_readable.js:1125:12)
+      at process._tickCallback (internal/process/next_tick.js:63:19)
 
 npm manifest: 
   {
@@ -62,9 +72,9 @@ npm manifest:
       "nervjs": "^1.4.0",
       "redux": "^4.0.4",
       "redux-logger": "^3.0.6",
+      "redux-observable": "^1.1.0",
       "redux-thunk": "^2.3.0",
-      "taro-ui": "^2.2.2",
-      "typesafe-actions": "^4.4.2"
+      "taro-ui": "^2.2.2"
     },
     "devDependencies": {
       "@tarojs/plugin-babel": "1.3.14",
@@ -8235,6 +8245,11 @@ Lockfile:
     dependencies:
       deep-diff "^0.3.5"
   
+  redux-observable@^1.1.0:
+    version "1.1.0"
+    resolved "https://registry.npm.taobao.org/redux-observable/download/redux-observable-1.1.0.tgz#323a8fe53e89fdb519be2807b55f08e21c13e6f1"
+    integrity sha1-MjqP5T6J/bUZvigHtV8I4hwT5vE=
+  
   redux-thunk@^2.3.0:
     version "2.3.0"
     resolved "https://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
@@ -9935,11 +9950,6 @@ Lockfile:
     version "0.0.6"
     resolved "https://registry.npm.taobao.org/typedarray/download/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
     integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  
-  typesafe-actions@^4.4.2:
-    version "4.4.2"
-    resolved "https://registry.npm.taobao.org/typesafe-actions/download/typesafe-actions-4.4.2.tgz#8f817c479d12130b5ebb442032968b2a18929e1a"
-    integrity sha1-j4F8R50SEwteu0QgMpaLKhiSnho=
   
   typescript@^3.0.1:
     version "3.6.2"
