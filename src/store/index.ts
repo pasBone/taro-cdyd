@@ -1,9 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
-import { RootAction, RootState } from 'typesafe-actions';
+import { RootAction, RootState, Services } from 'typesafe-actions';
 
 import { composeEnhancers } from '@/utils/common';
-import { rootReducers } from './root-reducer';
+import rootReducer from './root-reducer';
 import rootEpic from './root-epic';
 import { RootServices } from './root-services';
 
@@ -11,7 +11,7 @@ export const epicMiddleware = createEpicMiddleware<
   RootAction,
   RootAction,
   RootState,
-  typeof RootServices
+  Services
 >({
   dependencies: RootServices,
 });
@@ -25,7 +25,7 @@ const enhancer = composeEnhancers(applyMiddleware(...middlewares));
 const initialState = {};
 
 // create store
-const store = createStore(rootReducers, initialState, enhancer);
+const store = createStore(rootReducer, initialState, enhancer);
 
 epicMiddleware.run(rootEpic);
 

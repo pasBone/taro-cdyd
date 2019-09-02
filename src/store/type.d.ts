@@ -7,7 +7,7 @@ declare module 'typesafe-actions' {
 
   export type RootAction = ActionType<typeof import('./root-action')>;
 
-  export type Services = typeof import('./index');
+  export type Services = typeof import('./../api/index');
 
   interface Types {
     RootAction: RootAction;
