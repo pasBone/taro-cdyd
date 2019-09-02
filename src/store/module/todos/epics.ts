@@ -13,11 +13,10 @@ export const loadTodosEpic: Epic<
     Services
 > = (action$, state$, { api }) => {
 
-    console.log(api);
     return action$.pipe(
         filter(isActionOf(loadTodosAsync.request)),
         switchMap(() =>
-            from(api.loadSnapshot()).pipe(
+            from(api.todo.loadSnapshot()).pipe(
                 map(loadTodosAsync.success),
                 catchError((message: string) => of(loadTodosAsync.failure(message)))
             )
@@ -34,7 +33,7 @@ export const saveTodosEpic: Epic<
   action$.pipe(
     filter(isActionOf(saveTodosAsync.request)),
     switchMap(() =>
-      from(api.todos.saveSnapshot(getTodos(state$.value.rootReducer.todosReducer))).pipe(
+      from(api.todo.saveSnapshot(getTodos(state$.value.todosReducer))).pipe(
         map(saveTodosAsync.success),
         catchError((message: string) => of(saveTodosAsync.failure(message)))
       )
