@@ -33,7 +33,7 @@ export const saveTodosEpic: Epic<
   action$.pipe(
     filter(isActionOf(saveTodosAsync.request)),
     switchMap(() =>
-      from(api.todo.saveSnapshot(getTodos(state$.value.todosReducer))).pipe(
+      from(api.todo.saveSnapshot(getTodos(state$.value.todos))).pipe(
         map(saveTodosAsync.success),
         catchError((message: string) => of(saveTodosAsync.failure(message)))
       )

@@ -25,6 +25,7 @@ class App extends Component {
       'pages/login/index',
       'pages/demo/hooks-redux/index',
       'pages/demo/hooks/index',
+      'pages/demo/todos/index',
     ],
     window: {
       backgroundTextStyle: 'light',

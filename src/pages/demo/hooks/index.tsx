@@ -6,10 +6,10 @@ import { useSelector, useDispatch  } from '@tarojs/redux'
 
 // console.log(actions);
 
-const mapStateToProps = state => {
-    console.log(state, 'state');
-    return state.mebReducer
-}
+// const mapStateToProps = state => {
+//     console.log(state, 'state');
+//     return state.mebReducer
+// }
 
 // const mapDispatchToProps = dispatch => {
 //     return {
@@ -44,18 +44,18 @@ const mapStateToProps = state => {
 // export default Demo
 
 const Demo = () => {
-    const counter = useSelector(state => {
-        return state.mebReducer.num
-    });
+    // const counter = useSelector(state => {
+    //     return state.mebReducer.num
+    // });
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     return (
         <View className='todo'>
-            <AtButton className='add_btn' onClick={()=> dispatch({type: 'ADD'})}>+</AtButton>
+            {/* <AtButton className='add_btn' onClick={()=> dispatch({type: 'ADD'})}>+</AtButton>
             <AtButton className='dec_btn' onClick={this.props.dec}>-</AtButton>
             <AtButton className='dec_btn' onClick={this.props.asyncAdd}>async</AtButton>
             <View>值：{this.props.num}</View>
-            <View>值：{counter}</View>
+            <View>值：{counter}</View> */}
         </View>
     )
 }
