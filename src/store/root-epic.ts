@@ -5,6 +5,6 @@ import * as todosEpics from './module/todos/epics'
 export default combineEpics(
     ...Object.values({
         ...loginEpics,
-        ...todosEpics
+        ...todosEpics,
     }),
 )

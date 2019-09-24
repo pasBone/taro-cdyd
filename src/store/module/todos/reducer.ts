@@ -1,26 +1,46 @@
 import { combineReducers } from 'redux';
 import { createReducer } from 'typesafe-actions';
+import { addTodo, switchTodo, loadTodoAsync, saveTodoAsync, switchTodoAsync } from './actions';
+import { Todo } from 'MyModels';
 
-import { loadTodosAsync, addTodo, removeTodo } from './actions';
+const initialTodos: Todo[] = [{
+  done: false,
+  disabled: false,
+  name: 'You can add new todos using the form or load saved snapshot...',
+}]
 
-export const isLoadingTodos = createReducer(false as boolean)
-  .handleAction([loadTodosAsync.request], (state, action) => true)
+export const isLoadingTodos = createReducer(false)
+  .handleAction([loadTodoAsync.request], () => true)
   .handleAction(
-    [loadTodosAsync.success, loadTodosAsync.failure],
-    (state, action) => false
+    [loadTodoAsync.success, loadTodoAsync.failure],
+    () => false
   );
 
-export const todos = createReducer([
-  {
-    id: '0',
-    title: 'You can add new todos using the form or load saved snapshot...',
-  },
-] as any[])
-  .handleAction(loadTodosAsync.success, (state, action) => action.payload)
-  .handleAction(addTodo, (state, action) => [...state, action.payload])
-  .handleAction(removeTodo, (state, action) =>
-    state.filter(i => i.id !== action.payload)
-  );
+export const todos = createReducer({
+  list: initialTodos,
+  loading: false,
+})
+  .handleAction(addTodo, (state, action) => ({ list: [...state.list, action.payload], loading: false }))
+  .handleAction(switchTodo, (state, action) => {
+    const payload = action.payload;
+    state.list = state.list.map((item, index) => ({ ...item, done: index === payload.index ? payload.done : item.done }))
+    return state;
+  })
+  .handleAction(loadTodoAsync.request, (state, action) => ({ ...state, loading: false }))
+  .handleAction(loadTodoAsync.success, (state, action) => ({ ...state, loading: false }))
+  .handleAction(loadTodoAsync.failure, (state, action) => ({ ...state, loading: false }))
+  .handleAction(saveTodoAsync.request, state => ({ ...state, loading: true }))
+  .handleAction(saveTodoAsync.success, (state, action) => ({ list: [...state.list, ...action.payload], loading: false }))
+  .handleAction(saveTodoAsync.failure, state => ({ ...state, loading: true }))
+  .handleAction(switchTodoAsync.request, state => ({ ...state, loading: true }))
+  .handleAction(switchTodoAsync.success, (state, action) => {
+    const payload = action.payload;
+    state.list = state.list.map((item, index) => ({ ...item, done: index === payload.index ? payload.done : item.done }))
+    return {
+      ...state,
+      loading: false
+    };
+  })
 
 const todosReducer = combineReducers({
   isLoadingTodos,

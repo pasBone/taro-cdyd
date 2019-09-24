@@ -2,7 +2,7 @@ const path = `./images/${THEME_CONFIG.name}`;
 
 export const IMAGE_MAP = {
     /** 登录页面背景 */
-    loginBg: 'http://wap.succtime.com/img/login_bg@2x.a62fc8e5.png',
+    loginBg: 'http://wx.hycode.com.cn/img/login_bg@2x.4063080f.png',
 
     /** 默认头像 */
     defaultAvatar: require(path + '/default-user.png'),

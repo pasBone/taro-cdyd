@@ -1,4 +1,5 @@
 import { StateType, ActionType } from 'typesafe-actions';
+import { Epic } from 'redux-observable';
 
 declare module 'typesafe-actions' {
   export type Store = StateType<typeof import('./index').default>;
@@ -7,7 +8,9 @@ declare module 'typesafe-actions' {
 
   export type RootAction = ActionType<typeof import('./root-action')>;
 
-  export type Services = typeof import('./../api/index');
+  export type Services = typeof import('../api/index');
+
+  export type DetaultEpic = Epic<RootAction, RootAction, RootState, Services>
 
   interface Types {
     RootAction: RootAction;

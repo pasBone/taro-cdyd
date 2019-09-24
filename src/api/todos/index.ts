@@ -1,22 +1,30 @@
 import { Todo } from 'MyModels';
 
-let todos: Todo[] = [
-  { id: '0', title: `Yo, your snapshot has been loaded successfully!` },
-];
-
-export function loadSnapshot(): Promise<Todo[]> {
+export function loadSnapshot(todos): Promise<Todo[]> {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve(todos);
+      if (todos.length == 8) {
+        reject('哈哈报错了');
+      } else {
+        resolve(todos);
+      }
+    }, 1000);
+  });
+}
+
+export function saveSnapshot(data: Todo[]): Promise<Todo[]> {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      resolve(data);
     }, 500);
   });
 }
 
-export function saveSnapshot(data: Todo[]): Promise<undefined> {
+export function switchTodo(data: Todo & { index: number }): Promise<Todo> {
   return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      todos = data;
-      resolve();
-    }, 500);
-  });
+    setTimeout(_ => {
+      console.log(data, 'api');
+      resolve(data);
+    }, 2000)
+  })
 }

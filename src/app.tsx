@@ -23,9 +23,7 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/login/index',
-      'pages/demo/hooks-redux/index',
-      'pages/demo/hooks/index',
-      'pages/demo/todos/index',
+      'pages/todos/index'
     ],
     window: {
       backgroundTextStyle: 'light',

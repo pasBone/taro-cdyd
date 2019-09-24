@@ -1,7 +1,7 @@
 declare module 'MyModels' {
-    export type Todo = {
-      id: any;
-      title: string;
-    };
-  }
-  
+  export type Todo = {
+    name: string;
+    disabled: boolean;
+    done: boolean;
+  };
+}

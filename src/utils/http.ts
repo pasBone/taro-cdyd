@@ -1,5 +1,4 @@
-import { Observable, of, throwError, from } from "rxjs"
-import { catchError, filter, switchMap, tap } from "rxjs/operators"
+import { throwError } from "rxjs"
 import { OPERATE_CODE, Res } from "@/types"
 import { OPERATOR_CODE } from '@/constant';
 import Taro from '@tarojs/taro';
@@ -30,14 +29,13 @@ const genGetHeaderMethods = (type: RequestType) => {
     }
 }
 
-
 const genReqestMethods = (type: RequestType) => {
     const genHeader = genGetHeaderMethods(type)
 
     return <Q = void, P = void>(url: string) => {
-        return (params?: Q): Observable<Res<P>> => {
+        return (params?: Q): Promise<Res<P>> => {
 
-            const $request = Taro.request({
+            return Taro.request({
                 url: `${BASE_URL}${url}`,
                 method: "POST",
                 data: {
@@ -45,36 +43,17 @@ const genReqestMethods = (type: RequestType) => {
                     operator_code: OPERATOR_CODE
                 },
                 header: genHeader()
-            });
-
-            return from($request).pipe(
-                switchMap(response => {
-                    if (response.statusCode === 200) {
-                        return response.data as Promise<Res<P>>
-                    }
-                    return throwError({
-                        success: false,
-                        message: `Error ${response.statusCode}`,
-                    })
-                }),
-                tap(res => {
-                    if (res.code === OPERATE_CODE.登录信息失效) {
-                        console.log(res, '登录信息失效');
-                    }
-                }),
-                filter(res => res.code !== OPERATE_CODE.登录信息失效),
-                switchMap(res => {
-                    if (res.code === OPERATE_CODE.success) {
-                        return of(res)
-                    }
-                    res.success = false
-                    return throwError(res)
-                }),
-                catchError(err => {
-                    console.log(`请求接口【${url}】出错`, err)
-                    return of(err)
-                }),
-            )
+            }).then((response) => {
+                if (response.statusCode === 200) {
+                    return response.data
+                }
+                return throwError({
+                    success: false,
+                    message: `Error ${response.statusCode}`,
+                })
+            }).catch(err => {
+                console.log(`请求接口【${url}】出错`, err)
+            })
         }
     }
 }

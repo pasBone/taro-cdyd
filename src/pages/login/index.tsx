@@ -1,123 +1,41 @@
-import { mebApi } from '@/api/meb';
-import { IMAGE_MAP } from '@/assets'
-import { Toast } from '@/components/toast';
-import { AtButton, AtInput } from 'taro-ui';
-import Taro, { useState, useEffect } from '@tarojs/taro'
-import { View, Image, Text } from '@tarojs/components'
-import { DEFAULT_REG_WAY, REG_MAP } from '@/constant';
+import { AtButton } from "taro-ui";
+import { RootState } from "typesafe-actions";
+import { connect } from "@tarojs/redux";
+import { Component } from "@tarojs/taro";
+import { loginActionaAsync } from "@/store/module/meb/actions";
+import { DEFAULT_REG_WAY } from "@/constant";
 
-import './index.scss'
+const mapStateToProps = (state: RootState) => ({
+  userInfo: state.meb.userInfo
+});
 
+const dispatchProps = {
+  login: loginActionaAsync.request
+}
 
-const getFormState = (): mebApi.LoginReq => {
-  return {
-    tel: "",
-    code: "",
-    open_id: "",
-    reg_way: DEFAULT_REG_WAY,
-    plate_number: ""
+type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+
+type State = {}
+
+@connect(
+  mapStateToProps,
+  dispatchProps
+)
+class Login extends Component<Props, State> {
+  render() {
+    const { login } = this.props;  
+    return (
+      <AtButton  onClick={() => login({
+        tel: "13038360142",
+        code: "123456",
+        open_id: "",
+        reg_way: DEFAULT_REG_WAY,
+        plate_number: ""
+      })}>
+        确定
+      </AtButton>
+    )
   }
 }
 
-const getToastState = () => {
-  return {
-    show: false,
-    text: ''
-  }
-}
-
-const LoginView: Taro.FC = () => {
-
-  const [form, setFormState] = useState(getFormState());
-  const [toast, setToastState] = useState(getToastState());
-  const [loading, setLoadingState] = useState(false);
-
-  /** 手机号码赋值 */
-  const onTelChange = (tel: string) => {
-    setFormState({ ...form, tel })
-  }
-
-  /** 验证码赋值 */
-  const onCodeChange = (code: string) => {
-    setFormState({ ...form, code })
-  }
-
-  /** 验证手机号码是否正确 */
-  const validateTel = () => {
-    return REG_MAP.mobileNumber.test(String(form.tel));
-  }
-
-  /** 验证手机号码是否正确 */
-  const validateCode = () => {
-    return String(form.code).length === 6;
-  }
-
-  const validateForm = () => {
-    if (!validateTel()) {
-      setToastState({
-        show: true,
-        text: '请输入正确的手机号码'
-      });
-      return false;
-    }
-
-    if (!validateCode()) {
-      setToastState({
-        show: true,
-        text: '验证码格式错误'
-      });
-      return false;
-    }
-    return true;
-  }
-
-  const submit = () => {
-    if (loading) return;
-    if (true === validateForm()) {
-      setLoadingState(true);
-    }
-  }
-
-  return (
-    <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
-      <View className="logo">
-        <Image className="logo-img" src={IMAGE_MAP.logo} />
-      </View>
-
-      <View className="login-box">
-        <View className="login-row">
-          <AtInput
-            className="login-input"
-            name='tel'
-            type='phone'
-            border={false}
-            placeholder='请输入手机号码'
-            value={form.tel}
-            onChange={onTelChange}
-          />
-          <Text className="send-code"> 发送验证码 </Text>
-        </View>
-
-        <View className="login-row">
-          <AtInput
-            className="login-input"
-            name='code'
-            type='number'
-            border={false}
-            placeholder='验证码'
-            maxLength='6'
-            value={form.code}
-            onChange={onCodeChange}
-          />
-        </View>
-      </View>
-
-      <AtButton loading={loading} disabled={loading} className='login-btn' onClick={submit} type='primary'>登录</AtButton>
-
-      <Toast show={toast.show} text={toast.text} handleClose={() => setToastState({ show: false, text: '' })} />
-
-    </View>
-  )
-}
-
-export default LoginView;
+export default Login

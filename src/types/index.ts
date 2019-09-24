@@ -4,6 +4,10 @@ export interface PlainObj {
 
 export type StringOrNumber = string | number;
 
+export interface LoadingType {
+    loading: boolean
+}
+
 /** 操作状态  后台返回也是这个 */
 export enum OPERATE_CODE {
     fail = 0,
