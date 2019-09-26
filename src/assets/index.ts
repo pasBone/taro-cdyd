@@ -2,7 +2,7 @@ const path = `./images/${THEME_CONFIG.name}`;
 
 export const IMAGE_MAP = {
     /** 登录页面背景 */
-    loginBg: 'http://wx.hycode.com.cn/img/login_bg@2x.4063080f.png',
+    loginBg: require(path + '/login_bg@2x.png'),
 
     /** 默认头像 */
     defaultAvatar: require(path + '/default-user.png'),
@@ -58,4 +58,10 @@ export const IMAGE_MAP = {
     // setting: require(`./images/setting@2x.png`),
     // /** vihiclelicense */
     // vihiclelicense: require(`./images/vihiclelicense.jpg`),
+    /** toast-alert */
+    toastAlert: require('./images/toast_alert_32x32.png'),
+    /** toast-success */
+    toastSuccess: require('./images/toast_success_32x32.png'),
+    /** toast-faiure */
+    toastFaiure: require('./images/toast_failure_32x32.png')
 }

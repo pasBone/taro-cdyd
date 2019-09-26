@@ -27,11 +27,13 @@
             height: 106px;
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.06);
+            border-bottom: 2px solid $blackColor88;
             margin-bottom: 16px;
+            border-radius: 0;
             .login-input{
                 background: none;
                 input{
-                    color: $whiteColor86;
+                    color: $blackColor88;
                 }
             }
             .send-code{

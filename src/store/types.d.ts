@@ -10,7 +10,7 @@ declare module 'typesafe-actions' {
 
   export type Services = typeof import('../api/index');
 
-  export type DetaultEpic = Epic<RootAction, RootAction, RootState, Services>
+  export type DefaultEpic = Epic<RootAction, RootAction, RootState, Services>
 
   interface Types {
     RootAction: RootAction;

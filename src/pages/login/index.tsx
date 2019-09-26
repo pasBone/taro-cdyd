@@ -1,41 +1,84 @@
-import { AtButton } from "taro-ui";
-import { RootState } from "typesafe-actions";
-import { connect } from "@tarojs/redux";
-import { Component } from "@tarojs/taro";
-import { loginActionaAsync } from "@/store/module/meb/actions";
-import { DEFAULT_REG_WAY } from "@/constant";
+import { mebApi } from '@/api/meb';
+import { IMAGE_MAP } from '@/assets'
+import { useDispatch, useSelector } from '@tarojs/redux';
+import { AtButton, AtInput } from 'taro-ui';
+import Taro, { useState, useEffect, useMemo } from '@tarojs/taro'
+import { View, Image, Text } from '@tarojs/components'
+import { DEFAULT_REG_WAY, REG_MAP } from '@/constant';
+import Toast from '@/utils/toast';
+import VerificationCode from '@/components/verification-code'
+import './index.scss'
+import { loginActionaAsync } from '@/store/module/meb/actions';
+import { RootState } from 'typesafe-actions';
 
-const mapStateToProps = (state: RootState) => ({
-  userInfo: state.meb.userInfo
-});
 
-const dispatchProps = {
-  login: loginActionaAsync.request
-}
+const LoginView: Taro.FC = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state: RootState) => state.meb.userInfo);
+  const [tel, setTel] = useState('');
+  const [code, setCode] = useState('');
 
-type Props = ReturnType<typeof mapStateToProps> & typeof dispatchProps;
+  /** 按钮禁用状态 */
+  const loginBtnDisabled = useMemo(() => {
+    return loading || !(tel.length === 11 && code.length === 6)
+  }, [tel, code, loading]);
 
-type State = {}
-
-@connect(
-  mapStateToProps,
-  dispatchProps
-)
-class Login extends Component<Props, State> {
-  render() {
-    const { login } = this.props;  
-    return (
-      <AtButton  onClick={() => login({
-        tel: "13038360142",
-        code: "123456",
-        open_id: "",
-        reg_way: DEFAULT_REG_WAY,
-        plate_number: ""
-      })}>
-        确定
-      </AtButton>
+  const submit = () => {
+    dispatch(
+      loginActionaAsync.request({
+        tel,
+        code,
+        reg_way: 2,
+      })
     )
   }
+
+  return (
+    <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
+      <View className="logo">
+        <Image className="logo-img" src={IMAGE_MAP.logo} />
+      </View>
+
+      <View className="login-box">
+        <View className="login-row">
+          <AtInput
+            className="login-input"
+            name='tel'
+            type='phone'
+            placeholder='请输入手机号码'
+            value={tel}
+            onChange={value => setTel(value)}
+          />
+
+          <VerificationCode
+            tel={tel}
+            textStyle={{
+              textAlign: 'right',
+              color: '#2f86f6',
+              paddingRight: '8px'
+            }}
+          />
+
+        </View>
+
+        <View className="login-row">
+          <AtInput
+            className="login-input"
+            name='code'
+            type='number'
+            placeholder='验证码'
+            maxLength='6'
+            border={false}
+            value={code}
+            onChange={value => setCode(value)}
+          />
+        </View>
+      </View>
+
+      <AtButton disabled={loginBtnDisabled} loading={loading} className='login-btn' onClick={submit} type='primary'>登录</AtButton>
+
+    </View>
+  )
 }
 
-export default Login
+export default LoginView;

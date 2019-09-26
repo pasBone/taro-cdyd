@@ -2,7 +2,9 @@ import { StringOrNumber } from "@/types";
 import { post } from '@/utils/http';
 
 export const mebApi = {
-    login: post<mebApi.LoginReq, mebApi.LoginRes>('/meb/login')
+    login: post<mebApi.LoginReq, mebApi.LoginRes>('/meb/login'),
+    /** 发送验证码 */
+    sendCode: post<mebApi.SendCodeReq>("/meb/sendCode"),
 }
 
 export namespace mebApi {
