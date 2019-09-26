@@ -2,7 +2,7 @@ import { mebApi } from '@/api/meb';
 import { IMAGE_MAP } from '@/assets'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { AtButton, AtInput } from 'taro-ui';
-import Taro, { useState, useEffect, useMemo } from '@tarojs/taro'
+import Taro, { useState, useEffect, useMemo, Config } from '@tarojs/taro'
 import { View, Image, Text } from '@tarojs/components'
 import { DEFAULT_REG_WAY, REG_MAP } from '@/constant';
 import Toast from '@/utils/toast';
@@ -46,6 +46,7 @@ const LoginView: Taro.FC = () => {
             name='tel'
             type='phone'
             placeholder='请输入手机号码'
+            border={false}
             value={tel}
             onChange={value => setTel(value)}
           />
@@ -54,7 +55,7 @@ const LoginView: Taro.FC = () => {
             tel={tel}
             textStyle={{
               textAlign: 'right',
-              color: '#2f86f6',
+              color: '#1dad92',
               paddingRight: '8px'
             }}
           />
@@ -79,6 +80,10 @@ const LoginView: Taro.FC = () => {
 
     </View>
   )
+}
+
+LoginView.config = {
+  navigationBarTitleText: '登录'
 }
 
 export default LoginView;

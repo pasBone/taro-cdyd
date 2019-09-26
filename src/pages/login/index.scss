@@ -4,7 +4,7 @@
     background-position: 50%;
     .logo{
         margin: 0 auto;
-        padding-top: 200px;
+        padding-top: 150px;
         height: 266px;
         width: 266px;
         display: block;
@@ -22,16 +22,17 @@
         background: none;
         .login-row{
             display: flex;
-            // justify-content: center;
+            justify-content: space-between;
             align-items: center;
             height: 106px;
             border-radius: 8px;
             background-color: rgba(255, 255, 255, 0.06);
-            border-bottom: 2px solid $blackColor88;
+            border-bottom: 2px solid $blackColor16;
             margin-bottom: 16px;
             border-radius: 0;
             .login-input{
                 background: none;
+                margin-left: 0;
                 input{
                     color: $blackColor88;
                 }
@@ -41,7 +42,7 @@
                 display: block;
                 min-width: 250px;
                 padding-right: 33px;
-                color: #2f86f6;
+                color: #1dad92;
             }
         }
        
