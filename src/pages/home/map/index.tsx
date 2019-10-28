@@ -5,7 +5,6 @@ import './index.scss';
 
 const MapView: FC = () => {
 
-
     Taro.getLocation({
         type: 'wgs84',
         success(res) {

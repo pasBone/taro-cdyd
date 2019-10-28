@@ -1,15 +1,12 @@
-import { mebApi } from '@/api/meb';
-import { IMAGE_MAP } from '@/assets'
-import { useDispatch, useSelector } from '@tarojs/redux';
+import { IMAGE_MAP } from '@/assets';
 import { AtButton, AtInput } from 'taro-ui';
-import Taro, { useState, useEffect, useMemo, Config } from '@tarojs/taro'
-import { View, Image, Text } from '@tarojs/components'
-import { DEFAULT_REG_WAY, REG_MAP } from '@/constant';
-import Toast from '@/utils/toast';
-import VerificationCode from '@/components/verification-code'
-import './index.scss'
-import { loginActionaAsync } from '@/store/module/meb/actions';
 import { RootState } from 'typesafe-actions';
+import { View, Image } from '@tarojs/components'
+import { useDispatch, useSelector } from '@tarojs/redux';
+import VerificationCode from '@/components/verification-code'
+import { loginActionaAsync } from '@/store/module/meb/actions';
+import Taro, { useState, useMemo } from '@tarojs/taro'
+import './index.scss'
 
 
 const LoginView: Taro.FC = () => {
@@ -35,11 +32,13 @@ const LoginView: Taro.FC = () => {
 
   return (
     <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
+      
       <View className="logo">
         <Image className="logo-img" src={IMAGE_MAP.logo} />
       </View>
 
       <View className="login-box">
+
         <View className="login-row">
           <AtInput
             className="login-input"
@@ -59,7 +58,6 @@ const LoginView: Taro.FC = () => {
               paddingRight: '8px'
             }}
           />
-
         </View>
 
         <View className="login-row">
@@ -74,6 +72,7 @@ const LoginView: Taro.FC = () => {
             onChange={value => setCode(value)}
           />
         </View>
+     
       </View>
 
       <AtButton disabled={loginBtnDisabled} loading={loading} className='login-btn' onClick={submit} type='primary'>登录</AtButton>
