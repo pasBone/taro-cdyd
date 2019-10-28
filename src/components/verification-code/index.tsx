@@ -15,7 +15,6 @@ export interface VerificationCodeProps {
 	tel: string,
 	/** 发送事件 */
 	onClick?: () => void
-
 }
 
 const initText = '发送验证码';

@@ -40,12 +40,12 @@ export const IMAGE_MAP = {
     // code: require(`./images/code@2x.png`),
     // /** gps */
     // gps: require(`./images/gps@2x.png`),
-    // /** list */
-    // list: require(`./images/list@2x.png`),
+    /** list */
+    list: require('./images/list@2x.png'),
     // /** map */
     // map: require(`./images/map@2x.png`),
-    // /** mine */
-    // mine: require(`./images/mine@2x.png`),
+    /** mine */
+    mine: require('./images/mine@2x.png'),
     // /** nodata */
     // nodata: require(`./images/nodata@2x.png`),
     // /** order */

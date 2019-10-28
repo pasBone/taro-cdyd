@@ -23,6 +23,7 @@ class App extends Component {
   config: Config = {
     pages: [
       'pages/login/index',
+      'pages/home/index',
       'pages/todos/index'
     ],
     window: {
@@ -30,6 +31,11 @@ class App extends Component {
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
+    },
+    "permission": {
+      "scope.userLocation": {
+        "desc": "你的位置信息将用于小程序地图" // 高速公路行驶持续后台定位
+      }
     }
   }
 

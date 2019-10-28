@@ -4,7 +4,8 @@ export const DEFAULT_REG_WAY = 2
 export const OPERATOR_CODE = "byd"
 
 /** 应用名 */
-export const APP_NAME = "充电有道"
+// export const APP_NAME = "充电有道"
+export const APP_NAME = "首页"
 
 /** 正则 map */
 export const REG_MAP = {
