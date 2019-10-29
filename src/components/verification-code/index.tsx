@@ -1,13 +1,13 @@
-import { FC, useState, useCallback } from "@tarojs/taro";
-import { Text } from "@tarojs/components";
-import { REG_MAP } from "@/constant";
 import Toast from "@/utils/toast";
-import { CSSProperties } from "react";
 import { AtButton } from "taro-ui";
-import { interval, timer } from "rxjs";
-import { scan, takeUntil, takeWhile } from "rxjs/operators";
-import { sendCodeActionaAsync } from '@/store/module/meb/actions'
+import { REG_MAP } from "@/constant";
+import { CSSProperties } from "react";
+import { Text } from "@tarojs/components";
 import { useDispatch } from "@tarojs/redux";
+import { timer } from "rxjs";
+import { scan, takeWhile } from "rxjs/operators";
+import { sendCodeActionaAsync } from '@/store/module/meb/actions'
+import { FC, useState, useCallback } from "@tarojs/taro";
 
 export interface VerificationCodeProps {
 	textStyle: CSSProperties,
