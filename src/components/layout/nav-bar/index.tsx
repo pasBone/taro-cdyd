@@ -6,7 +6,9 @@ import { APP_NAME } from '@/constant'
 import './style.scss'
 
 type NavbarProps = {
-    /** 左边icon slot */
+    /** 左边icon slot 例如：
+     * <Image src={IMAGE_MAP.mine} />或者
+     * <View><Image src={IMAGE_MAP.mine} /><Image src={IMAGE_MAP.mine} /></View>*/
     renderLeftIcon: JSX.Element,
     /** 右边icon slot */
     renderRightIcon: JSX.Element,

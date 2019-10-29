@@ -4,11 +4,17 @@ import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
 import { View, Image } from "@tarojs/components"
 import Navbar from '@/components/layout/nav-bar'
+import { useSetSideMenuState } from '@/hooks/use-set-side-menu-state'
 
 const HomeView: FC = () => {
     return (
         <View>
-            <Navbar title="首页" renderRightIcon={<Image src={IMAGE_MAP.list} />} renderLeftIcon={<Image src={IMAGE_MAP.mine} />} />
+            <Navbar
+                title="首页"
+                renderLeftIcon={<Image src={IMAGE_MAP.mine} onClick={() => useSetSideMenuState()} />}
+                renderRightIcon={<Image src={IMAGE_MAP.list} />}
+            />
+
             <MapView />
         </View>
     )

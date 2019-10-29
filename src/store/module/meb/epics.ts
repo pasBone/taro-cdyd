@@ -1,6 +1,6 @@
 import { of } from "rxjs"
 import { distinctUntilChanged, filter, mergeMap, switchMap } from "rxjs/operators"
-import { isActionOf, DefaultEpic, action } from "typesafe-actions"
+import { isActionOf, DefaultEpic } from "typesafe-actions"
 import { loginActionaAsync, sendCodeActionaAsync } from "./actions";
 import Toast from "@/utils/toast";
 import Taro from "@tarojs/taro";

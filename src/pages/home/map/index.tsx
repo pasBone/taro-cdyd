@@ -1,6 +1,5 @@
 import { View, Map } from '@tarojs/components'
-import { FC } from '@tarojs/taro'
-import Taro from '@tarojs/taro'
+import Taro, { FC } from '@tarojs/taro'
 import './index.scss';
 
 const MapView: FC = () => {
@@ -10,9 +9,7 @@ const MapView: FC = () => {
         success(res) {
             console.log(res);
         }
-    }).then(data => {
-        console.log(data);
-    })
+    }).then(console.log)
 
     return (
         <View>
