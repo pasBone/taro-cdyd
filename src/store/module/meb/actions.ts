@@ -5,7 +5,7 @@ export const loginActionaAsync = createAsyncAction(
   "meb/登录",
   "meb/登录成功",
   "meb/登录失败",
-)<mebApi.LoginReq, mebApi.LoginRes, any>();
+)<mebApi.LoginReq, mebApi.LoginRes, null>();
 
 export const sendCodeActionaAsync = createAsyncAction(
   "meb/发送验证码",

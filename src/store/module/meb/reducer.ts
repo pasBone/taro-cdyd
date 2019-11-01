@@ -1,27 +1,31 @@
-import { combineReducers } from "redux"
-import { createReducer } from "typesafe-actions"
-import { loginActionaAsync, sendCodeActionaAsync } from "./actions"
-import { OPERATE_CODE, LoadingType } from "@/types";
+import { combineReducers } from "redux";
+import { createReducer } from "typesafe-actions";
 import { mebApi } from "@/api/meb";
+import { LoadingType } from "@/types";
+import { loginActionaAsync } from './actions'
 
+type UserInfo = mebApi.LoginRes & LoadingType
 
-type UserInfo = mebApi.LoginRes & LoadingType;
+const userInfoState: UserInfo = {
+    loading: false,
+    meb_id: '',
+    operator_id: '',
+    reg_way: '',
+    tel: '',
+    token: '',
+    avatar: '',
+    plate_number: ''
+}
 
-export const userInfo = createReducer({
-    loading: false
-} as UserInfo)
-    .handleAction([loginActionaAsync.request], (state, action) => ({ ...state, loading: true }))
-    .handleAction(
-        [loginActionaAsync.success, loginActionaAsync.failure], (state, action) => ({ ...state, loading: false })
-    )
-
-
-export const verifyCode = createReducer(OPERATE_CODE.success)
-    .handleAction(sendCodeActionaAsync.failure, (state, action) => OPERATE_CODE.fail);
+export const userInfo = createReducer(userInfoState)
+    /** handleAction(actionCreator) */
+    .handleAction(loginActionaAsync.request, (state) => {
+        return { ...state, loading: true }
+    })
+    .handleAction([loginActionaAsync.success, loginActionaAsync.failure], (state) => {
+        return { ...state, loading: false }
+    })
 
 export const mebReducer = combineReducers({
-    userInfo,
-    verifyCode
-})
-
-export default mebReducer;
+    userInfo
+});

@@ -6,12 +6,14 @@ import { useDispatch, useSelector } from '@tarojs/redux';
 import VerificationCode from '@/components/verification-code'
 import { loginActionaAsync } from '@/store/module/meb/actions';
 import Taro, { useState, useMemo } from '@tarojs/taro'
+import { loginAsync } from '@/actions/meb.actions'
 import './index.scss'
 
 
 const LoginView: Taro.FC = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: RootState) => state.meb.userInfo);
+  // const { loading } = useSelector((state: RootState) => state.meb.userInfo);
+  const { loading } = { loading: false };
   const [tel, setTel] = useState('');
   const [code, setCode] = useState('');
 
@@ -21,6 +23,15 @@ const LoginView: Taro.FC = () => {
   }, [tel, code, loading]);
 
   const submit = () => {
+
+    // dispatch(
+    //   loginAsync({
+    //     tel,
+    //     code,
+    //     reg_way: 2,
+    //   })
+    // )
+
     dispatch(
       loginActionaAsync.request({
         tel,
@@ -31,10 +42,11 @@ const LoginView: Taro.FC = () => {
   }
 
   return (
-    <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
-      
+    // <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
+    <View className='login-view'>
+
       <View className="logo">
-        <Image className="logo-img" src={IMAGE_MAP.logo} />
+        {/* <Image className="logo-img" src={IMAGE_MAP.logo} /> */}
       </View>
 
       <View className="login-box">
@@ -72,7 +84,7 @@ const LoginView: Taro.FC = () => {
             onChange={value => setCode(value)}
           />
         </View>
-     
+
       </View>
 
       <AtButton disabled={loginBtnDisabled} loading={loading} className='login-btn' onClick={submit} type='primary'>登录</AtButton>

@@ -1,4 +1,3 @@
-import { throwError } from "rxjs"
 import { OPERATE_CODE, Res } from "@/types"
 import { OPERATOR_CODE } from '@/constant';
 import Taro from '@tarojs/taro';
@@ -29,14 +28,23 @@ const genGetHeaderMethods = (type: RequestType) => {
     }
 }
 
+const throwError = (url: string, response: object) => {
+    throw {
+        url,
+        success: false,
+        ...response
+    }
+}
+
 const genReqestMethods = (type: RequestType) => {
     const genHeader = genGetHeaderMethods(type)
 
     return <Q = void, P = void>(url: string) => {
         return (params?: Q): Promise<Res<P>> => {
 
+            const requestUrl = `${BASE_URL}${url}`;
             return Taro.request({
-                url: `${BASE_URL}${url}`,
+                url: requestUrl,
                 method: "POST",
                 data: {
                     ...params,
@@ -47,12 +55,17 @@ const genReqestMethods = (type: RequestType) => {
                 if (response.statusCode === 200) {
                     return response.data
                 }
-                return throwError({
-                    success: false,
-                    message: `Error ${response.statusCode}`,
-                })
+                /** 请求异常 */
+                return throwError(requestUrl, { statusCode: response.statusCode });
+
+            }).then((response: Res<P>) => {
+                if (response.code === OPERATE_CODE.success) {
+                    return response
+                }
+                /** 业务异常 */
+                return throwError(requestUrl, response);
             }).catch(err => {
-                console.log(`请求接口【${url}】出错`, err)
+                return throwError(requestUrl, err);
             })
         }
     }

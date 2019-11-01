@@ -1,3 +1,4 @@
+
 /** 默认登录途径（1表示APP， 2表示微信公众号）	 */
 export const DEFAULT_REG_WAY = 2
 /** 运营商code */
