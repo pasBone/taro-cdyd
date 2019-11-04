@@ -1,18 +1,24 @@
-import { StateType, ActionType } from 'typesafe-actions';
-import { Epic } from 'redux-observable';
+export declare type TypeConstant = string;
 
-declare module 'typesafe-actions' {
-  export type Store = StateType<typeof import('./index').default>;
+export declare type Action<TType extends TypeConstant = TypeConstant> = {
+  type: TType;
+};
 
-  export type RootState = StateType<typeof import('./root-reducer').default>;
+export declare type ActionCreator<TType extends TypeConstant> = (...args: any[]) => Action<TType>;
 
-  export type RootAction = ActionType<typeof import('./root-action')>;
+export declare type Reducer<TState, TAction extends Action> = (state: TState | undefined, action: TAction) => TState;
 
-  export type Services = typeof import('../api/index');
+export declare type ActionType<TActionCreatorOrMap extends any> = TActionCreatorOrMap extends ActionCreator<TypeConstant> ? ReturnType<TActionCreatorOrMap> : TActionCreatorOrMap extends Record<any, any> ? {
+  [K in keyof TActionCreatorOrMap]: ActionType<TActionCreatorOrMap[K]>;
+}[keyof TActionCreatorOrMap] : TActionCreatorOrMap extends infer R ? never : never;
 
-  export type DefaultEpic = Epic<RootAction, RootAction, RootState, Services>
+export declare type StateType<TReducerOrMap extends any> = TReducerOrMap extends Reducer<any, any> ? ReturnType<TReducerOrMap> : TReducerOrMap extends Record<any, any> ? {
+  [K in keyof TReducerOrMap]: StateType<TReducerOrMap[K]>;
+} : never;
 
-  interface Types {
-    RootAction: RootAction;
-  }
-}
+export type RootState = StateType<typeof import('./root-reducer').default>;
+export type RootAction = ActionType<typeof import('./root-action')>;
+export type RootServices = typeof import('../api/index');
+
+
+

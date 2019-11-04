@@ -1,6 +1,7 @@
 import { OPERATE_CODE, Res } from "@/types"
 import { OPERATOR_CODE } from '@/constant';
 import Taro from '@tarojs/taro';
+import Toast from "./toast";
 
 const BASE_URL = "https://wx.succtime.com/wx"
 
@@ -56,6 +57,7 @@ const genReqestMethods = (type: RequestType) => {
                     return response.data
                 }
                 /** 请求异常 */
+                Toast.info('服务异常')
                 return throwError(requestUrl, { statusCode: response.statusCode });
 
             }).then((response: Res<P>) => {
@@ -63,6 +65,7 @@ const genReqestMethods = (type: RequestType) => {
                     return response
                 }
                 /** 业务异常 */
+                Toast.info(response.message)
                 return throwError(requestUrl, response);
             }).catch(err => {
                 return throwError(requestUrl, err);

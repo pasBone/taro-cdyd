@@ -21,10 +21,8 @@ var config = {
     '@/types': path.resolve(__dirname, '..', 'src/types'),
     '@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
     '@/assets': path.resolve(__dirname, '..', 'src/assets'),
-    '@/reducer': path.resolve(__dirname, '..', 'src/reducer'),
     '@/constant': path.resolve(__dirname, '..', 'src/constant'),
     '@/components': path.resolve(__dirname, '..', 'src/components'),
-    '@/actions': path.resolve(__dirname, '..', 'src/actions'),
   },
   plugins: {
     babel: {

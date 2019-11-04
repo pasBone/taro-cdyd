@@ -1,7 +1,5 @@
-import * as loginActions from "@/store/module/meb/actions";
-import * as todosActions from '@/store/module/todos/actions';
+import * as loginActions from "./module/meb/meb.actions";
 
 export const RootAction = {
   login: loginActions,
-  todos: todosActions,
 }

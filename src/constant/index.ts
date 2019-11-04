@@ -3,6 +3,8 @@
 export const DEFAULT_REG_WAY = 2
 /** 运营商code */
 export const OPERATOR_CODE = "byd"
+/** openId */
+export const OPEN_ID = 'obC_NwYCFZPSHAThFZ0z_1nSlQbc'
 
 /** 应用名 */
 // export const APP_NAME = "充电有道"
