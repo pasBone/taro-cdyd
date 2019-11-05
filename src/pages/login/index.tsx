@@ -33,10 +33,9 @@ const LoginView: Taro.FC = () => {
   }
 
   return (
-    // <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
-    <View className='login-view'>
+    <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
       <View className="logo">
-        {/* <Image className="logo-img" src={IMAGE_MAP.logo} /> */}
+        <Image className="logo-img" src={IMAGE_MAP.logo} />
       </View>
 
       <View className="login-box">
