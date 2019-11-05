@@ -29,17 +29,17 @@ const Navbar: FC<NavbarProps> = (props) => {
     return (
         <View className="nav__bar">
             <View className="nav__bar-left">
-                <AtButton customStyle={buttonStyle}>
-                    {props.renderLeftIcon}
-                </AtButton>
+                {/* <AtButton customStyle={buttonStyle}> */}
+                {props.renderLeftIcon}
+                {/* </AtButton> */}
             </View>
 
             <View className="nav__bar-center">{props.title || APP_NAME}</View>
 
             <View className="nav__bar-right">
-                <AtButton customStyle={buttonStyle}>
-                    {props.renderRightIcon}
-                </AtButton>
+                {/* <AtButton customStyle={buttonStyle}> */}
+                {props.renderRightIcon}
+                {/* </AtButton> */}
             </View>
         </View>
     )

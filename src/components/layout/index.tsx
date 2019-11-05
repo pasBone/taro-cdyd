@@ -5,7 +5,7 @@ import { View } from "@tarojs/components";
 const Layout: FC = () => {
     return (
         <View>
-            <NavBar></NavBar>
+            {/* <NavBar></NavBar> */}
         </View>
     )
 }
