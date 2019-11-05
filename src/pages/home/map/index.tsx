@@ -7,9 +7,11 @@ const MapView: FC = () => {
     Taro.getLocation({
         type: 'wgs84',
         success(res) {
-            console.log(res);
+            // console.log(res);
         }
-    }).then(console.log)
+    }).then(
+        // console.log
+    )
 
     return (
         <View>
