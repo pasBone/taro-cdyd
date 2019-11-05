@@ -9,7 +9,7 @@ export const loginAsync = (payload: mebApi.LoginReq) => {
             dispatch(
                 loginRequest()
             );
-            const resposne = await mebApi.login(payload);
+            const resposne = await mebApi.login(payload)
             dispatch(
                 loginSuccess(resposne.data)
             );
@@ -22,32 +22,26 @@ export const loginAsync = (payload: mebApi.LoginReq) => {
 }
 
 /** 登录中 */
-export const loginRequest = () => {
-    return {
-        type: types.LOG_IN
-    }
-}
+export const loginRequest = () => ({ type: types.LOG_IN})
 
 /** 登录成功 */
-export const loginSuccess = (payload) => {
-    return {
-        type: types.LOG_IN_SUCCESS,
-        payload
-    }
-}
+export const loginSuccess = (payload) => ({
+    type: types.LOG_IN_SUCCESS,
+    payload
+})
+
+/** 清除用户信息 */
+export const clearUserInfo = ()=> ({ type: types.CLEAR_USER_INFO})
+
 
 /** 登录失败 */
-export const loginError = () => {
-    return {
-        type: types.LOG_IN_ERROR
-    }
-}
+export const loginError = () => ({ type: types.LOG_IN_ERROR })
 
 /** 发送短信验证码 */
 export const sendCodeAsync = (payload: mebApi.SendCodeReq) => {
     return async (dispatch: Dispatch) => {
         try {
-            await mebApi.sendCode(payload);
+            await mebApi.sendCode(payload)
             dispatch(
                 sendCodeSuccess()
             )
@@ -60,17 +54,8 @@ export const sendCodeAsync = (payload: mebApi.SendCodeReq) => {
 }
 
 /** 发送短信验证码成功 */
-export const sendCodeSuccess = () => {
-    return {
-        type: types.SEND_CODE_SUCCESS
-    }
-}
+export const sendCodeSuccess = () => ({ type: types.SEND_CODE_SUCCESS })
 
 /** 发送短信验证码失败 */
-export const sendCodeError = () => {
-    return {
-        type: types.SEND_CODE_ERROR
-    }
-}
-
+export const sendCodeError = () => ({ type: types.SEND_CODE_ERROR })
 

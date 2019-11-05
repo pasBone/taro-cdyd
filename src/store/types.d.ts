@@ -16,6 +16,11 @@ export declare type StateType<TReducerOrMap extends any> = TReducerOrMap extends
   [K in keyof TReducerOrMap]: StateType<TReducerOrMap[K]>;
 } : never;
 
+export interface IAction<T=any> {
+  type: string;
+  payload: T;
+}
+
 export type RootState = StateType<typeof import('./root-reducer').default>;
 export type RootAction = ActionType<typeof import('./root-action')>;
 export type RootServices = typeof import('../api/index');

@@ -1,11 +1,13 @@
 import { combineReducers } from "redux";
 import { mebApi } from "@/api/meb";
 import { LoadingType } from "@/types";
-import { RootAction } from "@/store/types";
+import { RootAction, IAction } from "@/store/types";
+import { setStorage } from '@tarojs/taro'
 import * as types from './meb.types'
 
 type UserInfo = mebApi.LoginRes & LoadingType
 
+/** 用户基本信息 */
 const userInfoState: UserInfo = {
 	loading: false,
 	meb_id: '',
@@ -17,20 +19,30 @@ const userInfoState: UserInfo = {
 	plate_number: ''
 }
 
+/** 短信验证码发送状态 */
 const sendCodeState = {
-	state: false
+	state: true
 }
 
-export const userInfo = (state = userInfoState, action: RootAction) => {
+
+/** 缓存用户信息 */
+const storageUserInfo = (data) => {
+	setStorage({ key: 'userInfo', data })
+}
+
+export const userInfo = (state = userInfoState, action: IAction<mebApi.LoginRes>) => {
 	switch (action.type) {
 
 		case types.LOG_IN:
-			return { ...state, loading: true }
+			storageUserInfo(state);
+			return { ...userInfoState, loading: true }
 
 		case types.LOG_IN_SUCCESS:
-			return { ...state, loading: false }
+			storageUserInfo(action.payload);
+			return { ...state, ...action.payload, loading: false }
 
-		case types.LOG_IN_ERROR:
+		case types.LOG_IN_ERROR || types.CLEAR_USER_INFO:
+			storageUserInfo(state);
 			return userInfoState
 
 		default:
@@ -38,7 +50,8 @@ export const userInfo = (state = userInfoState, action: RootAction) => {
 	}
 }
 
-export const sendCode = (state = sendCodeState, action: RootAction) => {
+/** 发送短信验证码 */
+export const sendCode = (state = sendCodeState, action: IAction) => {
 	switch (action.type) {
 
 		case types.SEND_CODE_SUCCESS:
