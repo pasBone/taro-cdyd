@@ -1,34 +1,26 @@
-import { View, Map, CoverImage } from '@tarojs/components'
-import Taro, { FC, useCallback, useEffect, createMapContext, useState, useRef } from '@tarojs/taro'
-import { IMAGE_MAP } from '@/assets';
-import { useSelector, useDispatch } from '@tarojs/redux';
-import { RootState } from '@/store/types';
+import { View, CoverImage } from '@tarojs/components'
+import Taro, { FC, useCallback } from '@tarojs/taro'
+import { useDispatch } from '@tarojs/redux';
 import { getLocationAsync } from '@/store/module/common/common.actions'
+import { IMAGE_MAP } from '@/assets';
 import './index.scss';
 
-const MapView: FC = () => {
+type Props = {
+    mapCtx: Taro.MapContext,
+    renderMapView: JSX.Element
+}
+
+const MapView: FC<Props> = (props) => {
     const dispatch = useDispatch();
-    const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
-    const mapRef = useRef<any>();
-
-    useEffect(() => {
-        mapRef.current = createMapContext('homeMap')
-    }, [])
-
     const getLocation = useCallback(() => {
         dispatch(getLocationAsync(true));
-        mapRef.current.moveToLocation();
-    }, [latitude, longitude])
+        props.mapCtx.moveToLocation();
+    }, [])
 
     return (
         <View className="home-map__view">
             <CoverImage onClick={getLocation} className="gps-icon" src={IMAGE_MAP.gps} />
-            <Map
-                id="homeMap"
-                latitude={latitude}
-                longitude={longitude}
-                show-location
-            />
+            {props.renderMapView}
         </View>
     )
 }
