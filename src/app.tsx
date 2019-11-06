@@ -3,6 +3,7 @@ import '@tarojs/async-await'
 import { Provider } from '@tarojs/redux'
 import Login from './pages/login/index'
 import configStore from './store'
+import { getLocationAsync } from '@/store/module/common/common.actions'
 import './app.scss'
 
 // 如果需要在 h5 环境中开启 React Devtools
@@ -36,12 +37,17 @@ class App extends Component {
     },
     "permission": {
       "scope.userLocation": {
-        "desc": "你的位置信息将用于小程序地图" // 高速公路行驶持续后台定位
+        "desc": "你的位置信息将用于小程序地图" 
       }
     }
   }
 
-  componentDidMount() { }
+  componentDidMount() {
+    /** 初始化获取定位信息 */
+    store.dispatch(
+      getLocationAsync()
+    )
+  }
 
   componentDidShow() { }
 
