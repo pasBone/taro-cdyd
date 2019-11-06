@@ -1,4 +1,15 @@
-.map-view{
-    width: 100vw;
+.home-map__view{
+  map{
     height: 100vh;
+    width: 100vw;
+  }
+  .gps-icon{
+        position: fixed;
+        z-index: 90;
+        bottom: 65px;
+        left: 32px;
+        border-radius: 50%;
+        width: 92px;
+        height: 92px;
+  }
 }
