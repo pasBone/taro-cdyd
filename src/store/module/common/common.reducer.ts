@@ -1,9 +1,20 @@
 import { IAction } from '@/store/types';
 import * as types from './common.types';
 import { combineReducers } from 'redux';
+import { getLocation } from '@tarojs/taro';
 
 export const sideMenuState = {
   state: false
+}
+
+export const locationState = {
+  latitude: 22.53332,
+  longitude: 113.93041,
+  speed: 0,
+  accuracy: 0,
+  altitude: 0,
+  verticalAccuracy: 0,
+  horizontalAccuracy: 0
 }
 
 export const sideMenu = (state = sideMenuState, action: IAction) => {
@@ -17,6 +28,17 @@ export const sideMenu = (state = sideMenuState, action: IAction) => {
   }
 }
 
+export const gpsLocation = (state = locationState, action: IAction<getLocation.Promised>) => {
+  switch (action.type) {
+    case types.SET_LOCATION:
+      return action.payload;
+    default:
+      return state
+  }
+}
+
+
 export const commonReducer = combineReducers({
-  sideMenu
+  sideMenu,
+  gpsLocation
 });
