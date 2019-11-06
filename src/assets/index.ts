@@ -38,8 +38,8 @@ export const IMAGE_MAP = {
     // electricity: require(`./images/electricity@2x.png`),
     // /** code */
     // code: require(`./images/code@2x.png`),
-    // /** gps */
-    // gps: require(`./images/gps@2x.png`),
+    /** gps */
+    gps: require('./images/gps@2x.png'),
     /** list */
     list: require('./images/list@2x.png'),
     // /** map */
@@ -58,6 +58,11 @@ export const IMAGE_MAP = {
     // setting: require(`./images/setting@2x.png`),
     // /** vihiclelicense */
     // vihiclelicense: require(`./images/vihiclelicense.jpg`),
+
+     /** 扫码 */
+    scanning: require('./images/scanning@2x.png'),
+    /** 输入桩号 */
+    numCodewhite: require('./images/num_code_white@2x.png'),
     /** toast-alert */
     toastAlert: require('./images/toast_alert_32x32.png'),
     /** toast-success */
