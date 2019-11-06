@@ -15,7 +15,7 @@ const HomeView: FC = () => {
     const dispatch = useDispatch();
     const menuState = useSelector((state: RootState) => state.common.sideMenu.state);
     const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
-    
+
     return (
         <View className="home__view">
             <Navbar
@@ -25,12 +25,12 @@ const HomeView: FC = () => {
             />
             <SideMenu />
 
-            {false && <ChargeEntry />}
+            <ChargeEntry />
 
             {/* 小程序组件有坑，直接拆分组件无法拿到map实例，采用props传递 */}
             <MapView
                 mapCtx={createMapContext('homeMap')}
-                renderMapView={<Map id="homeMap" latitude={latitude} longitude={longitude} show-location={true} />}
+                renderMapView={<Map id="homeMap" markers={} latitude={latitude} longitude={longitude} show-location={true} />}
             />
 
         </View>
