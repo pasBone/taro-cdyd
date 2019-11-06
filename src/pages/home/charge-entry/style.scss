@@ -1,0 +1,45 @@
+@import './../../../assets/style/border.scss';
+
+.charge-battery__view {
+  position: fixed;
+  display: flex;
+  z-index: 100;
+  justify-content: center;
+  align-items: center;
+  bottom: 72px;
+  left: 50%;
+  margin-left: -220px;
+  width: 440px;
+  height: 88px;
+  background-image: $chargeBatteryBgColor;
+  background-blend-mode: normal, normal;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.24);
+  border-radius: 44px;
+  overflow: hidden;
+  .split-line {
+    height: 40px;
+    width: 2px;
+    background-color: #ffffff;
+    opacity: 0.4;
+  }
+  &-btn {
+    background: rgba(255, 0, 0, 0);
+    height: 88px;
+    line-height: 88px;
+    font-size: 28px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    .charge-text{
+        display: block;
+    }
+    .charge-img {
+        width: 33px;
+        height: 33px;
+        display: block;
+        margin-right: 15px;
+    }
+  }
+}
