@@ -1,0 +1,67 @@
+.station-details__view {
+  padding-bottom: 106px;
+  .station__scene {
+    margin-bottom: 24px;
+  }
+  .station__logo {
+    height: 300px;
+    width: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .station__info {
+    // height: 158px;
+    padding: 30px 32px 32px 32px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &_l {
+      margin-right: 15px;
+      .station_status_box {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .station_status {
+          font-size: 20px;
+          padding: 8px 11px;
+        }
+        .station_status_1 {
+          color: #2565de;
+          background-color: rgba(37, 102, 222, 0.1);
+        }
+        .station_status_0 {
+          color: #f56c6c;
+          background-color: rgba(245, 108, 108, 0.1);
+        }
+      }
+    }
+
+    &_r {
+      display: flex;
+      min-width: 100px;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      .navigation_icon {
+        display: block;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
+    .address {
+      font-size: 28px;
+      color: $blackColor88;
+      margin-bottom: 32px;
+    }
+    .distance {
+      font-size: 24px;
+      color: $blackColor64;
+      // margin-top: 10px;
+      margin-left: 5px;
+    }
+  }
+}
