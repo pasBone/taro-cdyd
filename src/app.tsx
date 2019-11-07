@@ -27,6 +27,7 @@ class App extends Component {
     pages: [
       'pages/login/index',
       'pages/home/index',
+      'pages/station/details/index',
       'pages/react-typescript/index',
     ],
     window: {
