@@ -1,31 +1,40 @@
-import MapView from './map'
-import { FC, createMapContext, useEffect, useMemo } from "@tarojs/taro"
+import MapView from './components/map'
+import { FC, createMapContext, useEffect, useMemo, useCallback, useState } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
 import { View, Image, Map } from "@tarojs/components"
 import Navbar from '@/components/layout/nav-bar'
 import SideMenu from '@/components/layout/side-menu'
-import ChargeEntry from './charge-entry';
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { setSideMenuClose, setSideMenuOpen } from '@/store/module/common/common.actions'
 import { getStationListAsync } from '@/store/module/station/station.actions'
 import { RootState } from '@/store/types'
+import ChargeEntry from './components/charge-entry';
+import CurrentStationCrd from './components/current-station-card'
+import { stationApi } from '@/api/station'
 
+const initStationDetails = { station_id: 'none'} as stationApi.ListItem;
 
 const HomeView: FC = () => {
     const dispatch = useDispatch();
     const menuState = useSelector((state: RootState) => state.common.sideMenu.state);
     const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
     const stationList = useSelector((state: RootState) => state.station.stationList);
+    const [stationDetails, setStationDetails] = useState(initStationDetails);
 
     useEffect(() => {
         dispatch(
-            getStationListAsync({
-                longitude,
-                latitude
-            })
+            getStationListAsync({ longitude, latitude })
         )
     }, [])
+
+    const makerTap = useCallback((data) => {
+        setStationDetails(data.markerId)
+    }, [stationList])
+
+    const mapTap = useCallback(() => {
+        setStationDetails(initStationDetails);
+    }, []);
 
     /** 地图站点标记打点 */
     const markers = useMemo(() => {
@@ -43,7 +52,7 @@ const HomeView: FC = () => {
                 iconPath: IMAGE_MAP.mapStationMarker,
                 latitude: item.latitude,
                 longitude: item.longitude,
-                id: item.station_id,
+                id: item,
                 width: 26,
                 height: 35
             }
@@ -63,10 +72,21 @@ const HomeView: FC = () => {
 
             <ChargeEntry />
 
+            <CurrentStationCrd  {...stationDetails} />
+
             {/* 小程序组件有坑，直接拆分组件无法拿到map实例，采用props传递 */}
             <MapView
                 mapCtx={createMapContext('homeMap')}
-                renderMapView={<Map id="homeMap" markers={markers} latitude={latitude} longitude={longitude} show-location={true} />}
+                renderMapView={
+                    <Map
+                        id="homeMap"
+                        markers={markers}
+                        latitude={latitude}
+                        longitude={longitude}
+                        show-location={true}
+                        onMarkerTap={makerTap}
+                        onTap={mapTap}
+                    />}
             />
 
         </View>
