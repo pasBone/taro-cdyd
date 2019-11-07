@@ -1,0 +1,37 @@
+/* 站点电桩数据 */
+.recharge-data {
+  height: 164px;
+  padding: 0 56px 0 60px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  margin-bottom: 24px;
+  &__num {
+    display: flex;
+  }
+
+  &__item {
+    line-height: 32px;
+    text-align: center;
+
+    .part {
+      font-size: 56px;
+      color: $fontColor;
+    }
+
+    .full {
+      font-size: 24px;
+      color: $blackColor64;
+      position: relative;
+      top: 10px;
+    }
+
+    .name {
+      font-size: 24px;
+      color: $blackColor88;
+      padding-top: 24px;
+    }
+  }
+}
