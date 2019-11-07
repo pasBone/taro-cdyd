@@ -7,9 +7,9 @@ export const IMAGE_MAP = {
     /** 默认头像 */
     defaultAvatar: require(path + '/default-user.png'),
     // /** 地图标记图标 */
-    // mapMakerLocation: require(`${path}/icon_location@2x.png`),
-    // /** 地图定位图标 */
-    // mapLocation: require(`${path}/location@2x.png`),
+    mapStationMarker: require(path + '/icon_location@2x.png'),
+    // /** 当前定位图标 */
+    mapLocationMarker: require(path + '/location@2x.png'),
     /** 登录界面logo */
     logo: require(path + '/logo@2x.png'),
     // /** 首页电站详情 */
@@ -59,7 +59,7 @@ export const IMAGE_MAP = {
     // /** vihiclelicense */
     // vihiclelicense: require(`./images/vihiclelicense.jpg`),
 
-     /** 扫码 */
+    /** 扫码 */
     scanning: require('./images/scanning@2x.png'),
     /** 输入桩号 */
     numCodewhite: require('./images/num_code_white@2x.png'),
