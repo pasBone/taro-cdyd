@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { mebApi } from "@/api/meb";
 import { LoadingType } from "@/types";
-import { RootAction, IAction } from "@/store/types";
+import { IAction } from "@/store/types";
 import { setStorage } from '@tarojs/taro'
 import * as types from './meb.types'
 
