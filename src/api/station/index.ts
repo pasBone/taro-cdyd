@@ -58,6 +58,8 @@ export namespace stationApi {
     slow_fill_all?: number
     /** 慢充桩（可用） */
     slow_fill_available?: number
+    /** 站点状态 */
+    station_status: number
   }
 
   export interface ListReq extends BaseListReq {
