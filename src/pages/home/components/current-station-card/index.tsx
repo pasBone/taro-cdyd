@@ -7,7 +7,6 @@ import { IMAGE_MAP } from "@/assets";
 
 const StationCard: FC<stationApi.ListItem> = (props) => {
 
-
   const stationRule = useMemo(() => {
     if (props.current_rule) {
       const { charge_price, service_price, start_time, end_time } = props.current_rule;
