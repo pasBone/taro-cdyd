@@ -1,0 +1,100 @@
+.current-station-card {
+  position: fixed;
+  z-index: 101;
+  bottom: 32px;
+  right: 0;
+  left: 0;
+  margin: 0 auto;
+  width: 702px;
+  height: 314px;
+  box-sizing: border-box;
+  // padding: 40px 0 30px 0;
+  background-color: #ffffff;
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.16);
+  border-radius: 16px;
+  // display: flex;
+
+  cover-view {
+    line-height: none;
+  }
+
+  .station-card-header {
+    height: 214px;
+    box-sizing: border-box;
+    padding: 40px 32px 0 32px;
+    position: relative;
+
+    .station-name {
+      font-size: 28px;
+      color: rgba(16, 13, 13, 0.88);
+    }
+
+    .distance {
+      font-size: 24px;
+      color: $blackColor64;
+      margin-top: 15px;
+    }
+
+    .price {
+      margin-top: 20px;
+      font-size: 28px;
+      color: $blackColor88;
+      display: flex;
+      .price-number {
+        color: #f54c2b;
+      }
+      .price-text {
+        padding-left: 8px;
+      }
+    }
+
+    .number-of {
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 26px;
+      right: 32px;
+      .number-text-quantity {
+        font-size: 24px;
+        color: $blackColor64;
+        position: relative;
+        top: 10px;
+      }
+      .number-text-pile {
+        font-size: 56px;
+        color: $fontColor;
+      }
+    }
+  }
+
+  .station-card-body {
+    height: 99px;
+    border-top: 2px solid $blackColor10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .station-card-link {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      color: #333;
+      height: 60px;
+      line-height: 60px;
+      border-right: 2px solid $blackColor10;
+      flex: 1;
+    }
+
+    .station-card-img {
+      display: block;
+      height: 40px;
+      width: 40px;
+      margin-right: 16px;
+    }
+    .station-text {
+      padding-left: 6px;
+    }
+  }
+}
