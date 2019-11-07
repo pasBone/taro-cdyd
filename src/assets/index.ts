@@ -6,16 +6,16 @@ export const IMAGE_MAP = {
 
     /** 默认头像 */
     defaultAvatar: require(path + '/default-user.png'),
-    // /** 地图标记图标 */
+    /** 地图标记图标 */
     mapStationMarker: require(path + '/icon_location@2x.png'),
-    // /** 当前定位图标 */
+    /** 当前定位图标 */
     mapLocationMarker: require(path + '/location@2x.png'),
     /** 登录界面logo */
     logo: require(path + '/logo@2x.png'),
-    // /** 首页电站详情 */
-    // detailsIcon: require(`${path}/details@2x.png`),
-    // /** 首页电站详情 */
-    // navigation: require(`${path}/navigation@2x.png`),
+    /** 首页电站详情 */
+    detailsIcon: require(path + '/details@2x.png'),
+    /** 首页电站详情 */
+    navigationIcon: require(path + '/navigation@2x.png'),
     // /** 成功 */
     // success: require(`${path}/successed@2x.png`),
     // /** 钱包界面背景 */
