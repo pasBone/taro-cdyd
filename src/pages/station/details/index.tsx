@@ -5,6 +5,8 @@ import { IMAGE_MAP } from '@/assets';
 import { getStationDetailsAsync } from '@/store/module/station/station.actions'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
+import { RechargeDataView } from './components/recharge-data';
+
 
 export const StationDetails: FC = () => {
   const $router = useRouter();
@@ -39,6 +41,7 @@ export const StationDetails: FC = () => {
 
   return (
     <View className="station-details__view">
+
       <View className="station__scene">
         <Image mode="aspectFill" className="station__logo" src={stationDetails.station_logo} />
 
@@ -46,7 +49,7 @@ export const StationDetails: FC = () => {
           <View className="station__info_l">
             <View className="address">{stationDetails.address}</View>
             <View className="station_status_box">
-              <View className={`station_status station_status_${stationDetails.station_status}`} >{stationDetails.station_status == 1 ? '正常开放' : '维护中'}</View>
+              <View className={`station_status station_status_${stationDetails.station_status}`}>{stationDetails.station_status == 1 ? '正常开放' : '维护中'}</View>
             </View>
           </View>
           <View className="station__info_r" >
@@ -56,6 +59,9 @@ export const StationDetails: FC = () => {
 
         </View>
       </View>
+
+      <RechargeDataView {...stationDetails} />
+
     </View>
   )
 }
