@@ -8,6 +8,10 @@ export interface LoadingType {
     loading: boolean
 }
 
+export interface ErrorType {
+    error: boolean
+}
+
 export interface BaseListReq {
     pageSize?: number
     pageNumber?: number
@@ -24,7 +28,7 @@ export type BaseList<T> = {
     totalPage: number
     pageSize: number
     list: T[]
-} & LoadingType
+} & LoadingType & ErrorType
 
 export enum WX_API_ERROR {
     "扫码-用户取消扫码" = "scanCode:fail cancel",
