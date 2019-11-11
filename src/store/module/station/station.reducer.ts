@@ -13,6 +13,7 @@ export const stationListState: stationApi.ListRes = {
   totalPage: 0,
   pageSize: 0,
   loading: false,
+  error: false,
   list: []
 }
 
@@ -27,6 +28,7 @@ export const stationList = (state = stationListState, action: IAction<stationApi
       return {
         ...action.payload,
         loading: false,
+        error: false,
         list: [...state.list, ...action.payload.list || []]
       }
     default:
@@ -78,7 +80,7 @@ export const flat: stationApi.Flat = {
 }
 
 /** 站点计费规则 */
-export const stationRulesState = {
+export const stationRulesState: stationApi.RuleDetailRes & LoadingType = {
   config_name: '',
   creator: '',
   create_time: 0,
@@ -96,15 +98,16 @@ export const stationRulesState = {
   config_id: '',
   is_valid: 0,
   template_id: '',
-  desc: ''
+  desc: '',
+  loading: false
 }
 
 export const stationRules = (state = stationRulesState, action: IAction<stationApi.RuleDetailRes>) => {
   switch (action.type) {
     case types.GET_STATION_RULES:
-      return state;
+      return { ...state, loading: true }
     case types.GET_STATION_RULES_SUCCESS:
-      return action.payload;
+      return { ...action.payload, loading: false };
     default:
       return state
   }
