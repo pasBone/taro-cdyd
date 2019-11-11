@@ -6,6 +6,29 @@ export const OPERATOR_CODE = "byd"
 /** openId */
 export const OPEN_ID = 'obC_NwYCFZPSHAThFZ0z_1nSlQbc'
 
+/** 收费模式(peak：峰，flat：平，valley：谷，unit：统一单价) */
+export enum RULE_MODE {
+    /** 峰 */
+    peak = "peak",
+    /** 平 */
+    flat = "flat",
+    /** 谷 */
+    valley = "valley",
+    /** 统一单价 */
+    unit = "unit",
+}
+
+export enum RULE_MODE_NAME {
+    /** 峰 */
+    peak = "峰时",
+    /** 平 */
+    flat = "平时",
+    /** 谷 */
+    valley = "谷时",
+    /** 统一单价 */
+    unit = "统一单价",
+}
+
 /** 应用名 */
 // export const APP_NAME = "充电有道"
 export const APP_NAME = "首页"

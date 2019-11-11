@@ -69,7 +69,49 @@ export const stationDetails = (state = stationDetailsState, action: IAction<stat
   }
 }
 
+export const flat: stationApi.Flat = {
+  mode: '',
+  start_time: '',
+  service_price: '',
+  end_time: '',
+  charge_price: '',
+}
+
+/** 站点计费规则 */
+export const stationRulesState = {
+  config_name: '',
+  creator: '',
+  create_time: 0,
+  operator_id: '',
+  owner_id: '',
+  rule_list: {
+    flat: [flat],
+    peak: [flat],
+    unit: [flat],
+    valley: [flat]
+  },
+  current_rule: flat,
+  config_param: '',
+  update_time: 0,
+  config_id: '',
+  is_valid: 0,
+  template_id: '',
+  desc: ''
+}
+
+export const stationRules = (state = stationRulesState, action: IAction<stationApi.RuleDetailRes>) => {
+  switch (action.type) {
+    case types.GET_STATION_RULES:
+      return state;
+    case types.GET_STATION_RULES_SUCCESS:
+      return action.payload;
+    default:
+      return state
+  }
+}
+
 export const stationReducer = combineReducers({
   stationList,
-  stationDetails
+  stationDetails,
+  stationRules
 })

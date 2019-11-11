@@ -25,6 +25,16 @@ export const getStationDetailsAsync = (params: stationApi.DetailReq) => {
   }
 }
 
+/** 获取计费规则 */
+export const getStationRulesAsync = (params: stationApi.RuleDetailReq) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(getStationRules())
+      const response = await stationApi.getRules(params);
+      dispatch(getStationRulesSuccess(response.data));
+    } catch (error) { }
+  }
+}
 
 /** 获取站点列表 */
 export const getStationList = () => ({ type: types.GET_STATION_LIST });
@@ -34,10 +44,6 @@ export const getStationSuccess = (payload) => ({ type: types.GET_STATION_LIST_SU
 export const getStationDetails = () => ({ type: types.GET_STATION_DETAILS });
 export const getStationDetailsSuccess = (payload) => ({ type: types.GET_STATION_DETAILS_SUCCESS, payload });
 
-
-export const asyncAction = () => {
-  return (dispatch: Dispatch) => {
-    dispatch({type: 'SOME_SYNC_ACTION'})
-    return Promise.resolve();
-  }
-}
+/** 获取站点计费规则 */
+export const getStationRules = () => ({ type: types.GET_STATION_RULES })
+export const getStationRulesSuccess = (payload) => ({ type: types.GET_STATION_RULES_SUCCESS, payload })
