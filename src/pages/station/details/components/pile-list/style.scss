@@ -1,0 +1,46 @@
+@import "./../../../../../assets/style/border.scss";
+.pile_status {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__item {
+    min-width: 50%;
+    max-width: 50%;
+    box-sizing: border-box;
+    width: 50%;
+    padding: 33px 0 36px 32px;
+    @include border-single($direction: bottom, $size: 1px, $color: rgba(220, 220, 220, 0.8), $position: relative);
+  }
+  &__header {
+    display: flex;
+  }
+  &__label {
+    font-size: 28px;
+    color: $blackColor88;
+    margin-bottom: 16px;
+    .pile_code {
+      margin-bottom: 16px;
+    }
+  }
+  &__img {
+    width: 55px;
+    height: 97px;
+    margin-right: 25px;
+  }
+  &__info {
+    margin-top: 30px;
+    font-size: 22px;
+    color: $blackColor64;
+    .order_nums {
+      margin-bottom: 16px;
+    }
+  }
+  &__tag {
+    display: inline-block;
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 20px;
+    border-radius: 8px;
+  }
+}
