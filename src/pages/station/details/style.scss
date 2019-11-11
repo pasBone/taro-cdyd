@@ -67,4 +67,24 @@
       margin-left: 5px;
     }
   }
+  /*充电注意事项*/
+  .station__notice {
+    line-height: 40px;
+    font-size: 22px;
+    position: relative;
+    &:after {
+      position: absolute;
+      content: "";
+      height: 8px;
+      width: 8px;
+      left: 0;
+      top: 18px;
+      border-radius: 50%;
+      background-color: #2363de;
+    }
+    Text {
+      padding-left: 20px;
+      color: $blackColor64;
+    }
+  }
 }

@@ -1,12 +1,13 @@
 import './style.scss';
-import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading } from '@tarojs/taro';
-import { View, Image } from '@tarojs/components';
+import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo } from '@tarojs/taro';
+import { View, Image, Text, Block } from '@tarojs/components';
 import { IMAGE_MAP } from '@/assets';
 import { getStationDetailsAsync, getStationRulesAsync } from '@/store/module/station/station.actions'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { RechargeDataView } from './components/recharge-data';
 import { StationRulesTable } from '@/components/station-rules-table'
+import { CardBox } from '@/components/card';
 
 export const StationDetails: FC = () => {
   const $router = useRouter();
@@ -49,6 +50,16 @@ export const StationDetails: FC = () => {
     getStationDetails();
   }, [stationId]);
 
+  /** 站点其他信息说明 */
+  const description = useMemo(() => {
+    let { desc } = stationDetails;
+    desc = (desc || '').replace(
+      /\n/g,
+      "<br/>"
+    );
+    return desc.split("<br/>");
+  }, [stationDetails.desc])
+
   return (
     <View className="station-details__view">
 
@@ -73,6 +84,12 @@ export const StationDetails: FC = () => {
       <RechargeDataView {...stationDetails} />
 
       <StationRulesTable rules={stationRules} />
+
+      <CardBox title="站点其他信息">
+        <Block>
+          {description.map(item => (<View className="station__notice"><Text>{item}</Text></View>))}
+        </Block>
+      </CardBox>
 
     </View>
   )
