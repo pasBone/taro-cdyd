@@ -1,0 +1,57 @@
+@mixin border-line($direction) {
+  border-#{$direction}: 2px solid #fff;
+  &:last-child {
+    border-#{$direction}: 0;
+  }
+}
+
+.station-rules-title {
+  font-size: 28px;
+  color: $blackColor88;
+  margin-bottom: 16px;
+  margin-top: -10px;
+}
+.station-rules-current-price {
+  color: red;
+}
+.station-rules-table {
+  background-color: #fff;
+  border-radius: 24px;
+  overflow: hidden;
+  .table-header {
+    background-color: $rechargeRulesHeaderBgColor;
+    height: 70px;
+    line-height: 70px;
+    font-size: 22px;
+    color: $blackColor96;
+  }
+  .table-body {
+    font-size: 22px;
+    color: $blackColor64;
+    background: $rechargeRulesBodyBgColor;
+    @include border-line(bottom);
+  }
+  .table-col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include border-line(right);
+  }
+  .time-col {
+    min-width: 170px;
+  }
+  .table-row {
+    display: flex;
+    text-align: center;
+  }
+  .table-sub-col {
+    width: 100%;
+    .table-col {
+      height: 90px;
+      line-height: 90px;
+      @include border-line(bottom);
+      border-right: 0;
+    }
+  }
+}
