@@ -1,5 +1,5 @@
 import './style.scss';
-import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo } from '@tarojs/taro';
+import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, Events, useRef } from '@tarojs/taro';
 import { View, Image, Text, Block } from '@tarojs/components';
 import { IMAGE_MAP } from '@/assets';
 import { getStationDetailsAsync, getStationRulesAsync } from '@/store/module/station/station.actions'
@@ -8,16 +8,20 @@ import { RootState } from '@/store/types';
 import { RechargeDataView } from './components/recharge-data';
 import { StationRulesTable } from '@/components/station-rules-table'
 import { CardBox } from '@/components/card';
+import { PileList } from './components/pile-list';
+import { FooterView } from './components/footer-view';
 
 export const StationDetails: FC = () => {
   const $router = useRouter();
   const stationId = $router.params.id;
   const dispatch = useDispatch();
+  const pileListRef = useRef(null);
 
   const stationDetails = useSelector((state: RootState) => state.station.stationDetails);
   const stationRules = useSelector((state: RootState) => state.station.stationRules);
   const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
 
+  /** 获取站点详情信息 */
   const getStationDetails = useCallback(() => {
     showNavigationBarLoading();
     dispatch(
@@ -49,6 +53,12 @@ export const StationDetails: FC = () => {
   useEffect(() => {
     getStationDetails();
   }, [stationId]);
+
+  /**子组件不支持上拉加载函数，暂时采用事件通讯 */
+  useReachBottom(() => {
+    console.log(pileListRef);
+    // Taro.eventCenter.trigger('GET_PILE_LIST')
+  });
 
   /** 站点其他信息说明 */
   const description = useMemo(() => {
@@ -83,13 +93,17 @@ export const StationDetails: FC = () => {
 
       <RechargeDataView {...stationDetails} />
 
-      <StationRulesTable rules={stationRules} />
+      {!stationRules.loading && <StationRulesTable rules={stationRules} />}
 
       <CardBox title="站点其他信息">
         <Block>
           {description.map(item => (<View className="station__notice"><Text>{item}</Text></View>))}
         </Block>
       </CardBox>
+
+      <PileList ref={pileListRef} stationId={stationId} />
+
+      <FooterView rules={stationRules} />
 
     </View>
   )
