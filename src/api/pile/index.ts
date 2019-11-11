@@ -4,11 +4,11 @@ import { CODE_TYPE, PILE_STATUS } from "@/constant"
 
 export const pileApi = {
   /** 电桩详情 */
-  get: post<pileApi.PileGetReq, pileApi.PileGetRes>("/pile/get"),
+  details: post<pileApi.PileDetailsReq, pileApi.PileDetailsRes>("/pile/get"),
   /** 电桩列表 */
   list: post<pileApi.PileListReq, pileApi.PileListRes>("/pile/list"),
   /** 通过二维码或者电桩编号获取电桩信息 */
-  getByCode: post<pileApi.GetByCodeReq, pileApi.PileGetRes>(
+  getByCode: post<pileApi.GetByCodeReq, pileApi.PileDetailsRes>(
     "/pile/getByCode",
   ),
 }
@@ -25,11 +25,11 @@ export namespace pileApi {
     code: StringOrNumber
   }
 
-  export interface PileGetReq {
+  export interface PileDetailsReq {
     /** 电桩ID */
     pile_id: StringOrNumber
   }
-  export interface PileGetRes {
+  export interface PileDetailsRes {
     /**  主键	 */
     pile_id: string
     /**  电桩编号	 */
@@ -69,16 +69,18 @@ export namespace pileApi {
     /** 状态  0-禁用 1-启动中 2-使用中 3-充满 4-故障 6-空闲 */
     pile_status: PILE_STATUS,
     /** 站点名称 */
-    station_name: string
+    station_name: string,
+    /** soc进度 */
+    soc: number
   }
 
   export interface PileListReq {
     /** 电桩ID */
     station_id: StringOrNumber,
-     /** 分页 */
-     pageNumber?: number,
-     pageSize?: number,
+    /** 分页 */
+    pageNumber?: number,
+    pageSize?: number,
   }
 
-  export type PileListRes = BaseList<PileGetRes>
+  export type PileListRes = BaseList<PileDetailsRes>
 }
