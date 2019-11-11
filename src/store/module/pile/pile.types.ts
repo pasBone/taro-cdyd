@@ -1,0 +1,5 @@
+
+/** 获取电桩列表 */
+export const GET_PILE_LIST = 'GET_PILE_LIST'
+export const GET_PILE_LIST_SUCCESS = 'GET_PILE_LIST_SUCCESS'
+export const GET_PILE_LIST_ERROR = 'GET_PILE_LIST_ERROR'
