@@ -1,0 +1,14 @@
+.card-box {
+  margin-bottom: 24px;
+  padding: 40px 32px 32px 32px;
+  box-sizing: border-box;
+  background: #fff;
+  &__title {
+    font-size: 28px;
+    color: $blackColor88;
+    font-weight: 600;
+  }
+  &__body {
+    margin-top: 24px;
+  }
+}
