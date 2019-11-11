@@ -24,7 +24,7 @@ export const RechargeDataView: FC<stationApi.DetailRes> = (stationDetails) => {
 
       <View className="recharge-data__item">
         <View className="recharge-data__num">
-          <View className="part">{stationDetails.max_power}</View>
+          <View className="part">{stationDetails.max_power || 0}</View>
           <View className="full">kW</View>
         </View>
         <View className="name">最大功率</View>

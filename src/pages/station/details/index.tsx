@@ -2,11 +2,11 @@ import './style.scss';
 import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading } from '@tarojs/taro';
 import { View, Image } from '@tarojs/components';
 import { IMAGE_MAP } from '@/assets';
-import { getStationDetailsAsync } from '@/store/module/station/station.actions'
+import { getStationDetailsAsync, getStationRulesAsync } from '@/store/module/station/station.actions'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { RechargeDataView } from './components/recharge-data';
-
+import { StationRulesTable } from '@/components/station-rules-table'
 
 export const StationDetails: FC = () => {
   const $router = useRouter();
@@ -14,6 +14,7 @@ export const StationDetails: FC = () => {
   const dispatch = useDispatch();
 
   const stationDetails = useSelector((state: RootState) => state.station.stationDetails);
+  const stationRules = useSelector((state: RootState) => state.station.stationRules);
   const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
 
   const getStationDetails = useCallback(() => {
@@ -34,6 +35,15 @@ export const StationDetails: FC = () => {
   usePullDownRefresh(() => {
     getStationDetails();
   });
+
+  /**获取计费规则 */
+  useEffect(() => {
+    dispatch(
+      getStationRulesAsync({
+        station_id: stationId
+      })
+    );
+  }, [stationId])
 
   useEffect(() => {
     getStationDetails();
@@ -61,6 +71,8 @@ export const StationDetails: FC = () => {
       </View>
 
       <RechargeDataView {...stationDetails} />
+
+      <StationRulesTable rules={stationRules} />
 
     </View>
   )
