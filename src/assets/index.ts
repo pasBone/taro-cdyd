@@ -68,5 +68,11 @@ export const IMAGE_MAP = {
     /** toast-success */
     toastSuccess: require('./images/toast_success_32x32.png'),
     /** toast-faiure */
-    toastFaiure: require('./images/toast_failure_32x32.png')
+    toastFaiure: require('./images/toast_failure_32x32.png'),
+    /** 电桩使用中图片 */
+    charging_busy: require("./images/charging_busy@2x.png"),
+    /** 电桩故障图片 */
+    charging_fault: require("./images/charging_fault@2x.png"),
+    /** 电桩空闲图片 */
+    charging_free: require("./images/charging_free@2x.png"),
 }
