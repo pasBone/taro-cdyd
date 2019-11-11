@@ -1,5 +1,5 @@
 @mixin border-line($direction) {
-  border-#{$direction}: 2px solid #fff;
+  border-#{$direction}: 1px solid #fff;
   &:last-child {
     border-#{$direction}: 0;
   }
@@ -12,7 +12,7 @@
   margin-top: -10px;
 }
 .station-rules-current-price {
-  color: red;
+  color: #ff0000;
 }
 .station-rules-table {
   background-color: #fff;

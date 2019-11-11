@@ -29,7 +29,6 @@ export const StationRulesTable: FC<IProps> = (props) => {
     return (parseFloat(charge_price) + parseFloat(service_price)).toFixed(4);
   }, [props.rules]);
 
-
   return (
     <CardBox title="电价计费规则">
       <View>
