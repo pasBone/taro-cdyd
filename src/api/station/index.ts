@@ -6,6 +6,8 @@ export const stationApi = {
   details: post<stationApi.DetailReq, stationApi.DetailRes>("/station/get"),
   /** 获取站点列表 */
   list: post<stationApi.ListReq, stationApi.ListRes>("/station/list"),
+  /** 获取计费规则 */
+  getRules: post<stationApi.RuleDetailReq, stationApi.RuleDetailRes>("/rule/getRule"),
 }
 
 /* eslint-disable */
@@ -61,7 +63,6 @@ export namespace stationApi {
     /** 站点状态 */
     station_status: number
   }
-
   export interface ListReq extends BaseListReq {
     /** 分页 */
     pageNumber?: number
@@ -74,7 +75,7 @@ export namespace stationApi {
     /** 纬度 */
     latitude?: StringOrNumber
   }
-  
+
   export type ListRes = BaseList<ListItem>
 
   export interface ListItem {
@@ -113,5 +114,40 @@ export namespace stationApi {
       end_time: string
       charge_price: string
     }
+  }
+
+  export interface RuleDetailReq {
+    station_id: StringOrNumber
+  }
+
+
+  interface Rulelist {
+    flat: Flat[]
+    peak: Flat[]
+    unit: Flat[]
+    valley: Flat[]
+  }
+
+  export interface Flat {
+    mode: string
+    start_time: string
+    service_price: string
+    end_time: string
+    charge_price: string
+  }
+  export interface RuleDetailRes {
+    config_name: string
+    creator?: any
+    create_time: number
+    operator_id: string
+    owner_id: string
+    rule_list: Rulelist
+    current_rule: Flat
+    config_param: string
+    update_time: number
+    config_id: string
+    is_valid: number
+    template_id: string
+    desc?: any
   }
 }
