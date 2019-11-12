@@ -1,0 +1,24 @@
+.home-view {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  .map-view {
+    flex: 1;
+    map{
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .other-view {
+    height: 80px;
+  }
+  .gps-icon {
+    position: fixed;
+    z-index: 90;
+    bottom: 105px;
+    left: 32px;
+    border-radius: 50%;
+    width: 92px;
+    height: 92px;
+  }
+}

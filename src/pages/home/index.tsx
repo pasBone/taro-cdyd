@@ -1,14 +1,15 @@
-import MapView from './components/map'
 import { FC, createMapContext, useEffect, useMemo, useCallback, useState } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
-import { View, Map } from "@tarojs/components"
+import { View, Map, CoverImage } from "@tarojs/components"
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { getStationListAsync } from '@/store/module/station/station.actions'
 import { RootState } from '@/store/types'
 import ChargeEntry from './components/charge-entry';
 import CurrentStationCard from './components/current-station-card'
 import { stationApi } from '@/api/station'
+import { getLocationAsync } from '@/store/module/common/common.actions'
+import './style.scss';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
 
@@ -18,18 +19,27 @@ const HomeView: FC = () => {
   const stationList = useSelector((state: RootState) => state.station.stationList);
   const [stationDetails, setStationDetails] = useState(initStationDetails);
 
+  /** 获取站点/地图打点 */
   useEffect(() => {
     dispatch(
       getStationListAsync({ longitude, latitude })
     )
   }, [])
 
+  /** 点击站点事件 */
   const makerTap = useCallback((data) => {
     setStationDetails(data.markerId)
   }, [stationList])
 
+  /** 点击空白地图重置事件 */
   const mapTap = useCallback(() => {
     setStationDetails(initStationDetails);
+  }, []);
+
+  /** 手动定位 */
+  const getLocation = useCallback(() => {
+    dispatch(getLocationAsync(true));
+    this.mapCtx.moveToLocation();
   }, []);
 
   /** 地图站点标记打点 */
@@ -57,26 +67,26 @@ const HomeView: FC = () => {
   }, [stationList, longitude, latitude])
 
   return (
-    <View className="home__view">
+    <View className="home-view">
 
-      <ChargeEntry />
+      <View className="map-view">
+        <CoverImage onClick={getLocation} className="gps-icon" src={IMAGE_MAP.gps} />
+        {/* <ChargeEntry /> */}
+        <CurrentStationCard  {...stationDetails} />
+        <Map
+          id="homeMap"
+          markers={markers}
+          latitude={latitude}
+          longitude={longitude}
+          show-location={true}
+          onMarkerTap={makerTap}
+          onTap={mapTap}
+        />
+      </View>
 
-      <CurrentStationCard  {...stationDetails} />
+      <View className="other-view">
 
-      {/* 小程序组件有坑，直接拆分组件无法拿到 map实例，采用props传递 */}
-      <MapView
-        mapCtx={createMapContext('homeMap')}
-        renderMapView={
-          <Map
-            id="homeMap"
-            markers={markers}
-            latitude={latitude}
-            longitude={longitude}
-            show-location={true}
-            onMarkerTap={makerTap}
-            onTap={mapTap}
-          />}
-      />
+      </View>
 
     </View>
   )
