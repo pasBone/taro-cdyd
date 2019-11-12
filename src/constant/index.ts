@@ -1,3 +1,4 @@
+import { IMAGE_MAP } from "@/assets"
 
 /** 默认登录途径（1表示APP， 2表示微信公众号）	 */
 export const DEFAULT_REG_WAY = 2
@@ -55,4 +56,50 @@ export enum PILE_STATUS {
     充电结束,
     故障,
     离线 = 9,
-  }
+}
+
+/** 电桩状态 */
+export const PILE_SHOW_MAP = {
+    [PILE_STATUS.空闲中]: {
+        image: IMAGE_MAP.charging_free,
+        style: {
+            backgroundColor: '#def1e6',
+            color: '#1ea456'
+        }
+    },
+    [PILE_STATUS.使用中]: {
+        image: IMAGE_MAP.charging_busy,
+        style: {
+            backgroundColor: '#fde2dd',
+            color: '#f54c2b'
+        }
+    },
+    [PILE_STATUS.刷卡中]: {
+        image: IMAGE_MAP.charging_busy,
+        style: {
+            backgroundColor: '#dce6fa',
+            color: '#2565de'
+        }
+    },
+    [PILE_STATUS.充电结束]: {
+        image: IMAGE_MAP.charging_busy,
+        style: {
+            backgroundColor: '#faeedb',
+            color: '#ef9e10'
+        }
+    },
+    [PILE_STATUS.故障]: {
+        image: IMAGE_MAP.charging_fault,
+        style: {
+            backgroundColor: '#fde2dd',
+            color: '#f54c2b'
+        }
+    },
+    [PILE_STATUS.离线]: {
+        image: IMAGE_MAP.charging_fault,
+        style: {
+            backgroundColor: '#fde2dd',
+            color: '#f54c2b'
+        }
+    },
+}
