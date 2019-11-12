@@ -36,6 +36,7 @@ export const StationDetails: FC = () => {
   }, [stationId]);
 
   usePullDownRefresh(() => {
+
     getStationDetails();
   });
 
@@ -60,6 +61,7 @@ export const StationDetails: FC = () => {
   }, [stationDetails.desc])
 
   return (
+
     <View className="station-details__view">
 
       <View className="station__scene">
@@ -86,11 +88,11 @@ export const StationDetails: FC = () => {
 
       <CardBox title="站点其他信息">
         <Block>
-          {description.map(item => (<View className="station__notice"><Text>{item}</Text></View>))}
+          {description.map(item => (<View key={item} className="station__notice"><Text>{item}</Text></View>))}
         </Block>
       </CardBox>
 
-      <PileList ref={pileListRef} stationId={stationId} />
+      <PileList ref="pileListRef" stationId={stationId} />
 
       <FooterView />
 

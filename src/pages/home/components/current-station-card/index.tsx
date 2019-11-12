@@ -1,9 +1,8 @@
 import { FC, useMemo } from "@tarojs/taro";
 import { CoverView, CoverImage, View } from "@tarojs/components";
 import { stationApi } from "@/api/station";
-
-import './style.scss';
 import { IMAGE_MAP } from "@/assets";
+import './style.scss';
 
 const StationCard: FC<stationApi.ListItem> = (props) => {
 
