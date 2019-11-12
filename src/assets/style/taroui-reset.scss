@@ -1,41 +1,44 @@
 /** 去掉按钮边框 */
 .at-button {
-    button{
-        &::after{
-            border: none;
-        }
+  button {
+    &::after {
+      border: none;
     }
+  }
 }
-.at-button--primary{
-    border: none;
+.at-button--primary {
+  border: none;
+}
+
+.cdyd-primary-button {
+  background: $themeColor;
 }
 
 /**自定义toast样式 */
-.cdyd-toast{
-    .toast-body{
-        max-width: 80%;
+.cdyd-toast {
+  .toast-body {
+    max-width: 80%;
+    overflow: hidden;
+  }
+  .toast-body-content {
+    display: flex;
+    align-items: center;
+    .toast-body-content__icon {
+      font-size: 40rpx;
+    }
+    .toast-body-content__info {
+      margin-top: 0;
+      padding-left: 16px;
+      padding-right: 32px;
+      box-sizing: border-box;
+      max-width: 100%;
+      text {
+        text-overflow: ellipsis;
         overflow: hidden;
-
+        white-space: nowrap;
+        width: 100%;
+        display: block;
+      }
     }
-    .toast-body-content{
-        display: flex;
-        align-items: center;
-        .toast-body-content__icon{
-            font-size: 40rpx;
-        }
-        .toast-body-content__info{
-            margin-top: 0;
-            padding-left: 16px;
-            padding-right: 32px;
-            box-sizing: border-box;
-            max-width: 100%;
-            text {
-                text-overflow: ellipsis;
-                overflow: hidden;
-                white-space: nowrap;
-                width: 100%;
-                display: block;
-            }
-        }
-    }
+  }
 }
