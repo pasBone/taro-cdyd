@@ -14,8 +14,11 @@ export const FooterView: FC<IProps> = (props) => {
 
   /** 当前电价 */
   const currentPrice = useMemo(() => {
-    const { charge_price, service_price } = props.rules.current_rule;
-    return (parseFloat(charge_price) + parseFloat(service_price)).toFixed(4);
+    if (props.rules) {
+      const { charge_price, service_price } = props.rules.current_rule;
+      return (parseFloat(charge_price) + parseFloat(service_price)).toFixed(4);
+    }
+    return 0;
   }, [props.rules]);
 
   /** 调起微信扫码功能 */
