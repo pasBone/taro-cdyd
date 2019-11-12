@@ -61,14 +61,14 @@ export const StationRulesTable: FC<IProps> = (props) => {
           </View>
 
           {
-            ruleListSort.map(item => (
-              <View className="table-row table-body">
+            ruleListSort.map((item, index) => (
+              <View className="table-row table-body" key={index}>
                 <View className="table-col">
                   {RULE_MODE_NAME[item[0].mode]}
                 </View>
                 <View className="table-col">
                   <View className="table-sub-col time-col">
-                    {item.map((subs) => <View className="table-col">{subs.start_time}-{subs.end_time}</View>)}
+                    {item.map((subs) => <View key={subs.start_time} className="table-col">{subs.start_time}-{subs.end_time}</View>)}
                   </View>
                 </View>
                 <View className="table-col">{item[0].charge_price}</View>
