@@ -1,0 +1,39 @@
+@import "./../../../../../assets/style/border.scss";
+.pile-list__view {
+  border-top: 16px solid #f2f2f2;
+  border-bottom: 32px solid #f2f2f2;
+  .pile-list__item {
+    margin: 0 32px;
+    height: 86px;
+    line-height: 86px;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    font-size: 28px;
+    @include border-single($direction: bottom, $size: 1px, $color: rgba(220, 220, 220, 0.8), $position: relative);
+    &:last-child {
+      &:after {
+        height: 0rpx;
+      }
+    }
+    .label {
+      color: $blackColor88;
+    }
+    .value {
+      color: $blackColor48;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 70%;
+    }
+    .pile_status__tag {
+      display: flex;
+      text-align: center;
+      padding: 6px 12px;
+      font-size: 20px;
+      border-radius: 8px;
+      height: 30px;
+      line-height: 30px;
+    }
+  }
+}
