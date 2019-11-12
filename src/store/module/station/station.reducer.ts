@@ -74,9 +74,9 @@ export const stationDetails = (state = stationDetailsState, action: IAction<stat
 export const flat: stationApi.Flat = {
   mode: '',
   start_time: '',
-  service_price: '',
+  service_price: '0',
   end_time: '',
-  charge_price: '',
+  charge_price: '0',
 }
 
 /** 站点计费规则 */
