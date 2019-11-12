@@ -28,6 +28,7 @@ class App extends Component {
       'pages/login/index',
       'pages/home/index',
       'pages/station/details/index',
+      'pages/pile/details/index',
       'pages/react-typescript/index',
     ],
     window: {
@@ -38,7 +39,7 @@ class App extends Component {
     },
     "permission": {
       "scope.userLocation": {
-        "desc": "你的位置信息将用于小程序地图" 
+        "desc": "你的位置信息将用于小程序地图导航" 
       }
     }
   }
