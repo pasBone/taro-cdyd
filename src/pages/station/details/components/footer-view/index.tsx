@@ -1,13 +1,16 @@
 import { CoverView } from "@tarojs/components"
-import { FC, useMemo } from "@tarojs/taro"
-import './style.scss';
+import { FC, useMemo, useCallback } from "@tarojs/taro"
+import { scanCodeWithPileAsync } from "@/store/module/common/common.actions";
 import { stationApi } from "@/api/station";
+import { useDispatch } from "@tarojs/redux";
+import './style.scss';
 
 type IProps = {
   rules: stationApi.RuleDetailRes
 }
 
 export const FooterView: FC<IProps> = (props) => {
+  const dispatch = useDispatch();
 
   /** 当前电价 */
   const currentPrice = useMemo(() => {
@@ -15,12 +18,19 @@ export const FooterView: FC<IProps> = (props) => {
     return (parseFloat(charge_price) + parseFloat(service_price)).toFixed(4);
   }, [props.rules]);
 
+  /** 调起微信扫码功能 */
+  const handleScanCode = useCallback(async () => {
+    dispatch(
+      scanCodeWithPileAsync()
+    )
+  }, [])
+
   return (
     <CoverView className="footer_view">
       <CoverView className="footer_view-text">
         <CoverView className="price">{currentPrice}</CoverView>元/度（{props.rules.current_rule.start_time}-{props.rules.current_rule.end_time}）
       </CoverView>
-      <CoverView className="start-button">
+      <CoverView className="start-button" onClick={handleScanCode}>
         开始充电
       </CoverView>
     </CoverView>

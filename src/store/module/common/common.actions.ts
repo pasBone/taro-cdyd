@@ -1,9 +1,10 @@
 
 import * as types from './common.types';
 import { Dispatch } from 'redux';
-import { getLocation } from '@tarojs/taro'
+import { getLocation, scanCode } from '@tarojs/taro'
 import { reAuthorize } from '@/utils/common';
 import { wxApiError, WX_API_ERROR } from '@/types';
+import Toast from '@/utils/toast';
 
 /** 设置侧边菜单状态 */
 export const setSideMenuOpen = () => ({ type: types.SET_SIDE_MENU_OPEN })
@@ -35,4 +36,19 @@ export const getLocationAsync = (retry: boolean = false): any => {
   }
 }
 
-export const setLocation = ((payload) => ({ type: types.SET_LOCATION, payload }))
+export const setLocation = ((payload) => ({ type: types.SET_LOCATION, payload }));
+
+/** 电桩扫码 */
+export const scanCodeWithPileAsync = () => {
+  return async () => {
+    try {
+      const result = await scanCode();
+      console.log(result);
+      // todo code.result
+    } catch (err) {
+      if (err.errMsg !== WX_API_ERROR["扫码-用户取消扫码"]) {
+        Toast.failed('请检测二维码是否正确...')
+      }
+    }
+  }
+}

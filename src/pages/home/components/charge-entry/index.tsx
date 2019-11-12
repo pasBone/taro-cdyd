@@ -1,24 +1,18 @@
-import { FC, scanCode, useCallback } from "@tarojs/taro";
+import { FC, useCallback } from "@tarojs/taro";
 import { CoverView, CoverImage } from "@tarojs/components";
+import { scanCodeWithPileAsync } from "@/store/module/common/common.actions";
+import { useDispatch } from "@tarojs/redux";
 import { IMAGE_MAP } from "@/assets";
-import Toast from "@/utils/toast";
-import { WX_API_ERROR } from "@/types";
 import './style.scss';
 
 const ChargeEntry: FC = () => {
+  const dispatch = useDispatch();
 
   /** 调起微信扫码功能 */
   const handleScanCode = useCallback(async () => {
-
-    try {
-      const code = await scanCode()
-      // todo code.result
-
-    } catch (err) {
-      if (err.errMsg !== WX_API_ERROR["扫码-用户取消扫码"]) {
-        Toast.failed('扫码错误...')
-      }
-    }
+    dispatch(
+      scanCodeWithPileAsync()
+    )
   }, [])
 
   return (
