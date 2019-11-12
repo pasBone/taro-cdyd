@@ -69,7 +69,7 @@ export const pileDetailsState: pileApi.PileDetailsRes & LoadingType = {
   /**  排序号	 */
   order_num: "",
   /** 状态  0-禁用 1-启动中 2-使用中 3-充满 4-故障 6-空闲 */
-  pile_status: 0,
+  pile_status: 1,
   /** 站点名称 */
   station_name: "",
   /** soc进度 */
