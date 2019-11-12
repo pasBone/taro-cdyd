@@ -1,8 +1,8 @@
 import './style.scss';
-import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, Events, useRef } from '@tarojs/taro';
+import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, useRef } from '@tarojs/taro';
 import { View, Image, Text, Block } from '@tarojs/components';
 import { IMAGE_MAP } from '@/assets';
-import { getStationDetailsAsync, getStationRulesAsync } from '@/store/module/station/station.actions'
+import { getStationDetailsAsync } from '@/store/module/station/station.actions'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { RechargeDataView } from './components/recharge-data';
@@ -16,9 +16,7 @@ export const StationDetails: FC = () => {
   const stationId = $router.params.id;
   const dispatch = useDispatch();
   const pileListRef = useRef(null);
-
   const stationDetails = useSelector((state: RootState) => state.station.stationDetails);
-  const stationRules = useSelector((state: RootState) => state.station.stationRules);
   const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
 
   /** 获取站点详情信息 */
@@ -30,25 +28,16 @@ export const StationDetails: FC = () => {
         latitude,
         longitude
       })
-    ).then(_ => {
+    ).finally(_ => {
       stopPullDownRefresh();
       hideNavigationBarLoading();
-    })
+    });
 
   }, [stationId]);
 
   usePullDownRefresh(() => {
     getStationDetails();
   });
-
-  /**获取计费规则 */
-  useEffect(() => {
-    dispatch(
-      getStationRulesAsync({
-        station_id: stationId
-      })
-    );
-  }, [stationId])
 
   useEffect(() => {
     getStationDetails();
@@ -93,7 +82,7 @@ export const StationDetails: FC = () => {
 
       <RechargeDataView {...stationDetails} />
 
-      {!stationRules.loading && <StationRulesTable rules={stationRules} />}
+      <StationRulesTable stationId={stationId} />
 
       <CardBox title="站点其他信息">
         <Block>
@@ -103,7 +92,7 @@ export const StationDetails: FC = () => {
 
       <PileList ref={pileListRef} stationId={stationId} />
 
-      <FooterView rules={stationRules} />
+      <FooterView />
 
     </View>
   )
