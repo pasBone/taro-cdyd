@@ -4,58 +4,12 @@ import { useCallback, FC, eventCenter, useEffect, useRef, useState } from "@taro
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { getPileListAsync } from '@/store/module/pile/pile.actions';
 import { RootState } from "@/store/types";
-import { PILE_STATUS } from "@/constant";
-import { IMAGE_MAP } from "@/assets";
-import './style.scss'
+import { PILE_STATUS, PILE_SHOW_MAP } from "@/constant";
 import { AtProgress } from "taro-ui";
+import './style.scss'
 
 type IProps = {
   stationId: string
-}
-
-const PILE_SHOW_MAP = {
-  [PILE_STATUS.空闲中]: {
-    image: IMAGE_MAP.charging_free,
-    style: {
-      backgroundColor: '#def1e6',
-      color: '#1ea456'
-    }
-  },
-  [PILE_STATUS.使用中]: {
-    image: IMAGE_MAP.charging_busy,
-    style: {
-      backgroundColor: '#fde2dd',
-      color: '#f54c2b'
-    }
-  },
-  [PILE_STATUS.刷卡中]: {
-    image: IMAGE_MAP.charging_busy,
-    style: {
-      backgroundColor: '#dce6fa',
-      color: '#2565de'
-    }
-  },
-  [PILE_STATUS.充电结束]: {
-    image: IMAGE_MAP.charging_busy,
-    style: {
-      backgroundColor: '#faeedb',
-      color: '#ef9e10'
-    }
-  },
-  [PILE_STATUS.故障]: {
-    image: IMAGE_MAP.charging_fault,
-    style: {
-      backgroundColor: '#fde2dd',
-      color: '#f54c2b'
-    }
-  },
-  [PILE_STATUS.离线]: {
-    image: IMAGE_MAP.charging_fault,
-    style: {
-      backgroundColor: '#fde2dd',
-      color: '#f54c2b'
-    }
-  },
 }
 
 export const PileList: FC<IProps> = (props) => {
