@@ -1,38 +1,54 @@
-import { FC, useMemo } from "@tarojs/taro";
+import { FC, useMemo, useEffect } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { CardBox } from "@/components/card";
 import { stationApi } from "@/api/station";
 import './style.scss';
 import { RULE_MODE_NAME } from "@/constant";
+import { useDispatch, useSelector } from "@tarojs/redux";
+import { getStationRulesAsync } from "@/store/module/station/station.actions";
+import { RootState } from "@/store/types";
 
 type IProps = {
-  rules: stationApi.RuleDetailRes
+  stationId: string
 }
 
 export const StationRulesTable: FC<IProps> = (props) => {
-  if (!props.rules) return <View></View>
+  const dispatch = useDispatch();
+  const stationId = props.stationId;
+  const stationRules = useSelector((state: RootState) => state.station.stationRules);
+
+  if (!stationId) return <View></View>
+
+  /**获取计费规则 */
+  useEffect(() => {
+    dispatch(
+      getStationRulesAsync({
+        station_id: stationId
+      })
+    );
+  }, [stationId])
 
   /** 计费规则排序 */
   const ruleListSort: Array<Array<stationApi.Flat>> = useMemo(() => {
-    const { rule_list } = props.rules;
+    const { rule_list } = stationRules;
     return [
       rule_list.peak,
       rule_list.flat,
       rule_list.valley,
       rule_list.unit
     ].filter(item => item)
-  }, [props.rules]);
+  }, [stationRules]);
 
   /** 当前电价 */
   const currentPrice = useMemo(() => {
-    const { charge_price, service_price } = props.rules.current_rule;
+    const { charge_price, service_price } = stationRules.current_rule;
     return (parseFloat(charge_price) + parseFloat(service_price)).toFixed(4);
-  }, [props.rules]);
+  }, [stationRules]);
 
   return (
     <CardBox title="电价计费规则">
       <View>
-        <View className="station-rules-title">当前电价: <Text className="station-rules-current-price">{currentPrice}</Text> 元/度（{props.rules.current_rule.start_time}-{props.rules.current_rule.end_time}）</View>
+        <View className="station-rules-title">当前电价: <Text className="station-rules-current-price">{currentPrice}</Text> 元/度（{stationRules.current_rule.start_time}-{stationRules.current_rule.end_time}）</View>
         <View className="station-rules-table">
           <View className="table-row table-header">
             <View className="table-col">
