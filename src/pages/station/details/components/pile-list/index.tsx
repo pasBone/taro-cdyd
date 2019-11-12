@@ -1,6 +1,6 @@
 import { View, Image, Text } from "@tarojs/components"
 import { CardBox } from "@/components/card"
-import { useCallback, FC, eventCenter, useEffect, useRef, useState } from "@tarojs/taro";
+import { useCallback, FC, eventCenter, useEffect, useRef, useState, navigateTo } from "@tarojs/taro";
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { getPileListAsync } from '@/store/module/pile/pile.actions';
 import { RootState } from "@/store/types";
@@ -42,7 +42,12 @@ export const PileList: FC<IProps> = (props) => {
       <View className="pile_status__list">
         {
           pileList.list.map(item => (
-            <View className="pile_status__item" key={item.pile_id}>
+            <View
+              className="pile_status__item"
+              onClick={() => navigateTo({
+                url: `/pages/pile/details/index?id=${item.pile_id}`
+              })}
+              key={item.pile_id}>
               <View className="pile_status__header">
                 <Image className="pile_status__img" src={PILE_SHOW_MAP[item.pile_status].image} />
                 <View className="pile_status__label">

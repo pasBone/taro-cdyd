@@ -1,9 +1,11 @@
 import { FC } from "@tarojs/taro"
-import { stationApi } from "@/api/station"
 import { View } from "@tarojs/components"
+import { useSelector } from "@tarojs/redux"
+import { RootState } from "@/store/types"
 import './style.scss'
 
-export const RechargeDataView: FC<stationApi.DetailRes> = (stationDetails) => {
+export const RechargeDataView: FC = () => {
+  const stationDetails = useSelector((state: RootState) => state.station.stationDetails);
   return (
     <View className="recharge-data">
       <View className="recharge-data__item">

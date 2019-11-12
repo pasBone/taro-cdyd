@@ -80,7 +80,7 @@ export const StationDetails: FC = () => {
         </View>
       </View>
 
-      <RechargeDataView {...stationDetails} />
+      <RechargeDataView />
 
       <StationRulesTable stationId={stationId} />
 
