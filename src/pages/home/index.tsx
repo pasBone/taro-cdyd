@@ -80,6 +80,7 @@ const HomeView: FC = () => {
           show-location={true}
           onMarkerTap={makerTap}
           onTap={mapTap}
+          scale={12}
         />
       </View>
     </View>
