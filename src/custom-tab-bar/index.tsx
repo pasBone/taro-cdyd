@@ -25,7 +25,7 @@ export const Tabbar: FC = () => {
     }, {
       name: '扫码',
       id: 2,
-      icon: [IMAGE_MAP.tabWalletIcon, IMAGE_MAP.tabWalletIconFill],
+      icon: IMAGE_MAP.tabScanIconFill,
     }, {
       name: '订单',
       id: 3,
@@ -61,8 +61,9 @@ export const Tabbar: FC = () => {
             const iconPath = tabbarId == item.id ? item.icon[1] : item.icon[0];
             return item.id == 2 ?
               <CoverView className="tab-bar__item" onClick={handleScanCode}>
-                <CoverView className="tab-bar__scan">
-                </CoverView>
+                <CoverImage className="tab-bar__scan" src={item.icon} />
+                {/* <CoverImage className="icon" src={item.icon}></CoverImage>
+                </CoverView> */}
               </CoverView>
               :
               <CoverView className="tab-bar__item" onClick={() => switchTabBar(item)} key={item.id}>

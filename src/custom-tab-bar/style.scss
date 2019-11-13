@@ -5,6 +5,7 @@
     display: flex;
     justify-content: center;
     background: #fff;
+    border-top: 1px solid #f2f2f2;
   }
   .tab-bar__item {
     height: 98px;
@@ -18,16 +19,15 @@
       font-size: 20px;
     }
     .icon {
-      height: 48px;
-      width: 48px;
+      height: 40px;
+      width: 40px;
       margin-bottom: 8px;
     }
   }
   .tab-bar__scan {
-    height: 85px;
-    width: 85px;
-    border-radius: 50%;
-    background: red;
+    height: 98px;
+    width: 98px;
+    margin: 0 auto;
     align-self: center;
   }
 }
