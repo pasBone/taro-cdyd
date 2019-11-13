@@ -83,4 +83,5 @@ export const IMAGE_MAP = {
     tabWalletIconFill: require("./images/tab-wallet-fill.png"),
     tabOrderIcon: require("./images/tab-order.png"),
     tabOrderIconFill: require("./images/tab-order-fill.png"),
+    tabScanIconFill: require("./images/tab-scan.png")
 }
