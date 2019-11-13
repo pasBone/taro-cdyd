@@ -75,4 +75,12 @@ export const IMAGE_MAP = {
     charging_fault: require("./images/charging_fault@2x.png"),
     /** 电桩空闲图片 */
     charging_free: require("./images/charging_free@2x.png"),
+    tabHomeIcon: require("./images/tab-home.png"),
+    tabHomeIconFill: require("./images/tab-home-fill.png"),
+    tabMineIcon: require("./images/tab-my.png"),
+    tabMineIconFill: require("./images/tab-my-fill.png"),
+    tabWalletIcon: require("./images/tab-wallet.png"),
+    tabWalletIconFill: require("./images/tab-wallet-fill.png"),
+    tabOrderIcon: require("./images/tab-order.png"),
+    tabOrderIconFill: require("./images/tab-order-fill.png"),
 }

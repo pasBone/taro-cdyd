@@ -15,22 +15,27 @@ export const Tabbar: FC = () => {
     return [{
       name: '首页',
       id: 0,
-      path: '/pages/home/index'
+      path: '/pages/home/index',
+      icon: [IMAGE_MAP.tabHomeIcon, IMAGE_MAP.tabHomeIconFill],
     }, {
       name: '钱包',
       id: 1,
-      path: '/pages/wallet/index'
+      path: '/pages/wallet/index',
+      icon: [IMAGE_MAP.tabWalletIcon, IMAGE_MAP.tabWalletIconFill],
     }, {
       name: '扫码',
       id: 2,
+      icon: [IMAGE_MAP.tabWalletIcon, IMAGE_MAP.tabWalletIconFill],
     }, {
       name: '订单',
       id: 3,
-      path: '/pages/order/index'
+      path: '/pages/order/index',
+      icon: [IMAGE_MAP.tabOrderIcon, IMAGE_MAP.tabOrderIconFill],
     }, {
       name: '我的',
       id: 4,
-      path: '/pages/mine/index'
+      path: '/pages/mine/index',
+      icon: [IMAGE_MAP.tabMineIcon, IMAGE_MAP.tabMineIconFill],
     }]
 
   }, []);
@@ -53,12 +58,16 @@ export const Tabbar: FC = () => {
       <CoverView className="tab-bar__list">
         {
           tabBarData.map(item => {
+            const iconPath = tabbarId == item.id ? item.icon[1] : item.icon[0];
             return item.id == 2 ?
-              <CoverView className="tab-bar__scan" onClick={handleScanCode}></CoverView>
+              <CoverView className="tab-bar__item" onClick={handleScanCode}>
+                <CoverView className="tab-bar__scan">
+                </CoverView>
+              </CoverView>
               :
-              <CoverView className="tab-bar__item " onClick={() => switchTabBar(item)} key={item.id}>
-                <CoverImage className="icon" src={IMAGE_MAP.walletIcon} />
-                <CoverView className="text">{item.name}{tabbarId == item.id}</CoverView>
+              <CoverView className="tab-bar__item" onClick={() => switchTabBar(item)} key={item.id}>
+                <CoverImage className="icon" src={iconPath} />
+                <CoverView className="text">{item.name}</CoverView>
               </CoverView>
           })
         }
