@@ -5,11 +5,9 @@ import { View, Map, CoverImage } from "@tarojs/components"
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { getStationListAsync } from '@/store/module/station/station.actions'
 import { RootState } from '@/store/types'
-// import ChargeEntry from './components/charge-entry';
 import CurrentStationCard from './components/current-station-card'
 import { stationApi } from '@/api/station'
 import { getLocationAsync } from '@/store/module/common/common.actions'
-import Tabbar from '@/components/tab-bar'
 import './style.scss';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
@@ -84,11 +82,6 @@ const HomeView: FC = () => {
           onTap={mapTap}
         />
       </View>
-
-      <View className="other-view">
-        {/* <Tabbar /> */}
-      </View>
-
     </View>
   )
 }
