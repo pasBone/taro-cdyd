@@ -7,8 +7,11 @@ import { wxApiError, WX_API_ERROR } from '@/types';
 import Toast from '@/utils/toast';
 
 /** 设置侧边菜单状态 */
-export const setSideMenuOpen = () => ({ type: types.SET_SIDE_MENU_OPEN })
-export const setSideMenuClose = () => ({ type: types.SET_SIDE_MENU_CLOSE })
+export const setSideMenuOpen = () => ({ type: types.SET_SIDE_MENU_OPEN });
+export const setSideMenuClose = () => ({ type: types.SET_SIDE_MENU_CLOSE });
+
+/** 设置tabbar选中id */
+export const setTabbarId = (payload) => ({ type: types.SET_TAB_BAR_ID, payload });
 
 /** 获取定位
  * @param retry ?用户尝试手动定位时，重新拉起授权

@@ -1,7 +1,7 @@
 import { IAction } from '@/store/types';
 import * as types from './common.types';
 import { combineReducers } from 'redux';
-import { getLocation } from '@tarojs/taro';
+import { getLocation, getStorageSync, setStorageSync } from '@tarojs/taro';
 
 export const sideMenuState = {
   state: false
@@ -17,6 +17,10 @@ export const locationState = {
   horizontalAccuracy: 0
 }
 
+export const tabbarIdState = {
+  id: getStorageSync('tabbar-id') || 0
+}
+
 export const sideMenu = (state = sideMenuState, action: IAction) => {
   switch (action.type) {
     case types.SET_SIDE_MENU_CLOSE:
@@ -24,7 +28,7 @@ export const sideMenu = (state = sideMenuState, action: IAction) => {
     case types.SET_SIDE_MENU_OPEN:
       return { state: true };
     default:
-      return state
+      return state;
   }
 }
 
@@ -33,12 +37,23 @@ export const gpsLocation = (state = locationState, action: IAction<getLocation.P
     case types.SET_LOCATION:
       return action.payload;
     default:
-      return state
+      return state;
   }
 }
 
+export const tabbar = (state = tabbarIdState, action: IAction<string>) => {
+  switch (action.type) {
+    case types.SET_TAB_BAR_ID:
+      const id = action.payload;
+      setStorageSync('tabbar-id', id);
+      return { id };
+    default:
+      return state;
+  }
+}
 
 export const commonReducer = combineReducers({
   sideMenu,
-  gpsLocation
+  gpsLocation,
+  tabbar
 });
