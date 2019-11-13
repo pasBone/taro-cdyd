@@ -1,0 +1,39 @@
+.tab-bar__view {
+  width: 100%;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  bottom: 0;
+  left: 0;
+  .tab-bar__list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .tab-bar__item {
+    background: #fff;
+    height: 98px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .text {
+      font-size: 20px;
+    }
+    .icon {
+      height: 40px;
+      width: 40px;
+      margin-bottom: 8px;
+    }
+  }
+  .tab-bar__scan {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    background: red;
+    position: relative;
+    // transform: translateY(-40px);
+  }
+}
