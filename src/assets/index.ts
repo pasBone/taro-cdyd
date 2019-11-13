@@ -49,11 +49,11 @@ export const IMAGE_MAP = {
     // /** nodata */
     // nodata: require(`./images/nodata@2x.png`),
     // /** order */
-    // order: require(`./images/order@2x.png`),
+    order: require('./images/order@2x.png'),
     // /** record */
     // record: require(`./images/record@2x.png`),
     // /** wallet */
-    // walletIcon: require(`./images/wallet@2x.png`),
+    walletIcon: require('./images/wallet@2x.png'),
     // /** setting */
     // setting: require(`./images/setting@2x.png`),
     // /** vihiclelicense */

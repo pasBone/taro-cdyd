@@ -27,21 +27,50 @@ class App extends Component {
     pages: [
       'pages/login/index',
       'pages/home/index',
+      'pages/mine/index',
+      'pages/order/index',
+      'pages/wallet/index',
       'pages/station/details/index',
       'pages/pile/details/index',
       'pages/react-typescript/index',
     ],
+    tabBar: {
+      "custom": true,
+      "color": "#7A7E83",
+      "selectedColor": "#3cc51f",
+      "borderStyle": "black",
+      "backgroundColor": "#ffffff",
+      "list": [
+        {
+          "pagePath": "pages/home/index",
+          "text": "首页"
+        },
+        {
+          "pagePath": "pages/wallet/index",
+          "text": "钱包"
+        },
+        {
+          "pagePath": "pages/order/index",
+          "text": "订单"
+        },
+        {
+          "pagePath": "pages/mine/index",
+          "text": "我的"
+        }
+      ]
+    },
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
     },
-    "permission": {
+    permission: {
       "scope.userLocation": {
-        "desc": "你的位置信息将用于小程序地图导航" 
+        "desc": "你的位置信息将用于小程序地图导航"
       }
-    }
+    },
+    usingComponents: {}
   }
 
   componentDidMount() {
@@ -61,9 +90,7 @@ class App extends Component {
   // 请勿修改此函数
   render() {
     return (
-      <Provider store={store}>
-        <Login />
-      </Provider>
+      <Provider store={store}></Provider>
     )
   }
 }
