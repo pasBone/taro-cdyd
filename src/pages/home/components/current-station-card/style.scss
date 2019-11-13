@@ -1,19 +1,16 @@
 .current-station-card {
   position: fixed;
   z-index: 101;
-  bottom: 32px;
+  bottom: 118px;
   right: 0;
   left: 0;
   margin: 0 auto;
   width: 702px;
   height: 314px;
   box-sizing: border-box;
-  // padding: 40px 0 30px 0;
   background-color: #ffffff;
   box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.16);
   border-radius: 16px;
-  // display: flex;
-
   cover-view {
     line-height: none;
   }
