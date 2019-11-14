@@ -1,7 +1,6 @@
 import Taro, { Component, Config } from '@tarojs/taro'
 import '@tarojs/async-await'
 import { Provider } from '@tarojs/redux'
-import Login from './pages/login/index'
 import configStore from './store'
 import { getLocationAsync } from '@/store/module/common/common.actions'
 import './app.scss'

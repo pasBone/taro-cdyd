@@ -22,7 +22,7 @@ const HomeView: FC = () => {
   /** 获取站点/地图打点 */
   useEffect(() => {
     dispatch(
-      getStationListAsync({ longitude, latitude })
+      getStationListAsync({ longitude, latitude, pageSize: 100 })
     )
   }, [])
 
