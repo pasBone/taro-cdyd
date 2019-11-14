@@ -1,10 +1,18 @@
+@mixin fixed {
+  position: fixed;
+  z-index: 99;
+  border-radius: 50%;
+  width: 92px;
+  height: 92px;
+  bottom: 105px;
+}
 .home-view {
   display: flex;
   height: 100vh;
   flex-direction: column;
   .map-view {
     flex: 1;
-    map{
+    map {
       height: 100%;
       width: 100%;
     }
@@ -13,12 +21,11 @@
     height: 98px;
   }
   .gps-icon {
-    position: fixed;
-    z-index: 90;
-    bottom: 105px;
+    @include fixed;
     left: 32px;
-    border-radius: 50%;
-    width: 92px;
-    height: 92px;
+  }
+  .station-list-icon {
+    @include fixed;
+    right: 32px;
   }
 }
