@@ -23,7 +23,7 @@ const StationCard: FC<stationApi.ListItem> = (props) => {
     openLocation({
       latitude,
       longitude,
-      scale: 28
+      scale: 14
     })
   }, [props.station_id]);
 
