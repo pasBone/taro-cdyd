@@ -22,7 +22,14 @@ export const pileList = (state = pileListState, actions: IAction<pileApi.PileLis
     case types.GET_PILE_LIST:
       return { ...state, loading: true, error: false };
     case types.GET_PILE_LIST_SUCCESS:
-      return { ...actions.payload, loading: false, error: false, pageNumber: state.pageNumber + 1 };
+      if (actions.payload.firstPage) return actions.payload;
+      return {
+        ...actions.payload,
+        list: [...state.list, ...actions.payload.list || []],
+        loading: false,
+        error: false,
+        pageNumber: state.pageNumber + 1,
+      };
     case types.GET_PILE_LIST_ERROR:
       return { ...state, loading: false, error: true };
     default:
