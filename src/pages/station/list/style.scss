@@ -1,0 +1,57 @@
+.station-list__view {
+  border-top: 24px solid #f2f2f2;
+  box-sizing: border-box;
+  background: #fff;
+  .station-list {
+    box-sizing: border-box;
+  }
+  .station-item {
+    display: flex;
+    align-items: center;
+    padding: 40px 32px;
+    box-sizing: border-box;
+    height: 216px;
+    border-bottom: 2px solid #e5e5e5;
+    transition: background ease 0.3s;
+    &:active,
+    &:hover {
+      transition: background ease 0.3s;
+      background: #eee;
+    }
+  }
+  .station-info {
+    flex: 1;
+  }
+  .station-name {
+    font-size: 32px;
+    color: rgba(0, 0, 0, 0.88);
+  }
+  .station-distance {
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.64);
+    margin-top: 10px;
+  }
+  .station-num {
+    width: 190px;
+    height: 96px;
+    padding-right: 24px;
+    box-sizing: border-box;
+    border-left: 2px solid rgba(0, 0, 0, 0.24);
+    font-size: 24px;
+    color: rgba(0, 0, 0, 0.64);
+    text-align: right;
+    .text {
+      font-size: 56px;
+      color: $fontColor;
+    }
+  }
+  .station-price {
+    color: rgba(0, 0, 0, 0.84);
+    font-size: 28px;
+    padding-top: 10px;
+    .text {
+      color: #f54c2b;
+      padding-right: 8px;
+    }
+  }
+}
