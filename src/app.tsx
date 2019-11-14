@@ -25,13 +25,13 @@ class App extends Component {
    */
   config: Config = {
     pages: [
-      'pages/login/index',
       'pages/home/index',
       'pages/mine/index',
       'pages/order/index',
       'pages/wallet/index',
       'pages/station/details/index',
       'pages/pile/details/index',
+      'pages/login/index',
       'pages/react-typescript/index',
     ],
     tabBar: {
