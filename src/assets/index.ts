@@ -37,7 +37,7 @@ export const IMAGE_MAP = {
     // /** 充电中electricity */
     // electricity: require(`./images/electricity@2x.png`),
     // /** code */
-    // code: require(`./images/code@2x.png`),
+    code: require('./images/code@2x.png'),
     /** gps */
     gps: require('./images/gps@2x.png'),
     /** list */
