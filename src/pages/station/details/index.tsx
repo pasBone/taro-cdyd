@@ -1,5 +1,5 @@
 import './style.scss';
-import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, useRef } from '@tarojs/taro';
+import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, useRef, setNavigationBarTitle, createRef } from '@tarojs/taro';
 import { View, Image, Text, Block } from '@tarojs/components';
 import { IMAGE_MAP } from '@/assets';
 import { getStationDetailsAsync } from '@/store/module/station/station.actions'
@@ -15,7 +15,8 @@ export const StationDetails: FC = () => {
   const $router = useRouter();
   const stationId = $router.params.id;
   const dispatch = useDispatch();
-  const pileListRef = useRef(null);
+  const pileListRef = useRef<any>();
+
   const stationDetails = useSelector((state: RootState) => state.station.stationDetails);
   const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
 
@@ -32,11 +33,9 @@ export const StationDetails: FC = () => {
       stopPullDownRefresh();
       hideNavigationBarLoading();
     });
-
   }, [stationId]);
 
   usePullDownRefresh(() => {
-
     getStationDetails();
   });
 
@@ -44,10 +43,9 @@ export const StationDetails: FC = () => {
     getStationDetails();
   }, [stationId]);
 
-  /**子组件不支持上拉加载函数，暂时采用事件通讯 */
+  /**子组件不支持上拉加载函数 */
   useReachBottom(() => {
-    console.log(pileListRef);
-    // Taro.eventCenter.trigger('GET_PILE_LIST')
+    pileListRef.current && pileListRef.current.getChildPileList();
   });
 
   /** 站点其他信息说明 */
@@ -58,7 +56,11 @@ export const StationDetails: FC = () => {
       "<br/>"
     );
     return desc.split("<br/>");
-  }, [stationDetails.desc])
+  }, [stationDetails.desc]);
+
+  setNavigationBarTitle({
+    title: stationDetails.station_name
+  });
 
   return (
 
@@ -92,7 +94,7 @@ export const StationDetails: FC = () => {
         </Block>
       </CardBox>
 
-      <PileList ref="pileListRef" stationId={stationId} />
+      <PileList cRef={pileListRef} stationId={stationId} />
 
       <FooterView />
 
@@ -101,5 +103,6 @@ export const StationDetails: FC = () => {
 }
 
 StationDetails.config = {
-  enablePullDownRefresh: true
+  enablePullDownRefresh: true,
+  navigationBarTitleText: '充电站详情',
 }
