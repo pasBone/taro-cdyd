@@ -14,10 +14,8 @@ type IProps = {
 }
 
 export const PileList: FC<IProps> = (props) => {
-  console.log(props.cRef, '====');
   const dispatch = useDispatch();
   const pileList = useSelector((state: RootState) => state.pile.pileList);
-  // const pageNumber = pileList.pageNumber;
   const [pageNumber, setPageNumber] = useState(1);
 
   /** 获取列表 */
