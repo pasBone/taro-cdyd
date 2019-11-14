@@ -30,6 +30,7 @@ class App extends Component {
       'pages/order/index',
       'pages/wallet/index',
       'pages/station/details/index',
+      'pages/station/list/index',
       'pages/pile/details/index',
       'pages/login/index',
       'pages/react-typescript/index',
