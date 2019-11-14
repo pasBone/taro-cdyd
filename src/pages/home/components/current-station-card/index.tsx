@@ -1,11 +1,13 @@
-import { FC, useMemo } from "@tarojs/taro";
+import { FC, useMemo, navigateTo, openLocation, useCallback } from "@tarojs/taro";
 import { CoverView, CoverImage, View } from "@tarojs/components";
 import { stationApi } from "@/api/station";
 import { IMAGE_MAP } from "@/assets";
 import './style.scss';
+import { gcoordTransform } from "@/utils/common";
 
 const StationCard: FC<stationApi.ListItem> = (props) => {
 
+  /** 计费规则 */
   const stationRule = useMemo(() => {
     if (props.current_rule) {
       const { charge_price, service_price, start_time, end_time } = props.current_rule;
@@ -13,7 +15,17 @@ const StationCard: FC<stationApi.ListItem> = (props) => {
       return { price, start_time, end_time, }
     }
     return { price: 0, start_time: '', end_time: '' }
-  }, [props.station_id])
+  }, [props.station_id]);
+
+  /** 打开地图 */
+  const openMap = useCallback(() => {
+    const [longitude, latitude] = gcoordTransform([props.longitude, props.latitude]);
+    openLocation({
+      latitude,
+      longitude,
+      scale: 28
+    })
+  }, [props.station_id]);
 
   return props.station_id !== 'none' ? (
     <CoverView className="current-station-card">
@@ -36,12 +48,12 @@ const StationCard: FC<stationApi.ListItem> = (props) => {
       </CoverView>
 
       <CoverView className="station-card-body">
-        <CoverView className="station-card-link">
+        <CoverView className="station-card-link" onClick={() => navigateTo({ url: `/pages/station/details/index?id=${props.station_id}` })}>
           <CoverImage className="station-card-img" src={IMAGE_MAP.detailsIcon} />
           <CoverView className="station-text">详情</CoverView>
         </CoverView>
 
-        <CoverView className="station-card-link">
+        <CoverView className="station-card-link" onClick={openMap}>
           <CoverImage className="station-card-img" src={IMAGE_MAP.navigationIcon} />
           <CoverView className="station-text">导航</CoverView>
         </CoverView>
