@@ -1,5 +1,5 @@
 import './style.scss'
-import { FC, useCallback, useEffect, usePullDownRefresh, useReachBottom, useState, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading, useMemo } from "@tarojs/taro";
+import { FC, useCallback, useEffect, usePullDownRefresh, useReachBottom, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading, navigateTo } from "@tarojs/taro";
 import { View, Text } from "@tarojs/components";
 import { useSelector, useDispatch } from '@tarojs/redux';
 import { RootState } from '@/store/types';
@@ -55,7 +55,7 @@ export const StationList: FC = () => {
             }
 
             return (
-              <View className="station-item" key={item.station_id}>
+              <View className="station-item" onClick={() => navigateTo({ url: `/pages/station/details/index?id=${item.station_id}` })} key={item.station_id}>
                 <View className="station-info">
                   <View className="station-name">{item.station_name}</View>
                   <View className="station-distance">距我 {item.distance} km</View>
