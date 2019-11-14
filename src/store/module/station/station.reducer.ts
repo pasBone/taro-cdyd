@@ -7,7 +7,7 @@ import { LoadingType } from "@/types";
 /** 站点列表 */
 export const stationListState: stationApi.ListRes = {
   totalRow: 0,
-  pageNumber: 1,
+  pageNumber: 0,
   firstPage: true,
   lastPage: false,
   totalPage: 0,
@@ -21,10 +21,8 @@ export const stationList = (state = stationListState, action: IAction<stationApi
   switch (action.type) {
     case types.GET_STATION_LIST:
       return { ...state, loading: true }
-
     case types.GET_STATION_LIST_SUCCESS:
       if (action.payload.firstPage) return action.payload;
-
       return {
         ...action.payload,
         loading: false,
