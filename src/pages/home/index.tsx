@@ -8,6 +8,7 @@ import { RootState } from '@/store/types'
 import CurrentStationCard from './components/current-station-card'
 import { stationApi } from '@/api/station'
 import { getLocationAsync } from '@/store/module/common/common.actions'
+import { gcoordTransform } from "@/utils/common";
 import './style.scss';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
@@ -44,26 +45,28 @@ const HomeView: FC = () => {
   /** 地图站点标记打点 */
   const markers = useMemo(() => {
     /** 当前定位标记 */
+    const [long, lat] = gcoordTransform([longitude, latitude]);
     const locationMarker = {
       iconPath: IMAGE_MAP.mapLocationMarker,
-      latitude,
-      longitude,
+      latitude: lat,
+      longitude: long,
       width: 16,
       height: 40
     }
     /** 站点标记 */
     const stationMarker = stationList.list.map(item => {
+      const [long, lat] = gcoordTransform([item.longitude, item.latitude]);
       return {
         iconPath: IMAGE_MAP.mapStationMarker,
-        latitude: item.latitude,
-        longitude: item.longitude,
+        latitude: lat,
+        longitude: long,
         id: item,
         width: 26,
         height: 35
       }
     });
     return [locationMarker, ...stationMarker]
-  }, [stationList, longitude, latitude])
+  }, [stationList])
 
   return (
     <View className="home-view">
