@@ -28,7 +28,7 @@ export const FooterView: FC = () => {
   return (
     <CoverView className="footer_view">
       <CoverView className="footer_view-text">
-        <CoverView className="price">{currentPrice}</CoverView>元/度（{stationRules.current_rule.start_time}-{stationRules.current_rule.end_time}）
+        <CoverView className="price">{currentPrice}</CoverView><CoverView>元/度（{stationRules.current_rule.start_time}-{stationRules.current_rule.end_time}）</CoverView>
       </CoverView>
       <CoverView className="start-button" onClick={handleScanCode}>
         开始充电
