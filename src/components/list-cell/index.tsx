@@ -11,12 +11,14 @@ type IProps = {
   /** value jsx  element */
   renderValue?: JSX.Element,
   /** 是否显示箭头 */
-  showArrow?: boolean
+  showArrow?: boolean,
+  /** 事件 */
+  onClick?: Function
 }
 
 export const ListCell: FC<IProps> = (props) => {
   return (
-    <View className="list-cell__view">
+    <View className="list-cell__view" onClick={() => props.onClick && props.onClick()}>
       <View className="list-cell__item">
         <View className="label">{props.label}</View>
         {<View className="value">{props.value || props.renderValue}</View>}
@@ -27,5 +29,6 @@ export const ListCell: FC<IProps> = (props) => {
 }
 
 ListCell.defaultProps = {
-  showArrow: true
+  showArrow: true,
+  onClick: () => { }
 }
