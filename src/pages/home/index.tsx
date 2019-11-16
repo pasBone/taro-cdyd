@@ -1,4 +1,5 @@
-import { FC, createMapContext, useEffect, useMemo, useCallback, useState, navigateTo } from "@tarojs/taro"
+import './style.scss';
+import { FC, createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
 import { View, Map, CoverImage, CoverView } from "@tarojs/components"
@@ -9,11 +10,10 @@ import CurrentStationCard from './components/current-station-card'
 import { stationApi } from '@/api/station'
 import { getLocationAsync } from '@/store/module/common/common.actions'
 import { gcoordTransform } from "@/utils/common";
-import './style.scss';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
 
-const HomeView: FC = () => {
+export const HomeView: FC = () => {
   const dispatch = useDispatch();
   const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
   const stationList = useSelector((state: RootState) => state.station.stationList);
@@ -21,6 +21,9 @@ const HomeView: FC = () => {
 
   /** 获取站点/地图打点 */
   useEffect(() => {
+    setNavigationBarTitle({
+      title: APP_NAME
+    });
     dispatch(
       getStationListAsync({ longitude, latitude, pageSize: 100 })
     )
@@ -94,9 +97,3 @@ const HomeView: FC = () => {
     </View>
   )
 }
-
-HomeView.config = {
-  navigationBarTitleText: APP_NAME
-}
-
-export default HomeView;
