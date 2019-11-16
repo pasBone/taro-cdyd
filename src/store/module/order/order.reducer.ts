@@ -33,6 +33,6 @@ export const orderList = (state = orderListState, actions: IAction<orderApi.List
   }
 }
 
-export default combineReducers({
+export const orderReducer = combineReducers({
   orderList
 });
