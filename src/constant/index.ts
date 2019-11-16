@@ -4,8 +4,12 @@ import { IMAGE_MAP } from "@/assets"
 export const DEFAULT_REG_WAY = 2
 /** 运营商code */
 export const OPERATOR_CODE = "byd"
-/** openId */
-export const OPEN_ID = 'obC_NwYCFZPSHAThFZ0z_1nSlQbc'
+
+/** openId-tg */
+// export const OPEN_ID = 'obC_NwYCFZPSHAThFZ0z_1nSlQbc'
+
+/** openId-tg */
+export const OPEN_ID = 'osMUR1GF_9KNXuabZx3E7T1dQUKA'
 
 /** 收费模式(peak：峰，flat：平，valley：谷，unit：统一单价) */
 export enum RULE_MODE {
@@ -102,4 +106,12 @@ export const PILE_SHOW_MAP = {
             color: '#f54c2b'
         }
     },
+}
+
+/** 车主认证状态 */
+export enum CAR_VERIFY_STATUS {
+    未认证 = 0,
+    待审核,
+    未通过,
+    已认证
 }
