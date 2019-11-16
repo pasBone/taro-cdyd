@@ -1,14 +1,11 @@
 import { OPERATE_CODE, Res } from "@/types"
 import { OPERATOR_CODE } from '@/constant';
-import Taro from '@tarojs/taro';
+import Taro, { getStorageSync } from '@tarojs/taro';
 import Toast from "./toast";
 
 // const BASE_URL = "https://wx.succtime.com/wx"
 const BASE_URL = "https://wx.youdaocharge.com/wx"
 
-let token = "";
-
-export const setToken = (t: string) => (token = t)
 
 enum RequestType {
     "请求数据",
@@ -26,7 +23,11 @@ const genGetHeaderMethods = (type: RequestType) => {
         })
     }
     return () => {
-        return { ...defaultHeaders, token }
+        let userInfo = getStorageSync('userInfo');
+        if (userInfo && userInfo.token) {
+            defaultHeaders.token = userInfo.token
+        }
+        return { ...defaultHeaders }
     }
 }
 
