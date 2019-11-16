@@ -2,11 +2,9 @@
   border-top: 16px solid #f2f2f2;
   box-sizing: border-box;
   background: #fff;
+  min-height: 100vh;
+  box-sizing: border-box;
   .order-list {
-    padding: 0;
-    margin: 0;
-    height: 100vh;
-    box-sizing: border-box;
     &__item {
       height: 180px;
       padding: 0 32px;

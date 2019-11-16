@@ -1,14 +1,16 @@
 import './style.scss'
 import { View, Text } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
-import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading } from '@tarojs/taro';
+import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
+import { AtLoadMore } from 'taro-ui';
+import { formatDate } from '@/utils/common';
 
-export const OrderListView = () => {
+export const OrderListView: FC = () => {
 
-  const order = useSelector((state: RootState) => state.order.orderList);
+  const orderList = useSelector((state: RootState) => state.order.orderList);
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
   const dispatch = useDispatch();
 
@@ -44,25 +46,32 @@ export const OrderListView = () => {
   return (
     <View className="order-list__view">
       {
-        order.list.length == 0
+        orderList.list.length == 0 && orderList.loading == false
           ?
           <EmptyData />
           :
-          order.list.map(item => (
+          orderList.list.map(item => (
             <View className="order-list" key={item.order_id}>
               <View className="order-list__item">
                 <View className="order-list__title">
-                  <View className="desc">item.way_desc</View>
-                  <Text>￥item.total_fee</Text>
+                  <View className="desc">{item.station_name}</View>
+                  <Text>￥{item.total_fee}</Text>
                 </View>
                 <View className="order-list__time">
-                  <Text>formatDate(item.paid_time)</Text>
-                  <Text>item.recharge_label</Text>
+                  <Text>{formatDate(item.end_time)}</Text>
+                  <Text>充电电量{item.electricity}kWh</Text>
                 </View>
               </View>
             </View>
           ))
       }
+      {orderList.loading && <AtLoadMore status={'loading'} />}
+      {orderList.lastPage && <AtLoadMore status={'noMore'} />}
     </View>
   )
+}
+
+OrderListView.config = {
+  navigationBarTitleText: '订单列表',
+  enablePullDownRefresh: true
 }
