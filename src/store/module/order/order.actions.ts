@@ -24,3 +24,26 @@ export const getOrderListAsync = (params: orderApi.ListReq) => {
 export const getOrderList = (() => ({ type: types.GET_ORDER_LIST }));
 export const getOrderListError = (() => ({ type: types.GET_ORDER_LIST_ERROR }));
 export const getOrderListSuccess = ((payload) => ({ type: types.GET_ORDER_LIST_SUCCESS, payload }));
+
+
+/** 获取订单详情 */
+export const getOrderDetailsAsync = (params: orderApi.DetailReq) => {
+  return async (dispatch: Dispatch) => {
+    try {
+      dispatch(
+        getOrderDetails()
+      );
+      const response = await orderApi.details(params);
+      dispatch(
+        getOrderDetailsSuccess(response.data)
+      );
+    } catch (error) {
+      dispatch(
+        getOrderDetailsError()
+      );
+    }
+  }
+}
+export const getOrderDetails = (() => ({ type: types.GET_ORDER_DETAILS }));
+export const getOrderDetailsError = (() => ({ type: types.GET_ORDER_DETAILS_ERROR }));
+export const getOrderDetailsSuccess = ((payload) => ({ type: types.GET_ORDER_DETAILS_SUCCESS, payload }));
