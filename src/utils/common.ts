@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import gcoord from 'gcoord'
 import { getSetting, authorize } from '@tarojs/taro';
 
@@ -25,4 +26,8 @@ export const reAuthorize = async (scope: string) => {
  */
 export const gcoordTransform = (coord: Array<number>, to = gcoord.GCJ02, from = gcoord.BD09) => {
   return gcoord.transform(coord, from, to) as Array<number>;
+}
+
+export const formatDate = function (ms: number, format: string = 'YYYY-MM-DD HH:mm:ss') {
+  return dayjs(ms).format(format)
 }
