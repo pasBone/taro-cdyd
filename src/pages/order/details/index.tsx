@@ -20,7 +20,6 @@ export const OrderDetailsView: FC = () => {
   const $router = useRouter();
   const orderId = $router.params.id;
   const stationId = $router.params.stationId;
-  console.log(stationId, 'stationId');
   const dispatch = useDispatch();
   const orderDetails = useSelector((state: RootState) => state.order.orderDetails);
   const stationDetails = useSelector((state: RootState) => state.station.stationDetails);
