@@ -13,13 +13,15 @@ type IProps = {
   /** 是否显示箭头 */
   showArrow?: boolean,
   /** 事件 */
-  onClick?: Function
+  onClick?: Function,
+  /** item样式 */
+  itemStyle?: React.CSSProperties
 }
 
 export const ListCell: FC<IProps> = (props) => {
   return (
     <View className="list-cell__view" onClick={() => props.onClick && props.onClick()}>
-      <View className="list-cell__item">
+      <View className="list-cell__item" style={props.itemStyle}>
         <View className="label">{props.label}</View>
         {<View className="value">{props.value || props.renderValue}</View>}
         {props.showArrow && <View className="arrow-icon"><AtIcon value='chevron-right' size='16' color='#ccc'></AtIcon></View>}
