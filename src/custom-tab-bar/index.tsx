@@ -29,7 +29,7 @@ export const Tabbar: FC = () => {
     }, {
       name: '订单',
       id: 3,
-      path: '/pages/order/index',
+      path: '/pages/order/list/index',
       icon: [IMAGE_MAP.tabOrderIcon, IMAGE_MAP.tabOrderIconFill],
     }, {
       name: '我的',
