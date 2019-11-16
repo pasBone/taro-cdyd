@@ -1,0 +1,4 @@
+/** 获取订单列表 */
+export const GET_ORDER_LIST = 'GET_ORDER_LIST';
+export const GET_ORDER_LIST_ERROR = 'GET_ORDER_LIST_ERROR';
+export const GET_ORDER_LIST_SUCCESS = 'GET_ORDER_LIST_SUCCESS';
