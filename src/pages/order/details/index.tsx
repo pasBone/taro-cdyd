@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from '@tarojs/redux'
 import { RootState } from '@/store/types'
 import { getOrderDetailsAsync } from '@/store/module/order/order.actions'
 import { STARTUP_MODE } from '@/api/order'
-import { formatDate } from '@/utils/common'
+import { formatDate, getDuration } from '@/utils/common'
 import { getStationDetailsAsync } from '@/store/module/station/station.actions'
 
 const cellProps = {
@@ -67,7 +67,7 @@ export const OrderDetailsView: FC = () => {
           <ListCell label="启动方式：" value={STARTUP_MODE[orderDetails.startup_mode]} {...cellProps} />
           <ListCell label="开始时间：" value={formatDate(orderDetails.start_time)} {...cellProps} />
           <ListCell label="结束时间：" value={formatDate(orderDetails.end_time)} {...cellProps} />
-          <ListCell label="充电时长：" value={orderDetails.duration} {...cellProps} />
+          <ListCell label="充电时长：" value={getDuration(orderDetails.duration)} {...cellProps} />
           <ListCell label="充电度数：" value={orderDetails.electricity + 'kWh'} {...cellProps} />
           <ListCell label="电费：" renderValue={<Text style={{ color: '#f54c2b' }}>￥{orderDetails.charge_fee}</Text>} {...cellProps} />
           <ListCell label="服务费：" renderValue={<Text style={{ color: '#f54c2b' }}>￥{orderDetails.service_fee}</Text>} {...cellProps} />

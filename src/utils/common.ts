@@ -31,3 +31,22 @@ export const gcoordTransform = (coord: Array<number>, to = gcoord.GCJ02, from = 
 export const formatDate = function (ms: number, format: string = 'YYYY-MM-DD HH:mm:ss') {
   return dayjs(ms).format(format)
 }
+
+/** 
+ *  @description 根据毫秒数计算时长 
+ *  @params duration: 毫秒数
+ *  @return times: 返回时长 5h39min
+*/
+export const getDuration = (duration: number, h = 'h', min = 'min ', min2 = 'min ') => {
+  duration = duration / 1000;
+  let hour = Math.floor(duration / 3600);
+  let minutes = Math.floor((duration / 60 % 60));
+  let _min = min;
+  // let seconds = addZero(Math.floor((duration % 60)));
+  let times = '';
+  // 如果有“小时” 则使用分，否则使用分钟
+  _min = hour > 0 ? min2 : min;
+  hour > 0 && (times += hour + h)
+  times += minutes + _min
+  return times
+}
