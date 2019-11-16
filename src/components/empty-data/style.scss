@@ -1,0 +1,14 @@
+.empty-data_view {
+  box-sizing: border-box;
+  background: #fff;
+  text-align: center;
+  padding-top: 200px;
+  .empty-icon {
+    width: 256px;
+    height: 256px;
+  }
+  .empty-text{
+    color: #666;
+    letter-spacing: 2px;
+  }
+}
