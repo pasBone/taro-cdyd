@@ -1,14 +1,18 @@
 import { StringOrNumber } from "@/types";
 import { post } from '@/utils/http';
+import { CAR_VERIFY_STATUS } from "@/constant";
 
 export const mebApi = {
     login: post<mebApi.LoginReq, mebApi.LoginRes>('/meb/login'),
     /** 发送验证码 */
     sendCode: post<mebApi.SendCodeReq>("/meb/sendCode"),
+    /** 通过openId获取用户信息 */
+    getUserInfoByOpenId: post<mebApi.logoutReq, mebApi.LoginRes>("/meb/loginByOpenId"),
+    /** 获取车主认证状态 */
+    getCarVerifyStatus: post<mebApi.carVerifyInfoReq, mebApi.carVerifyStatusRes>("/mebCarVerify/getCarVerifyStatus"),
 }
 
 export namespace mebApi {
-
     export interface SendCodeReq {
         /** 运营商编码 */
         operator_code?: StringOrNumber
@@ -45,5 +49,21 @@ export namespace mebApi {
         avatar: string,
         /** 车牌号码 */
         plate_number: string
+    }
+
+    export interface logoutReq {
+        open_id: string
+    }
+
+    export interface carVerifyInfoReq {
+        /** meb_id */
+        meb_id: StringOrNumber
+    }
+
+    export interface carVerifyStatusRes {
+        /** 审核状态(1-待审核 2-未通过 3-已认证)	 */
+        status: CAR_VERIFY_STATUS
+        /** 审核状态描述 */
+        status_desc: string
     }
 }
