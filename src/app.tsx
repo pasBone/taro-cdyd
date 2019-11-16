@@ -52,7 +52,7 @@ class App extends Component {
           "text": "钱包"
         },
         {
-          "pagePath": "pages/order/index",
+          "pagePath": "pages/order/list/index",
           "text": "订单"
         },
         {
