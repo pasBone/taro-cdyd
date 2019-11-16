@@ -24,10 +24,15 @@ const sendCodeState = {
 	state: true
 }
 
-
 /** 缓存用户信息 */
 const storageUserInfo = (data) => {
 	setStorage({ key: 'userInfo', data })
+}
+
+/** 车主认证状态 */
+const carVerifyStatusState: mebApi.carVerifyStatusRes = {
+	status: 2,
+	status_desc: ''
 }
 
 export const userInfo = (state = userInfoState, action: IAction<mebApi.LoginRes>) => {
@@ -65,7 +70,18 @@ export const sendCode = (state = sendCodeState, action: IAction) => {
 	}
 }
 
+/** 获取车主认证状态 */
+export const carVerifyStatus = (state = carVerifyStatusState, action: IAction<mebApi.carVerifyStatusRes>) => {
+	switch (action.type) {
+		case types.GET_CAR_VERIFY_STATUS_SUCCESS:
+			return { ...action.payload }
+		default:
+			return state;
+	}
+}
+
 export const mebReducer = combineReducers({
 	userInfo,
-	sendCode
-})
+	sendCode,
+	carVerifyStatus
+});
