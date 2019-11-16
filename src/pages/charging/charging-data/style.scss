@@ -1,0 +1,31 @@
+.charging-data {
+    height: 275px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .charging-item {
+        text-align: center;
+        box-sizing: border-box;
+        border-right: 2px solid $whiteColor24;
+        min-width: 33.33%;
+
+        .label {
+            font-size: 28px;
+            color: $whiteColor64;
+            padding-top: 10px;
+        }
+
+        .value {
+            font-size: 44px;
+            color: #fff;
+            line-height: 1;
+        }
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+}
+
+       
