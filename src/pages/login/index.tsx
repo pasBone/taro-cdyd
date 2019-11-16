@@ -6,9 +6,8 @@ import VerificationCode from '@/components/verification-code'
 import Taro, { useState, useMemo } from '@tarojs/taro'
 import { loginAsync } from '@/store/module/meb/meb.actions'
 import { RootState } from '@/store/types';
-import { OPEN_ID } from '@/constant';
+import { OPEN_ID, DEFAULT_REG_WAY } from '@/constant';
 import './index.scss'
-
 
 const LoginView: Taro.FC = () => {
   const dispatch = useDispatch();
@@ -25,9 +24,9 @@ const LoginView: Taro.FC = () => {
     dispatch(
       loginAsync({
         open_id: OPEN_ID,
+        reg_way: DEFAULT_REG_WAY,
         tel,
         code,
-        reg_way: 2,
       })
     )
   }
