@@ -1,3 +1,4 @@
+@import "./../../../assets/style/border.scss";
 .order-list__view {
   border-top: 16px solid #f2f2f2;
   box-sizing: border-box;
@@ -10,7 +11,7 @@
       padding: 0 32px;
       padding-top: 33px;
       box-sizing: border-box;
-      border-bottom: 1px solid $blackColor10;
+      @include border-single($direction: bottom, $size: 1px, $color: $blackColor10, $position: relative);
       transition: background ease 0.3s;
       &:active,
       &:hover {

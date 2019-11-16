@@ -1,7 +1,7 @@
 import './style.scss'
 import { View, Text } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
-import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC } from '@tarojs/taro';
+import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
@@ -43,30 +43,38 @@ export const OrderListView: FC = () => {
     getOrderList(true);
   }, []);
 
+  const isEmpty = useMemo(() => {
+    return orderList.list.length == 0 && orderList.loading == false
+  }, [orderList]);
+
   return (
     <View className="order-list__view">
       {
-        orderList.list.length == 0 && orderList.loading == false
+        isEmpty
           ?
           <EmptyData />
           :
-          orderList.list.map(item => (
-            <View className="order-list" key={item.order_id}>
-              <View className="order-list__item">
-                <View className="order-list__title">
-                  <View className="desc">{item.station_name}</View>
-                  <Text>￥{item.total_fee}</Text>
+          <View>
+            {
+              orderList.list.map(item => (
+                <View className="order-list" key={item.order_id} onClick={() => navigateTo({ url: `/pages/order/details/index?id=${item.order_id}&stationId=${item.station_id}` })}>
+                  <View className="order-list__item">
+                    <View className="order-list__title">
+                      <View className="desc">{item.station_name}</View>
+                      <Text>￥{item.total_fee}</Text>
+                    </View>
+                    <View className="order-list__time">
+                      <Text>{formatDate(item.end_time)}</Text>
+                      <Text>充电电量{item.electricity}kWh</Text>
+                    </View>
+                  </View>
                 </View>
-                <View className="order-list__time">
-                  <Text>{formatDate(item.end_time)}</Text>
-                  <Text>充电电量{item.electricity}kWh</Text>
-                </View>
-              </View>
-            </View>
-          ))
+              ))
+            }
+            {orderList.loading && <AtLoadMore status={'loading'} />}
+            {orderList.lastPage && <AtLoadMore status={'noMore'} />}
+          </View>
       }
-      {orderList.loading && <AtLoadMore status={'loading'} />}
-      {orderList.lastPage && <AtLoadMore status={'noMore'} />}
     </View>
   )
 }
