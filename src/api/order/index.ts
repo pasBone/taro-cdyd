@@ -32,7 +32,7 @@ export namespace orderApi {
     /** 充电开始时间 */
     start_time: string,
     /** 充电结束时间 */
-    end_time: string,
+    end_time: number,
     /** 结束原因  1-用户手动结束  2-钱包余额不足  3-电量已充满  4-硬件故障，5-后台结算，6-app结算，7-离网后系统结算	 */
     end_type: END_TYPE,
     /** 充电时长 */
