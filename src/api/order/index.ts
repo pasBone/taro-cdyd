@@ -3,7 +3,7 @@ import { StringOrNumber, BaseList } from "@/types"
 
 export const orderApi = {
   /** 历史订单详情（充电订单） */
-  get: post<orderApi.DetailReq, orderApi.DetailRes>("/orderHis/get"),
+  details: post<orderApi.DetailReq, orderApi.DetailRes>("/orderHis/get"),
   /** 历史订单列表（充电订单） */
   list: post<orderApi.ListReq, orderApi.ListRes>("/orderHis/list"),
 }
@@ -30,7 +30,7 @@ export namespace orderApi {
     /** 1-APP启，2-微信公众号，3-刷卡启动，4-密码启动  */
     startup_mode: STARTUP_MODE,
     /** 充电开始时间 */
-    start_time: string,
+    start_time: number,
     /** 充电结束时间 */
     end_time: number,
     /** 结束原因  1-用户手动结束  2-钱包余额不足  3-电量已充满  4-硬件故障，5-后台结算，6-app结算，7-离网后系统结算	 */
@@ -40,11 +40,11 @@ export namespace orderApi {
     /** 充电电量 */
     electricity: string,
     /** 电费 */
-    charge_fee: StringOrNumber,
+    charge_fee: string,
     /** 服务费 */
-    service_fee: StringOrNumber,
+    service_fee: string,
     /** 订单金额 */
-    total_fee: StringOrNumber,
+    total_fee: string,
     /** 支付钱包类型：1-个人钱包，2-企业钱包 */
     pay_wallet: string,
     /** 运营商ID */
@@ -57,6 +57,8 @@ export namespace orderApi {
     pile_id: string,
     /** 充电桩编号 */
     pile_code: string,
+    /** 地址 */
+    address: string
   }
 
   /** 订单列表 请求参数类型 */
