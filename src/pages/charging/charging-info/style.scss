@@ -1,0 +1,46 @@
+.charging-info {
+  display: flex;
+  flex-wrap: wrap;
+  background: #4a7cd7;
+
+  &__item {
+    box-sizing: border-box;
+    min-width: 50%;
+    max-width: 50%;
+    height: 170px;
+    flex: 1;
+    display: flex;
+    align-items: center;
+
+    .img {
+      width: 56px;
+      height: 56px;
+      display: block;
+      margin-left: 40px;
+      margin-right: 33px;
+    }
+
+    .label {
+      font-size: 24px;
+      color: $whiteColor64;
+    }
+
+    .value {
+      font-size: 24px;
+      color: #fff;
+    }
+  }
+
+  &__item:nth-child(1),
+  &__item:nth-child(2),
+  &__item:nth-child(3),
+  &__item:nth-child(4) {
+    border-bottom: 2px solid #336acf;
+  }
+
+  &__item:nth-child(1),
+  &__item:nth-child(3),
+  &__item:nth-child(5) {
+    border-right: 2px solid #336acf;
+  }
+}
