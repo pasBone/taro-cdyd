@@ -6,3 +6,4 @@ node_modules/
 .DS_Store
 .eslintrc
 .editorconfig
+.vscode/settings.json
