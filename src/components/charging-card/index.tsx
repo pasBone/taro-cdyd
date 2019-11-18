@@ -19,6 +19,7 @@ export const ChargingCard = () => {
             <CoverView>20.00</CoverView>
           </CoverView>
         </CoverView>
+
         <CoverView className="charging-card__time">
           <CoverView>
             <CoverView>20&nbsp;&nbsp;|&nbsp;&nbsp;</CoverView>
