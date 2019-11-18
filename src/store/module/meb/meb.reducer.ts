@@ -2,13 +2,21 @@ import { combineReducers } from "redux";
 import { mebApi } from "@/api/meb";
 import { LoadingType } from "@/types";
 import { IAction } from "@/store/types";
-import { setStorage } from '@tarojs/taro'
+import { getStorageSync, setStorageSync } from '@tarojs/taro'
 import * as types from './meb.types'
 
 type UserInfo = mebApi.LoginRes & LoadingType
 
+/** 缓存用户信息 */
+const storageUserInfo = (data) => {
+	setStorageSync('userInfo', data)
+}
+
+/** 获取缓存用户信息 */
+const getorageUserInfo = () => getStorageSync('userInfo');
+
 /** 用户基本信息 */
-const userInfoState: UserInfo = {
+const userInfoState: UserInfo = getorageUserInfo() || {
 	loading: false,
 	meb_id: '',
 	operator_id: '',
@@ -22,11 +30,6 @@ const userInfoState: UserInfo = {
 /** 短信验证码发送状态 */
 const sendCodeState = {
 	state: true
-}
-
-/** 缓存用户信息 */
-const storageUserInfo = (data) => {
-	setStorage({ key: 'userInfo', data })
 }
 
 /** 车主认证状态 */
