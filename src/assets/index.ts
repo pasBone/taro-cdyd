@@ -3,7 +3,8 @@ const path = `./images/${THEME_CONFIG.name}`;
 export const IMAGE_MAP = {
     /** 登录页面背景 */
     loginBg: require(path + '/login_bg@2x.png'),
-
+    /** 实时计费圆环背景 */
+    calibration: require(path + '/calibration@2x.png'),
     /** 默认头像 */
     defaultAvatar: require(path + '/default-user.png'),
     /** 地图标记图标 */
@@ -83,4 +84,5 @@ export const IMAGE_MAP = {
     tabOrderIconFill: require("./images/tab-order-fill.png"),
     tabScanIconFill: require("./images/tab-scan.png"),
     emptyDataIcon: require('./images/empty-data.png'),
+    
 }
