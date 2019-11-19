@@ -5,6 +5,7 @@
   background: #fff;
   min-height: 100vh;
   box-sizing: border-box;
+  padding-bottom: 98px;
   .order-list {
     &__item {
       height: 180px;
@@ -13,10 +14,10 @@
       box-sizing: border-box;
       @include border-single($direction: bottom, $size: 1px, $color: $blackColor10, $position: relative);
       transition: background ease 0.3s;
-      &:hover {
-        transition: background ease 0.3s;
-        background: #eee;
-      }
+      // &:hover {
+      //   transition: background ease 0.3s;
+      //   background: #eee;
+      // }
     }
 
     &__title {

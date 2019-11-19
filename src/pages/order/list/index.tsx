@@ -21,7 +21,7 @@ export const OrderListView: FC = () => {
       getOrderListAsync({
         meb_id: userInfo.meb_id,
         pageSize: 10,
-        pageNumber: isRefresh ? 1 : order.pageNumber + 1
+        pageNumber: isRefresh ? 1 : orderList.pageNumber + 1
       })
     ).then(_ => {
       stopPullDownRefresh();
