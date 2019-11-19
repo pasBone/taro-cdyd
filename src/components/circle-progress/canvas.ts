@@ -41,7 +41,7 @@ class CircleProgressCanvas {
     const y = _(config.canvasHeight / 2);
     const ballRadius = _(config.ballRadius - config.barLineWidth) / 2;
     ctx.beginPath();//开始一个新的路径
-    ctx.arc(x, y, ballRadius, -Math.PI / 2, progress * Math.PI - Math.PI / 2, true);
+    ctx.arc(x, y, ballRadius, -Math.PI / 2, (progress * Math.PI - Math.PI / 2) + 0.0001, true);
     ctx.stroke();//对当前路径进行描边
   }
 

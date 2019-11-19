@@ -4,7 +4,7 @@ import { px2rpx as _ } from '@/utils/common'
 import CircleProgressCanvas from './canvas';
 
 type IProps = {
-  progress: number
+  progress: string
 }
 
 export default class CircleProgress extends Taro.Component<IProps> {
@@ -14,8 +14,9 @@ export default class CircleProgress extends Taro.Component<IProps> {
   componentDidMount() {
     this.circleProgress = new CircleProgressCanvas({
       ctx: this
-    });
+    }).repaint(Number(this.props.progress));
   }
+
   componentDidUpdate() {
     this.circleProgress.repaint(this.props.progress);
   }
