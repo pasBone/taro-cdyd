@@ -42,7 +42,6 @@ const VerificationCode: FC<VerificationCodeProps> = (props) => {
 	}
 
 	useEffect(() => {
-
 		if (codeDisabled) {
 			if (time < 0 || verifyState === false) {
 				resetCodeFn();
@@ -52,7 +51,6 @@ const VerificationCode: FC<VerificationCodeProps> = (props) => {
 				countDown();
 			}, 1000);
 		}
-
 		return () => clearTimeout(timerRef.current);
 	}, [time, codeDisabled, verifyState]);
 
@@ -60,14 +58,12 @@ const VerificationCode: FC<VerificationCodeProps> = (props) => {
 		if (!REG_MAP.mobileNumber.test(tel)) {
 			return Toast.info('手机号码格式不正确');
 		}
-
 		countDown();
 		setCodeDisabled(true);
 		onClick && onClick();
-
 		dispatch(
 			sendCodeAsync({ tel })
-		)
+		);
 	}, [tel]);
 
 	return (
