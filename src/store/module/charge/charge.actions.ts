@@ -3,15 +3,17 @@ import { Dispatch } from 'redux';
 import { chargeApi } from '@/api/charge';
 import Toast from '@/utils/toast';
 import { OPERATE_CODE } from '@/types';
-import { showModal, navigateTo } from '@tarojs/taro';
+import { showModal, navigateTo, switchTab } from '@tarojs/taro';
 import { ORDER_STATUS } from '@/constant';
 
+const confirmColor = '#f00';
 /** 重新发起充电 */
 export const reApplyCharge = () => {
   return showModal({
     title: "请检查充电枪连接状态",
     content: "系统检测到充电枪和车辆未连接，请确保两者已有效连接",
-    confirmText: "已连接好"
+    confirmText: "已连接好",
+    confirmColor
   });
 }
 
@@ -21,6 +23,7 @@ export const checkCarVerify = (content: string) => {
     content,
     confirmText: "去认证",
     title: "请完成车主认证",
+    confirmColor
   });
 }
 
@@ -30,6 +33,7 @@ export const checkWallet = (content: string) => {
     title: "提示信息",
     content,
     confirmText: "去充值",
+    confirmColor
   });
 }
 
@@ -56,8 +60,9 @@ export const applyChargeAsync = (params: chargeApi.ApplyChargeReq) => {
       } else if (error.code === OPERATE_CODE.余额不足请充值) {
         checkWallet(error.message).then((res) => {
           if (res.confirm) {
-            //todo 跳转到钱包充值界面
-            console.log('todo 跳转到钱包充值界面');
+            switchTab({
+              url: '/pages/wallet/index'
+            });
           }
         })
       } else if ([OPERATE_CODE.车主未认证_启动充电, OPERATE_CODE.车主认证未通过_启动充电].includes(error.code)) {
@@ -91,7 +96,7 @@ export const getChargeInfoAsync = (params: chargeApi.GetChargingInfoReq) => {
       /** 定时器 */
       let timer: any = null;
 
-      dispatch(getChargeInfo({ loading: true }));
+      dispatch(getChargeInfo({ loading: false }));
 
       /** 初次查询一次 */
       getChargeInfoPolling();
@@ -125,7 +130,7 @@ export const getChargeInfoAsync = (params: chargeApi.GetChargingInfoReq) => {
               console.log('todo 轮询结束提示失败');
             }
           }
-          
+
         } else {
           if (timer === null) {  //首次查询充电信息且没有充电信息
             dispatch(getChargeInfoError());

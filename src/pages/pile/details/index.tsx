@@ -74,7 +74,7 @@ export const PileDetailsView: FC = () => {
               <AtIcon value='lightning-bolt' size='18' color='#FFF'></AtIcon>正在充电
             </AtButton>
             :
-            <AtButton type='primary' className="cdyd-primary-button" disabled={chargeInfo.loading} loading={chargeInfo.loading} full onClick={applyCharge}>启动启动</AtButton>
+            <AtButton type='primary' className="cdyd-primary-button" disabled={chargeInfo.loading} loading={chargeInfo.loading} full onClick={applyCharge}>启动充电</AtButton>
         }
       </View>
     </View>
