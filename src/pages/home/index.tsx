@@ -27,12 +27,12 @@ export const HomeView: FC = () => {
     dispatch(
       getStationListAsync({ longitude, latitude, pageSize: 100 })
     )
-  }, [])
+  }, []);
 
   /** 点击站点事件 */
   const makerTap = useCallback((data) => {
-    setStationDetails(data.markerId)
-  }, [stationList])
+    setStationDetails(data.markerId);
+  }, [stationList]);
 
   /** 点击空白地图重置事件 */
   const mapTap = useCallback(() => {
@@ -48,14 +48,13 @@ export const HomeView: FC = () => {
   /** 地图站点标记打点 */
   const markers = useMemo(() => {
     /** 当前定位标记 */
-    const [long, lat] = gcoordTransform([longitude, latitude]);
-    const locationMarker = {
-      iconPath: IMAGE_MAP.mapLocationMarker,
-      latitude: lat,
-      longitude: long,
-      width: 16,
-      height: 40
-    }
+    // const locationMarker = {
+    //   iconPath: IMAGE_MAP.mapLocationMarker,
+    //   latitude,
+    //   longitude,
+    //   width: 16,
+    //   height: 40
+    // }
     /** 站点标记 */
     const stationMarker = stationList.list.map(item => {
       const [long, lat] = gcoordTransform([item.longitude, item.latitude]);
@@ -68,7 +67,7 @@ export const HomeView: FC = () => {
         height: 35
       }
     });
-    return [locationMarker, ...stationMarker]
+    return stationMarker;
   }, [stationList])
 
   return (
