@@ -37,6 +37,15 @@ export const checkWallet = (content: string) => {
   });
 }
 
+/** 启动失败重试 */
+export const retry = () => {
+  return showModal({
+    title: "提示信息",
+    content: "启动失败，请重试",
+    confirmText: "重试"
+  });
+}
+
 /** 启动充电 */
 export const applyChargeAsync = (params: chargeApi.ApplyChargeReq) => {
   return async (dispatch) => {
@@ -86,7 +95,7 @@ export const applyChargeSuccess = () => ({ type: types.APPLY_CHARGE_SUCCESS });
 
 /** 获取充电信息 */
 export const getChargeInfoAsync = (params: chargeApi.GetChargingInfoReq) => {
-  return async (dispatch: Dispatch) => {
+  return async (dispatch) => {
     try {
 
       /** 获取启动充电结果频率 */
@@ -126,8 +135,18 @@ export const getChargeInfoAsync = (params: chargeApi.GetChargingInfoReq) => {
                 getChargeInfoPolling();
               }, frequency);
             } else {
-              //todo 轮询结束提示失败
-              console.log('todo 轮询结束提示失败');
+              dispatch(applyChargeError());
+              retry().then((res) => {
+                if (res.confirm) {
+                  dispatch(
+                    getChargeInfoAsync({
+                      meb_id: params.meb_id
+                    })
+                  );
+                  //todo 轮询结束提示失败
+                  console.log('todo 轮询结束提示失败');
+                }
+              })
             }
           }
 
