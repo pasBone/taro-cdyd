@@ -3,32 +3,28 @@ import { View, Canvas } from '@tarojs/components';
 import { px2rpx as _ } from '@/utils/common'
 import CircleProgressCanvas from './canvas';
 
-export default class CircleProgress extends Taro.Component {
+type IProps = {
+  progress: number
+}
 
-  state = {
-    canvasWidth: 420,
-    canvasHeight: 420
-  }
+export default class CircleProgress extends Taro.Component<IProps> {
 
-  componentDidShow() {
-    const circle = new CircleProgressCanvas({
-      ctx: this,
-      canvasWidth: this.state.canvasWidth,
-      canvasHeight: this.state.canvasHeight
+  private circleProgress;
+
+  componentDidMount() {
+    this.circleProgress = new CircleProgressCanvas({
+      ctx: this
     });
-    let progress = 0;
-    setInterval(_ => {
-      progress += 0.01;
-      circle.repaint(progress)
-    }, 500);
+  }
+  componentDidUpdate() {
+    this.circleProgress.repaint(this.props.progress);
   }
 
   render() {
-    const { canvasWidth, canvasHeight } = this.state;
     return (
       <View className="ball-progress">
         <View>{this.props.children}</View>
-        <Canvas canvasId="ball" style={{ width: canvasWidth + 'rpx', height: canvasHeight + 'rpx', margin: '0 auto' }} />
+        <Canvas canvasId="ball" style={{ width: 420 + 'rpx', height: 420 + 'rpx', margin: '0 auto' }} />
       </View>
     )
   }

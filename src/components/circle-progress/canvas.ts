@@ -73,9 +73,7 @@ class CircleProgressCanvas {
 }
 
 type Config = {
-  ctx: any,
-  canvasHeight: number,
-  canvasWidth: number,
+  ctx: any
 }
 
 export default CircleProgressCanvas;
