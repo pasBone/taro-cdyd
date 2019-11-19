@@ -51,6 +51,24 @@ export const getDuration = (duration: number, h = 'h', min = 'min ', min2 = 'min
   return times
 }
 
+/** 增加前导零 */
+export const addZero = function (times: number) {
+  return times < 10 ? '0' + times : times;
+}
+
+/** 
+ *  @description 根据毫秒数计算时长 
+ *  @params duration: 毫秒数
+ *  @return times: 返回时长 01:12:53
+*/
+export const getDurationFull = (duration: number) => {
+  duration = duration / 1000;
+  let hour = addZero(Math.floor(duration / 3600));
+  let minutes = addZero(Math.floor((duration / 60 % 60)));
+  let seconds = addZero(Math.floor((duration % 60)));
+  return `${hour}:${minutes}:${seconds}`
+}
+
 /**
  * @descrption px 装换成 rpx, 用于js计算
  * @param px 
