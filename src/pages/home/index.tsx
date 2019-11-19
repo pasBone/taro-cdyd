@@ -91,3 +91,7 @@ export const HomeView: FC = () => {
     </View>
   )
 }
+
+HomeView.config = {
+  navigationStyle: 'custom'
+}
