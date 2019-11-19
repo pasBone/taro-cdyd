@@ -15,6 +15,14 @@
   align-items: center;
   justify-content: center;
   text-align: center;
+  .progress-content {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 120px;
+    z-index: 99;
+    margin: 0 auto;
+  }
   .soc {
     min-width: 100%;
     font-size: 32px;
