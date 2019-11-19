@@ -2,7 +2,7 @@ import './style.scss';
 import { FC, createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
-import { View, Map, CoverImage, CoverView } from "@tarojs/components"
+import { View, Map, CoverImage } from "@tarojs/components"
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { getStationListAsync } from '@/store/module/station/station.actions'
 import { RootState } from '@/store/types'
@@ -73,15 +73,10 @@ export const HomeView: FC = () => {
 
   return (
     <View className="home-view">
-
       <View className="map-view">
-
         <CoverImage onClick={getLocation} className="gps-icon" src={IMAGE_MAP.gps} />
-
         <CoverImage onClick={() => navigateTo({ url: '/pages/station/list/index' })} className="station-list-icon" src={IMAGE_MAP.code} />
-
         <CurrentStationCard  {...stationDetails} />
-
         <Map
           id="homeMap"
           markers={markers}
@@ -92,7 +87,6 @@ export const HomeView: FC = () => {
           onTap={mapTap}
           scale={12}
         />
-
       </View>
     </View>
   )
