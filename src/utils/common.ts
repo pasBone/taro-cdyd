@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import gcoord from 'gcoord'
-import { getSetting, authorize } from '@tarojs/taro';
+import { getSetting, authorize, getSystemInfoSync } from '@tarojs/taro';
 
 /**
  * @description 适用于小程序内所有需要授权的地方，在用户拒绝授权之后重新要求用户授权
@@ -49,4 +49,14 @@ export const getDuration = (duration: number, h = 'h', min = 'min ', min2 = 'min
   hour > 0 && (times += hour + h)
   times += minutes + _min
   return times
+}
+
+/**
+ * @descrption px 装换成 rpx, 用于js计算
+ * @param px 
+ * @return rpx
+ */
+export const px2rpx = (px: number) => {
+  var systemInfo = getSystemInfoSync();
+  return px / 750 * systemInfo.windowWidth;
 }
