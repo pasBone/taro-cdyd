@@ -26,5 +26,7 @@ export const ChargingView: FC = () => {
 
 ChargingView.config = {
   navigationBarTitleText: '正在充电',
-  enablePullDownRefresh: true
+  enablePullDownRefresh: true,
+  navigationStyle: 'custom',
+  navigationBarTextStyle: 'white'
 }
