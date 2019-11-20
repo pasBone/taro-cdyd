@@ -10,12 +10,17 @@
   border: none;
 }
 
-.at-load-more__tip, .at-activity-indicator__content {
+.at-load-more__tip,
+.at-activity-indicator__content {
   font-size: 24px;
 }
 
 .cdyd-primary-button {
   background: $themeColor;
+}
+
+.at-nav-bar__left-view:active {
+  background-color: rgba(0, 0, 0, 0);
 }
 
 /**自定义toast样式 */
