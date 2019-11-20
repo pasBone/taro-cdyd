@@ -2,7 +2,7 @@ import './style.scss';
 import { View, Text } from '@tarojs/components';
 import { RootState } from '@/store/types';
 import { useSelector } from '@tarojs/redux';
-import { useEffect, useRef, useCallback, useState, useMemo } from '@tarojs/taro';
+import { useEffect, useRef, useState, useMemo } from '@tarojs/taro';
 import { getDurationFull } from '@/utils/common';
 
 export const ChargingData = () => {
