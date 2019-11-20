@@ -62,24 +62,31 @@ const chargeInfoState: chargeApi.GetChargingInfoRes & LoadingType & ErrorType = 
 
 export const chargeInfo = (state = chargeInfoState, actions: IAction<chargeApi.GetChargingInfoRes>) => {
 	switch (actions.type) {
-		case types.APPLY_CHARGE:
-			return { ...state, loading: true, error: false };
-		case types.APPLY_CHARGE_ERROR: //启动充电失败
-			return { ...state, loading: false, error: true };
-		case types.APPLY_CHARGE_SUCCESS: //启动充电成功
-			return { ...state, loading: false, error: false };
-
-		case types.GET_CHARGE_INFO: //获取充电信息
-			return { ...chargeInfoState, loading: false, error: false, ...actions.payload };
+		case types.GET_CHARGE_INFO:
+			return { ...state, loading: true };
 		case types.GET_CHARGE_INFO_SUCCESS:
-			return { ...chargeInfoState, loading: false, error: false, ...actions.payload };
+			return { ...state, ...(actions.payload === null ? chargeInfoState : actions.payload), loading: false };
 		case types.GET_CHARGE_INFO_ERROR:
-			return { ...state, error: true, loading: false };
+			return { ...state, loading: false };
 		default:
 			return state;
 	}
 };
 
+export const applyCharge = (state = chargeInfoState, actions: IAction<chargeApi.GetChargingInfoRes>) => {
+	switch (actions.type) {
+		case types.APPLY_CHARGE:
+			return { ...state, loading: true, error: false };
+		case types.APPLY_CHARGE_ERROR: //启动充电失败
+			return { ...state, loading: false, error: true };
+		case types.APPLY_CHARGE_SUCCESS: //启动充电成功
+			return { ...state, ...actions.payload, loading: false, error: false };
+		default:
+			return state;
+	}
+}
+
 export const chargeReducer = combineReducers({
-	chargeInfo
+	chargeInfo,
+	applyCharge
 });

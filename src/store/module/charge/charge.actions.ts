@@ -1,12 +1,15 @@
 import * as types from './charge.types';
-import { Dispatch } from 'redux';
 import { chargeApi } from '@/api/charge';
 import Toast from '@/utils/toast';
 import { OPERATE_CODE } from '@/types';
 import { showModal, navigateTo, switchTab } from '@tarojs/taro';
 import { ORDER_STATUS } from '@/constant';
+import { IAction } from '@/store/types';
 
+/** modal 按钮颜色 */
 const confirmColor = '#f00';
+/** 充电定时器 */
+let applyChargeTimer: any = null;
 /** 重新发起充电 */
 export const reApplyCharge = () => {
   return showModal({
@@ -53,9 +56,7 @@ export const applyChargeAsync = (params: chargeApi.ApplyChargeReq) => {
       dispatch(applyCharge());
       const response = await chargeApi.applyCharge(params);
       dispatch(
-        getChargeInfoAsync({
-          meb_id: params.meb_id
-        })
+        getChargeInfoPolling(dispatch, params)
       );
     } catch (error) {
       if (error.code === OPERATE_CODE.充电枪未连接) {
@@ -89,6 +90,56 @@ export const applyChargeAsync = (params: chargeApi.ApplyChargeReq) => {
   }
 }
 
+/** 轮询获取充电信息 */
+export const getChargeInfoPolling = (dispatch, params) => {
+  /** 获取启动充电结果频率 */
+  const frequency: number = 3000;
+  /** 最大轮询次数 */
+  let pollingTimes: number = 20;
+  const pollingFn = () => {
+    pollingTimes--;
+    dispatch(
+      getChargeInfoAsync({
+        meb_id: params.meb_id
+      })
+    ).then((data: IAction<chargeApi.GetChargingInfoRes>) => {
+      const payload = data.payload;
+      if (payload) {
+        if ([ORDER_STATUS.正在充电, ORDER_STATUS.暂停中].includes(payload.order_status)) {
+          dispatch(
+            applyChargeSuccess()
+          );
+          return navigateTo({ url: '/pages/charging/index' });
+        }
+
+        /** 启动中则轮询接口至启动成功 */
+        if (ORDER_STATUS.启动中 == payload.order_status) {
+          if (pollingTimes >= 1) {
+            applyChargeTimer = setTimeout(() => {
+              pollingFn();
+            }, frequency);
+          } else {
+            dispatch(applyChargeError());
+            retry().then((res) => {
+              /** 轮询结束提示失败,点击重试 */
+              if (res.confirm) {
+                dispatch(
+                  applyChargeAsync(params)
+                );
+              }
+            })
+          }
+        }
+      } else {
+        //todo 提示启动失败
+        dispatch(applyChargeError());
+      }
+    });
+    return { type: types.GET_CHARGE_INFO }
+  }
+  return pollingFn();
+}
+
 export const applyCharge = () => ({ type: types.APPLY_CHARGE });
 export const applyChargeError = () => ({ type: types.APPLY_CHARGE_ERROR });
 export const applyChargeSuccess = () => ({ type: types.APPLY_CHARGE_SUCCESS });
@@ -97,74 +148,25 @@ export const applyChargeSuccess = () => ({ type: types.APPLY_CHARGE_SUCCESS });
 export const getChargeInfoAsync = (params: chargeApi.GetChargingInfoReq) => {
   return async (dispatch) => {
     try {
-
-      /** 获取启动充电结果频率 */
-      const frequency: number = 3000;
-      /** 最大轮询次数 */
-      let pollingTimes: number = 20;
-      /** 定时器 */
-      let timer: any = null;
-
-      dispatch(getChargeInfo({ loading: false }));
-
-      /** 初次查询一次 */
-      getChargeInfoPolling();
-
-      async function getChargeInfoPolling() {
-        pollingTimes--;
-        clearTimeout(timer);
-        const resposne = await chargeApi.getChargingInfo(params);
-        const data = resposne.data;
-        dispatch(
-          getChargeInfoSuccess({ ...data, loading: true })
-        );
-
-        /** order_status等于 1 || 2 表示启动成功则跳转到实时计费页面 */
-        if (data) {
-          if ([ORDER_STATUS.正在充电, ORDER_STATUS.暂停中].includes(data.order_status) && timer !== null) {
-            dispatch(
-              applyChargeSuccess()
-            );
-            return navigateTo({ url: '/pages/charging/index' });
-          }
-
-          /** 启动中则轮询接口至启动成功 */
-          if (ORDER_STATUS.启动中 == data.order_status) {
-            if (pollingTimes >= 1) {
-              timer = setTimeout(() => {
-                getChargeInfoPolling();
-              }, frequency);
-            } else {
-              dispatch(applyChargeError());
-              retry().then((res) => {
-                if (res.confirm) {
-                  dispatch(
-                    getChargeInfoAsync({
-                      meb_id: params.meb_id
-                    })
-                  );
-                  //todo 轮询结束提示失败
-                  console.log('todo 轮询结束提示失败');
-                }
-              })
-            }
-          }
-
-        } else {
-          if (timer === null) {  //首次查询充电信息且没有充电信息
-            dispatch(getChargeInfoError());
-          } else {
-            //todo 重新启动
-            dispatch(applyChargeError());
-          }
-        }
-      }
+      dispatch(getChargeInfo());
+      const resposne = await chargeApi.getChargingInfo(params);
+      dispatch(
+        getChargeInfoSuccess(resposne.data)
+      );
+      return { type: types.GET_CHARGE_INFO_SUCCESS, payload: resposne.data }
+      // return resposne;
     } catch (error) {
       dispatch(getChargeInfoError());
     }
   }
 }
 
-export const getChargeInfo = (payload) => ({ type: types.GET_CHARGE_INFO, payload });
+export const getChargeInfo = () => ({ type: types.GET_CHARGE_INFO });
 export const getChargeInfoError = () => ({ type: types.GET_CHARGE_INFO_ERROR });
 export const getChargeInfoSuccess = (payload) => ({ type: types.GET_CHARGE_INFO_SUCCESS, payload });
+
+/** 清除定时器 */
+export const clearApplyChargeTimer = () => {
+  clearTimeout(applyChargeTimer);
+  return { type: types.CLEAR_APPLY_CHARGE_TIMER }
+}
