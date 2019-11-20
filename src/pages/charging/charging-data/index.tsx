@@ -11,7 +11,8 @@ export const ChargingData = () => {
   let timer = useRef<any>();
 
   const durationTime = useMemo(() => {
-    return getDurationFull(duration)
+    console.log(chargeInfo.duration, 'chargeInfo.duration1');
+    return getDurationFull(duration);
   }, [duration, chargeInfo.duration]);
 
   useEffect(() => {
@@ -19,7 +20,12 @@ export const ChargingData = () => {
       setDuration(duration + 1000);
     }, 1000);
     return () => clearTimeout(timer.current);
-  }, [duration, chargeInfo.duration]);
+  }, [duration]);
+
+  useEffect(() => {
+    console.log(chargeInfo.duration, 'chargeInfo.duration2');
+    setDuration(() => chargeInfo.duration);
+  }, [chargeInfo.duration]);
 
   return (
     <View className="charging-data">
