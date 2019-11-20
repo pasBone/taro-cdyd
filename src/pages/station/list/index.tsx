@@ -13,6 +13,7 @@ export const StationList: FC = () => {
 
   /** 获取列表 */
   const getStationList = useCallback((isRefresh = false) => {
+    if (stationList.lastPage && !isRefresh) return;
     showNavigationBarLoading();
     dispatch(
       getStationListAsync({
@@ -25,7 +26,7 @@ export const StationList: FC = () => {
       stopPullDownRefresh();
       hideNavigationBarLoading();
     })
-  }, [stationList, latitude, longitude]);
+  }, [stationList.pageNumber, stationList.lastPage, latitude, longitude]);
 
   /** 下拉刷新 */
   usePullDownRefresh(() => {
