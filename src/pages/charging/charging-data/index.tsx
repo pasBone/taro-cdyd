@@ -12,14 +12,14 @@ export const ChargingData = () => {
 
   const durationTime = useMemo(() => {
     return getDurationFull(duration)
-  }, [duration]);
+  }, [duration, chargeInfo.duration]);
 
   useEffect(() => {
     timer.current = setTimeout(() => {
       setDuration(duration + 1000);
     }, 1000);
     return () => clearTimeout(timer.current);
-  }, [duration]);
+  }, [duration, chargeInfo.duration]);
 
   return (
     <View className="charging-data">
