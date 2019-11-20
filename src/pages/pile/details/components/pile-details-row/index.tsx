@@ -1,9 +1,9 @@
+import './style.scss'
 import { View } from "@tarojs/components"
 import { PILE_STATUS, PILE_SHOW_MAP } from "@/constant"
 import { FC } from "@tarojs/taro"
 import { useSelector } from "@tarojs/redux"
 import { RootState } from "@/store/types"
-import './style.scss'
 
 export const PileDetailsRow: FC = () => {
   const pileDetails = useSelector((state: RootState) => state.pile.pileDetails);
