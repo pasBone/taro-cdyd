@@ -10,6 +10,7 @@ import CurrentStationCard from './components/current-station-card'
 import { stationApi } from '@/api/station'
 import { getLocationAsync } from '@/store/module/common/common.actions'
 import { gcoordTransform } from "@/utils/common";
+import { ChargingCard } from '@/components/charging-card';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
 
@@ -48,13 +49,13 @@ export const HomeView: FC = () => {
   /** 地图站点标记打点 */
   const markers = useMemo(() => {
     /** 当前定位标记 */
-    // const locationMarker = {
-    //   iconPath: IMAGE_MAP.mapLocationMarker,
-    //   latitude,
-    //   longitude,
-    //   width: 16,
-    //   height: 40
-    // }
+    const locationMarker = {
+      iconPath: IMAGE_MAP.mapLocationMarker,
+      latitude,
+      longitude,
+      width: 16,
+      height: 40
+    }
     /** 站点标记 */
     const stationMarker = stationList.list.map(item => {
       const [long, lat] = gcoordTransform([item.longitude, item.latitude]);
@@ -67,7 +68,7 @@ export const HomeView: FC = () => {
         height: 35
       }
     });
-    return stationMarker;
+    return [...stationMarker, locationMarker];
   }, [stationList])
 
   return (
@@ -76,6 +77,7 @@ export const HomeView: FC = () => {
         <CoverImage onClick={getLocation} className="gps-icon" src={IMAGE_MAP.gps} />
         <CoverImage onClick={() => navigateTo({ url: '/pages/station/list/index' })} className="station-list-icon" src={IMAGE_MAP.code} />
         <CurrentStationCard  {...stationDetails} />
+        <ChargingCard />
         <Map
           id="homeMap"
           markers={markers}
