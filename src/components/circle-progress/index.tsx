@@ -18,7 +18,7 @@ export default class CircleProgress extends Taro.Component<IProps> {
   }
 
   componentDidUpdate() {
-    this.circleProgress.repaint(this.props.progress);
+    this.circleProgress && this.circleProgress.repaint(this.props.progress);
   }
 
   render() {

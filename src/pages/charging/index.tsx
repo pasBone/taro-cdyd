@@ -1,6 +1,6 @@
 import './style.scss';
 import { View } from '@tarojs/components';
-import { FC, useCallback, usePullDownRefresh, useEffect, useRef } from '@tarojs/taro';
+import { FC, useCallback, usePullDownRefresh, useEffect, useRef, navigateTo, switchTab } from '@tarojs/taro';
 import { ChargingBall } from './charging-ball';
 import { ChargingData } from './charging-data';
 import { ChargingInfo } from './charging-info';
@@ -29,6 +29,9 @@ export const ChargingView: FC = () => {
       } else if (chargeInfo.order_status === ORDER_STATUS.暂停中) {
         // todo 变更状态为已结束
       } else {
+        switchTab({
+          url: '/pages/home/index'
+        });
         //todo 充电已结束。
       }
     });

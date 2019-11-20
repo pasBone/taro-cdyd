@@ -7,7 +7,7 @@ import { getDurationFull } from '@/utils/common';
 
 export const ChargingData = () => {
   const chargeInfo = useSelector((state: RootState) => state.charge.chargeInfo);
-  let [duration, setDuration] = useState(chargeInfo.duration + 5000);
+  let [duration, setDuration] = useState(chargeInfo.duration);
   let timer = useRef<any>();
 
   const calcDurationTimer = useCallback(() => {
@@ -18,7 +18,6 @@ export const ChargingData = () => {
   }, [duration]);
 
   const durationTime = useMemo(() => {
-    console.log(duration, 'duration');
     return getDurationFull(duration)
   }, [duration]);
 
