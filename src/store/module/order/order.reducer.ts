@@ -23,11 +23,12 @@ export const orderList = (state = orderListState, actions: IAction<orderApi.List
       return { ...state, loading: true }
     case types.GET_ORDER_LIST_SUCCESS:
       if (actions.payload.firstPage) return actions.payload;
+      const { list } = actions.payload;
       return {
         loading: false,
         error: false,
-        list: [...state.list, ...actions.payload.list || []],
-        ...actions.payload
+        ...actions.payload,
+        list: [...state.list, ...list || []],
       }
     default:
       return { ...state, loading: false }
@@ -43,7 +44,7 @@ const orderDetailsState: orderApi.DetailRes & LoadingType = {
   /** 订单类型（1：正常订单，2-异常订单）	 */
   order_type: '',
   /** 订单状态：0-启动中，1-充电中，2-暂停中，3-已完成，4-已关闭，5-已作废 */
-  order_status: 0,
+  order_status: 3,
   /** 1-APP启，2-微信公众号，3-刷卡启动，4-密码启动  */
   startup_mode: 1,
   /** 充电开始时间 */
@@ -53,7 +54,7 @@ const orderDetailsState: orderApi.DetailRes & LoadingType = {
   /** 结束原因  1-用户手动结束  2-钱包余额不足  3-电量已充满  4-硬件故障，5-后台结算，6-app结算，7-离网后系统结算	 */
   end_type: 1,
   /** 充电时长 */
-  duration: '',
+  duration: 0,
   /** 充电电量 */
   electricity: '',
   /** 电费 */

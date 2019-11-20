@@ -16,6 +16,7 @@ export const OrderListView: FC = () => {
 
   /** 获取列表 */
   const getOrderList = useCallback((isRefresh = false) => {
+    if (orderList.lastPage && !isRefresh) return;
     showNavigationBarLoading();
     dispatch(
       getOrderListAsync({
@@ -27,7 +28,7 @@ export const OrderListView: FC = () => {
       stopPullDownRefresh();
       hideNavigationBarLoading();
     })
-  }, []);
+  }, [orderList.pageNumber, orderList.lastPage]);
 
   /** 下拉刷新 */
   usePullDownRefresh(() => {

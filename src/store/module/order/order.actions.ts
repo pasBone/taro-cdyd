@@ -25,7 +25,6 @@ export const getOrderList = (() => ({ type: types.GET_ORDER_LIST }));
 export const getOrderListError = (() => ({ type: types.GET_ORDER_LIST_ERROR }));
 export const getOrderListSuccess = ((payload) => ({ type: types.GET_ORDER_LIST_SUCCESS, payload }));
 
-
 /** 获取订单详情 */
 export const getOrderDetailsAsync = (params: orderApi.DetailReq) => {
   return async (dispatch: Dispatch) => {
