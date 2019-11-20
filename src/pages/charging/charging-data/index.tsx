@@ -10,21 +10,16 @@ export const ChargingData = () => {
   let [duration, setDuration] = useState(chargeInfo.duration);
   let timer = useRef<any>();
 
-  const calcDurationTimer = useCallback(() => {
-    setDuration(duration + 1000);
-    timer.current = setTimeout(() => {
-      calcDurationTimer();
-    }, 1000);
-  }, [duration]);
-
   const durationTime = useMemo(() => {
     return getDurationFull(duration)
   }, [duration]);
 
   useEffect(() => {
-    calcDurationTimer();
-    return () => clearTimeout(timer.current)
-  }, [chargeInfo.duration]);
+    timer.current = setTimeout(() => {
+      setDuration(duration + 1000);
+    }, 1000);
+    return () => clearTimeout(timer.current);
+  }, [duration]);
 
   return (
     <View className="charging-data">
