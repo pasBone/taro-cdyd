@@ -51,7 +51,7 @@ export const userInfo = (state = userInfoState, action: IAction<mebApi.LoginRes>
 
 		case types.LOG_IN_ERROR || types.CLEAR_USER_INFO:
 			storageUserInfo(state);
-			return userInfoState
+			return { ...userInfoState, loading: false }
 
 		default:
 			return state

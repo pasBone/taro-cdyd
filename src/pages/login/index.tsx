@@ -4,11 +4,10 @@ import { AtButton, AtInput } from 'taro-ui';
 import { View, Image } from '@tarojs/components'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import VerificationCode from '@/components/verification-code'
-import Taro, { useState, useMemo, switchTab } from '@tarojs/taro'
-import { loginAsync } from '@/store/module/meb/meb.actions'
+import Taro, { useState, useMemo, useEffect } from '@tarojs/taro'
+import { loginAsync, clearUserInfo } from '@/store/module/meb/meb.actions'
 import { RootState } from '@/store/types';
 import { DEFAULT_REG_WAY } from '@/constant';
-import { mebApi } from '@/api/meb';
 
 const LoginView: Taro.FC = () => {
   const dispatch = useDispatch();
@@ -28,14 +27,12 @@ const LoginView: Taro.FC = () => {
         tel,
         code,
       })
-    ).then((data: mebApi.LoginRes) => {
-      if (data.meb_id) {
-        switchTab({
-          url: '/pages/home/index'
-        })
-      }
-    })
+    )
   }
+
+  useEffect(() => {
+    dispatch(clearUserInfo());
+  }, []);
 
   return (
     <View className='login-view' style={'background-image:url(' + IMAGE_MAP.loginBg + ')'}>
@@ -49,7 +46,6 @@ const LoginView: Taro.FC = () => {
           <AtInput
             className="login-input"
             name='tel'
-            type='phone'
             placeholder='请输入手机号码'
             border={false}
             value={tel}
@@ -70,7 +66,7 @@ const LoginView: Taro.FC = () => {
           <AtInput
             className="login-input"
             name='code'
-            type='number'
+            type='digit'
             placeholder='验证码'
             maxLength='6'
             border={false}

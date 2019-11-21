@@ -2,8 +2,6 @@ import { OPERATE_CODE, Res } from '@/types';
 import { OPERATOR_CODE } from '@/constant';
 import Taro, { getStorageSync, navigateTo } from '@tarojs/taro';
 import Toast from './toast';
-import { useDispatch } from '@tarojs/redux';
-import { clearUserInfo } from '@/store/module/meb/meb.actions';
 
 const BASE_URL = 'https://wx.succtime.com/wx';
 // const BASE_URL = "https://wx.youdaocharge.com/wx"
@@ -76,7 +74,6 @@ const genReqestMethods = (type: RequestType) => {
 
 					if (response.code === OPERATE_CODE.登录信息失效) {
 						Toast.info(response.message);
-						useDispatch()(clearUserInfo());
 						return navigateTo({
 							url: '/pages/login/index'
 						});
