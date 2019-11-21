@@ -1,7 +1,7 @@
 import { IMAGE_MAP } from "@/assets"
 
 /** 默认登录途径（1表示APP， 2表示微信公众号）	 */
-export const DEFAULT_REG_WAY = 2
+export const DEFAULT_REG_WAY = 1
 /** 运营商code */
 export const OPERATOR_CODE = "byd"
 
