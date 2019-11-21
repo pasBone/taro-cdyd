@@ -1,13 +1,14 @@
+import './index.scss'
 import { IMAGE_MAP } from '@/assets';
 import { AtButton, AtInput } from 'taro-ui';
 import { View, Image } from '@tarojs/components'
 import { useDispatch, useSelector } from '@tarojs/redux';
 import VerificationCode from '@/components/verification-code'
-import Taro, { useState, useMemo } from '@tarojs/taro'
+import Taro, { useState, useMemo, switchTab } from '@tarojs/taro'
 import { loginAsync } from '@/store/module/meb/meb.actions'
 import { RootState } from '@/store/types';
-import { OPEN_ID, DEFAULT_REG_WAY } from '@/constant';
-import './index.scss'
+import { DEFAULT_REG_WAY } from '@/constant';
+import { mebApi } from '@/api/meb';
 
 const LoginView: Taro.FC = () => {
   const dispatch = useDispatch();
@@ -23,12 +24,17 @@ const LoginView: Taro.FC = () => {
   const submit = () => {
     dispatch(
       loginAsync({
-        open_id: OPEN_ID,
         reg_way: DEFAULT_REG_WAY,
         tel,
         code,
       })
-    )
+    ).then((data: mebApi.LoginRes) => {
+      if (data.meb_id) {
+        switchTab({
+          url: '/pages/home/index'
+        })
+      }
+    })
   }
 
   return (
