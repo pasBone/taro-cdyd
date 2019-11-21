@@ -1,7 +1,9 @@
 import { OPERATE_CODE, Res } from '@/types';
 import { OPERATOR_CODE } from '@/constant';
-import Taro, { getStorageSync } from '@tarojs/taro';
+import Taro, { getStorageSync, navigateTo } from '@tarojs/taro';
 import Toast from './toast';
+import { useDispatch } from '@tarojs/redux';
+import { clearUserInfo } from '@/store/module/meb/meb.actions';
 
 const BASE_URL = 'https://wx.succtime.com/wx';
 // const BASE_URL = "https://wx.youdaocharge.com/wx"
@@ -39,7 +41,7 @@ const throwError = (url: string, response: object): Res<any> => {
 };
 
 const NotToast = (code: OPERATE_CODE) => {
-	return [ OPERATE_CODE.车主认证未通过_充电中, OPERATE_CODE.车主未认证_充电中, OPERATE_CODE.充电枪未连接, OPERATE_CODE.余额不足请充值 ].includes(
+	return [OPERATE_CODE.车主认证未通过_充电中, OPERATE_CODE.车主未认证_充电中, OPERATE_CODE.充电枪未连接, OPERATE_CODE.余额不足请充值].includes(
 		code
 	);
 };
@@ -70,6 +72,14 @@ const genReqestMethods = (type: RequestType) => {
 				.then((response: Res<P>) => {
 					if (response.code === OPERATE_CODE.success) {
 						return response;
+					}
+
+					if (response.code === OPERATE_CODE.登录信息失效) {
+						Toast.info(response.message);
+						useDispatch()(clearUserInfo());
+						return navigateTo({
+							url: '/pages/login/index'
+						});
 					}
 
 					/** 业务异常 */
