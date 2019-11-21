@@ -19,13 +19,13 @@ export const MineView: FC = () => {
       getUserInfoByOpenIdAsync({
         open_id: OPEN_ID
       })
-    ).then(()=>{
+    ).then(() => {
       getCarVerifyStatus();
     })
-    .finally(() => {
-      hideNavigationBarLoading();
-      stopPullDownRefresh();
-    });
+      .finally(() => {
+        hideNavigationBarLoading();
+        stopPullDownRefresh();
+      });
   }, []);
 
   const getCarVerifyStatus = useCallback(() => {
@@ -37,11 +37,13 @@ export const MineView: FC = () => {
   }, [userInfo]);
 
   useEffect(() => {
-    getUserInfoByOpenId();
-  }, []);
+    getCarVerifyStatus();
+    // getUserInfoByOpenId();
+  }, [userInfo.meb_id]);
 
   usePullDownRefresh(() => {
-    getUserInfoByOpenId();
+    getCarVerifyStatus();
+    // getUserInfoByOpenId();
   });
 
   return (
