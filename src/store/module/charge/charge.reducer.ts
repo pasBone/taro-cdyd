@@ -18,6 +18,8 @@ const chargeInfoState: chargeApi.GetChargingInfoRes & LoadingType & ErrorType = 
 	order_status: 3,
 	/** 充电开始时间 */
 	start_time: 0,
+	/* 更新时间* */
+	update_time: 0,
 	/** 充电时长 */
 	duration: 0,
 	/** 钱包余额 */
@@ -86,7 +88,21 @@ export const applyCharge = (state = chargeInfoState, actions: IAction<chargeApi.
 	}
 }
 
+export const stopCharge = (state = chargeInfoState, actions: IAction<chargeApi.GetChargingInfoRes>) => {
+	switch (actions.type) {
+		case types.STOP_CHARGE:
+			return { ...state, loading: true, error: false };
+		case types.STOP_CHARGE_ERROR:
+			return { ...state, loading: false, error: true };
+		case types.STOP_CHARGE_SUCCESS:
+			return { ...state, ...actions.payload, loading: false, error: false };
+		default:
+			return state;
+	}
+}
+
 export const chargeReducer = combineReducers({
 	chargeInfo,
-	applyCharge
+	applyCharge,
+	stopCharge
 });
