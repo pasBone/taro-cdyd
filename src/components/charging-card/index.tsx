@@ -2,57 +2,37 @@ import './style.scss';
 import { CoverView, Text, View } from '@tarojs/components';
 import { useSelector, useDispatch } from '@tarojs/redux';
 import { RootState } from '@/store/types';
-import { useMemo, navigateTo, useEffect, useCallback, useState, useRef } from '@tarojs/taro';
-import { getDurationFull } from '@/utils/common';
+import { navigateTo, useEffect } from '@tarojs/taro';
 import { useHasOngoingOrder } from '@/hooks/use-has-ongoing-order';
-import { getChargeInfoAsync } from '@/store/module/charge/charge.actions';
+import { chargeInfoPollingAsync } from '@/store/module/charge/charge.actions';
 import { ORDER_STATUS } from '@/constant';
+import { useDuration } from '@/hooks/use-duration';
+import { chargeApi } from '@/api/charge';
+
 export const ChargingCard = () => {
   const dispatch = useDispatch();
   const chargeInfo = useSelector((state: RootState) => state.charge.chargeInfo);
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
-  let [duration, setDuration] = useState(chargeInfo.duration);
-  let [times, setTimes] = useState(0);
-
-  const durationTime = useMemo(() => {
-    return getDurationFull(duration);
-  }, [duration, chargeInfo.duration]);
-
-  const getChargeInfo = useCallback(() => {
-    dispatch(
-      getChargeInfoAsync({
-        meb_id: userInfo.meb_id
-      })
-    ).then(_=>{
-      setDuration(chargeInfo.duration);
-    });
-  }, [chargeInfo.duration]);
-
-  useEffect(() => {
-    getChargeInfo();
-  }, []);
-
-  /** 按秒递增充电时长 */
-  useEffect(() => {
-    let timer = setTimeout(() => {
-      if (chargeInfo.order_status === ORDER_STATUS.正在充电) {
-        setDuration(duration + 1000);
-      }
-    }, 1000);
-    return () => clearTimeout(timer);
-  }, [duration, chargeInfo.duration, chargeInfo.order_status]);
+  const { order_status } = chargeInfo;
+  const { meb_id } = userInfo;
 
   /** 定时请求接口 */
   useEffect(() => {
-    let timer = setTimeout(_ => {
-      if (chargeInfo.order_status === ORDER_STATUS.正在充电) {
-        setTimes(times + 1);
-        getChargeInfo();
+    dispatch(
+      chargeInfoPollingAsync({
+        meb_id,
+        pollingTimes: 3000,
+        frequency: 100
+      })
+    ).then((data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+      if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
+        data.stopPolling();
       }
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [times, chargeInfo.order_status]);
+    });
 
+  }, [order_status, meb_id]);
+
+  const durationTime = useDuration();
 
   return (
     useHasOngoingOrder().hasOngoingOrder ?

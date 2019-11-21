@@ -1,5 +1,6 @@
 import { StringOrNumber } from "@/types"
 import { post } from "@/utils/http"
+import { ORDER_STATUS } from "@/constant"
 
 export const chargeApi = {
   /** 启动充电 */
@@ -32,7 +33,7 @@ export namespace chargeApi {
     /** 电桩SN */
     pile_sn: string,
     /** 订单状态：/**  0-启动中，1-充电中，2-暂停中，3-已完成，4-已关闭，5-已作废	 */
-    order_status: number
+    order_status: ORDER_STATUS
     /** 充电开始时间 */
     start_time: number
     /** 充电时长 */
@@ -58,6 +59,7 @@ export namespace chargeApi {
     electricity: StringOrNumber
     /** 订单费用 */
     total_fee: StringOrNumber
+    update_time: StringOrNumber,
     /** 实时充电数据 */
     charging_data: {
       /** 当前电压 */

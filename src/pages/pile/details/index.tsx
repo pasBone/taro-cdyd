@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "@tarojs/redux";
 import { getPileDetailsAsync } from "@/store/module/pile/pile.actions";
 import { StationRulesTable } from "@/components/station-rules-table";
 import { PileDetailsRow } from "./components/pile-details-row";
-import { applyChargeAsync, getChargeInfoAsync, clearApplyChargeTimer } from '@/store/module/charge/charge.actions';
+import { applyChargeAsync, getChargeInfoAsync, clearChargeInfoPollingTimer } from '@/store/module/charge/charge.actions';
 import { useHasOngoingOrder } from '@/hooks/use-has-ongoing-order';
 
 export const PileDetailsView: FC = () => {
@@ -51,12 +51,12 @@ export const PileDetailsView: FC = () => {
 
   useDidHide(() => {
     dispatch(
-      clearApplyChargeTimer()
+      clearChargeInfoPollingTimer()
     )
   });
 
   const applyCharge = useCallback(() => {
-    if (pileDetails.loading) return;
+    if (pileDetails.loading) return;  
     dispatch(
       applyChargeAsync({
         meb_id: userInfo.meb_id,

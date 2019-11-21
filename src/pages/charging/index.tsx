@@ -1,56 +1,64 @@
 import './style.scss';
 import { View } from '@tarojs/components';
-import { FC, useCallback, usePullDownRefresh, useEffect, useRef, useState, navigateBack } from '@tarojs/taro';
+import { AtButton, AtNavBar } from 'taro-ui';
+import { FC, useCallback, usePullDownRefresh, useEffect, navigateBack, switchTab, useDidHide } from '@tarojs/taro';
+import { useDispatch, useSelector } from '@tarojs/redux';
+import { stopChargeAsync, chargeInfoPollingAsync, clearChargeInfoPollingTimer } from '@/store/module/charge/charge.actions';
+import { RootState } from '@/store/types';
+import { ORDER_STATUS } from '@/constant';
+import { chargeApi } from '@/api/charge';
 import { ChargingBall } from './charging-ball';
 import { ChargingData } from './charging-data';
 import { ChargingInfo } from './charging-info';
-import { AtButton, AtNavBar } from 'taro-ui';
-import { useDispatch, useSelector } from '@tarojs/redux';
-import { getChargeInfoAsync } from '@/store/module/charge/charge.actions';
-import { RootState } from '@/store/types';
-import { ORDER_STATUS } from '@/constant';
 
 export const ChargingView: FC = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
   const chargeInfo = useSelector((state: RootState) => state.charge.chargeInfo);
-  const [requestTimes, setRequestTimes] = useState(0);
-  let timer = useRef<any>();
+  const { order_status, pile_sn } = chargeInfo;
+  const { meb_id } = userInfo;
 
   const getChargeInfo = useCallback(() => {
-    dispatch(
-      getChargeInfoAsync({
-        meb_id: userInfo.meb_id
+    return dispatch(
+      chargeInfoPollingAsync({
+        meb_id,
+        frequency: 3000,
+        pollingTimes: 100
       })
-    ).finally(_ => {
-      console.log(`实时充电 requestTimes >>>: ${requestTimes}`);
-      if (chargeInfo.order_status === ORDER_STATUS.正在充电) {
-        setRequestTimes(requestTimes + 1);
-      } else if (chargeInfo.order_status === ORDER_STATUS.暂停中) {
-        // todo 变更状态为已结束
-      } else {
-        // switchTab({
-        //   url: '/pages/home/index'
-        // });
-        //todo 充电已结束。
+    ).then((data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+      if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
+        data.stopPolling();
+        switchTab({
+          url: '/pages/home/index'
+        });
       }
     });
-  }, [userInfo.meb_id, chargeInfo.order_status, requestTimes]);
+  }, [meb_id, order_status]);
+
+  /** 结束充电 */
+  const stopCharge = useCallback(() => {
+    dispatch(
+      stopChargeAsync({
+        meb_id,
+        pile_sn,
+        startup_mode: 1
+      })
+    );
+  }, [meb_id, order_status, pile_sn]);
+
+  useEffect(() => {
+    getChargeInfo();
+  }, [meb_id]);
 
   usePullDownRefresh(() => {
     getChargeInfo();
   });
 
-  useEffect(() => {
-    timer.current = setTimeout(_ => {
-      getChargeInfo();
-    }, 30000);
-    return () => clearTimeout(timer.current);
-  }, [userInfo.meb_id, requestTimes]);
-
-  useEffect(() => {
-    getChargeInfo();
-  }, [userInfo.meb_id]);
+  useDidHide(() => {
+    dispatch(
+      clearChargeInfoPollingTimer()
+    )
+  });
 
   return (
     <View className="charging-realtime__view">
@@ -71,7 +79,7 @@ export const ChargingView: FC = () => {
           <ChargingInfo />
         </View>
       </View>
-      {chargeInfo.order_status === 1 && <AtButton className="charging-btn">结束充电</AtButton>}
+      {chargeInfo.order_status === 1 && <AtButton onClick={() => stopCharge} className="charging-btn">结束充电</AtButton>}
       {chargeInfo.order_status === 2 && <AtButton className="charging-btn">已结束充电，请拔枪</AtButton>}
     </View>
   )
