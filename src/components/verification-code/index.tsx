@@ -17,7 +17,7 @@ export interface VerificationCodeProps {
 }
 
 const initText = '发送验证码';
-const initTime = 6;
+const initTime = 60;
 
 const VerificationCode: FC<VerificationCodeProps> = (props) => {
 	const dispatch = useDispatch();

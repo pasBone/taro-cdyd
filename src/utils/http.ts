@@ -64,7 +64,7 @@ const genReqestMethods = (type: RequestType) => {
 						return response.data;
 					}
 					/** 请求异常 */
-					Toast.info('服务异常');
+					Toast.info({ title: '服务异常', mask: false, icon: 'none' });
 					return throwError(requestUrl, { statusCode: response.statusCode });
 				})
 				.then((response: Res<P>) => {
@@ -73,7 +73,7 @@ const genReqestMethods = (type: RequestType) => {
 					}
 
 					if (response.code === OPERATE_CODE.登录信息失效) {
-						Toast.info(response.message);
+						Toast.info({ title: '服务异常', mask: false, icon: 'none' });
 						return navigateTo({
 							url: '/pages/login/index'
 						});
@@ -81,7 +81,7 @@ const genReqestMethods = (type: RequestType) => {
 
 					/** 业务异常 */
 					if (NotToast(response.code) === false) {
-						Toast.info(response.message);
+						Toast.info({ title: '服务异常', mask: false, icon: 'none' });
 					}
 					return throwError(requestUrl, response);
 				})
