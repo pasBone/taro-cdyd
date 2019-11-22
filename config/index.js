@@ -43,7 +43,9 @@ var config = {
     THEME_CONFIG: theme //主题名字
   },
   copy: {
-    patterns: [],
+    patterns: [
+      { from: "src/custom-tab-bar/", to: "dist/custom-tab-bar/" }
+    ],
     options: {}
   },
   weapp: {

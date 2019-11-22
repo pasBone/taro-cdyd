@@ -1,14 +1,14 @@
 import './style.scss'
 import { View, Text } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
-import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo } from '@tarojs/taro';
+import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
 import { AtLoadMore } from 'taro-ui';
 import { formatDate } from '@/utils/common';
 
-export const OrderListView: FC = () => {
+export function OrderListView() {
 
   const orderList = useSelector((state: RootState) => state.order.orderList);
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
@@ -43,6 +43,15 @@ export const OrderListView: FC = () => {
   useEffect(() => {
     getOrderList(true);
   }, []);
+
+  useDidShow(() => {
+    if (typeof this.$scope.getTabBar === 'function' &&
+      this.$scope.getTabBar()) {
+      this.$scope.getTabBar().$component.setState({
+        selected: 3,
+      });
+    }
+  });
 
   const isEmpty = useMemo(() => {
     return orderList.list.length == 0 && orderList.loading == false

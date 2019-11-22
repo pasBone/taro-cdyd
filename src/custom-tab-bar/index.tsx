@@ -1,78 +1,71 @@
+import './style.scss';
+import { CoverView, CoverImage } from "@tarojs/components";
+import { IMAGE_MAP } from "@/assets";
+import { switchTab } from "@tarojs/taro";
+import { useDispatch } from "@tarojs/redux";
+import { scanCodeWithPileAsync } from "@/store/module/common/common.actions";
 
-import { CoverView, CoverImage } from '@tarojs/components'
-import { IMAGE_MAP } from '@/assets'
-import { FC, useCallback, switchTab, useMemo } from '@tarojs/taro'
-import { useSelector, useDispatch } from '@tarojs/redux'
-import { RootState } from '@/store/types'
-import { setTabbarId, scanCodeWithPileAsync } from '@/store/module/common/common.actions'
-import './style.scss'
+export default class Tabbar extends Taro.Component {
 
-export const Tabbar: FC = () => {
-  const tabbarId = useSelector((item: RootState) => item.common.tabbar.id)
-  const dispatch = useDispatch();
-
-  const tabBarData = useMemo(() => {
-    return [{
-      name: '首页',
-      id: 0,
-      path: '/pages/home/index',
-      icon: [IMAGE_MAP.tabHomeIcon, IMAGE_MAP.tabHomeIconFill],
+  state = {
+    selected: 0,
+    tabBarData: [{
+      text: "首页",
+      pagePath: '/pages/home/index',
+      iconPath: IMAGE_MAP.tabHomeIcon,
+      selectedIconPath: IMAGE_MAP.tabHomeIconFill,
     }, {
-      name: '钱包',
-      id: 1,
-      path: '/pages/wallet/index',
-      icon: [IMAGE_MAP.tabWalletIcon, IMAGE_MAP.tabWalletIconFill],
+      text: '钱包',
+      pagePath: '/pages/wallet/index',
+      iconPath: IMAGE_MAP.tabWalletIcon,
+      selectedIconPath: IMAGE_MAP.tabWalletIconFill,
     }, {
-      name: '扫码',
-      id: 2,
+      text: '扫码',
       icon: IMAGE_MAP.tabScanIconFill,
     }, {
-      name: '订单',
-      id: 3,
-      path: '/pages/order/list/index',
-      icon: [IMAGE_MAP.tabOrderIcon, IMAGE_MAP.tabOrderIconFill],
+      text: '订单',
+      pagePath: '/pages/order/list/index',
+      iconPath: IMAGE_MAP.tabOrderIcon,
+      selectedIconPath: IMAGE_MAP.tabOrderIconFill
     }, {
-      name: '我的',
-      id: 4,
-      path: '/pages/mine/index',
-      icon: [IMAGE_MAP.tabMineIcon, IMAGE_MAP.tabMineIconFill],
+      text: '我的',
+      pagePath: '/pages/mine/index',
+      iconPath: IMAGE_MAP.tabMineIcon,
+      selectedIconPath: IMAGE_MAP.tabMineIconFill
     }]
+  }
 
-  }, []);
-
-  const switchTabBar = useCallback(item => switchTab({
-    url: item.path
-  }).then(_ => {
-    dispatch(setTabbarId(item.id));
-  }), []);
-
-  /** 调起微信扫码功能 */
-  const handleScanCode = useCallback(async () => {
+  handleScanCode() {
+    const dispatch = useDispatch();
     dispatch(
       scanCodeWithPileAsync()
-    )
-  }, []);
+    );
+  }
 
-  return (
-    <CoverView className="tab-bar__view">
-      <CoverView className="tab-bar__list">
-        {
-          tabBarData.map(item => {
-            const iconPath = tabbarId == item.id ? item.icon[1] : item.icon[0];
-            return item.id == 2 ?
-              <CoverView className="tab-bar__item" onClick={handleScanCode}>
-                <CoverImage className="tab-bar__scan" src={item.icon} />
-                {/* <CoverImage className="icon" src={item.icon}></CoverImage>
-                </CoverView> */}
-              </CoverView>
-              :
-              <CoverView className="tab-bar__item" onClick={() => switchTabBar(item)} key={item.id}>
-                <CoverImage className="icon" src={iconPath} />
-                <CoverView className="text">{item.name}</CoverView>
-              </CoverView>
-          })
-        }
+  switchTab(item) {
+    switchTab({ url: item.pagePath });
+  }
+
+  render() {
+    return (
+      <CoverView className="tab-bar__view">
+        <CoverView className="tab-bar__list">
+          {
+            this.state.tabBarData.map((item, index) => {
+              const iconPath = this.state.selected === index ? item.selectedIconPath : item.iconPath;
+              return index == 2 ?
+                <CoverView className="tab-bar__item" onClick={this.handleScanCode}>
+                  <CoverImage className="tab-bar__scan" src={item.icon} />
+                </CoverView>
+                :
+                <CoverView className="tab-bar__item" onClick={() => this.switchTab(item)} key={item.pagePath}>
+                  <CoverImage className="icon" src={iconPath} />
+                  <CoverView className="text">{item.text}</CoverView>
+                </CoverView>
+            })
+          }
+        </CoverView>
       </CoverView>
-    </CoverView>
-  )
+    )
+  }
 }

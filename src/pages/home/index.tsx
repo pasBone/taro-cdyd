@@ -1,5 +1,5 @@
 import './style.scss';
-import { FC, createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle } from "@tarojs/taro"
+import { FC, createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle, useDidShow } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
 import { View, Map, CoverImage } from "@tarojs/components"
@@ -14,7 +14,7 @@ import { ChargingCard } from '@/components/charging-card';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
 
-export const HomeView: FC = () => {
+export function HomeView() {
   const dispatch = useDispatch();
   const { latitude, longitude } = useSelector((state: RootState) => state.common.gpsLocation);
   const stationList = useSelector((state: RootState) => state.station.stationList);
@@ -69,7 +69,16 @@ export const HomeView: FC = () => {
       }
     });
     return [...stationMarker, locationMarker];
-  }, [stationList])
+  }, [stationList]);
+
+  useDidShow(() => {
+    if (typeof this.$scope.getTabBar === 'function' &&
+      this.$scope.getTabBar()) {
+      this.$scope.getTabBar().$component.setState({
+        selected: 0,
+      });
+    }
+  });
 
   return (
     <View className="home-view">

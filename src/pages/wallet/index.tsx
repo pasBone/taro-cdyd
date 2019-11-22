@@ -1,12 +1,15 @@
 import { View } from "@tarojs/components"
-import { FC } from "@tarojs/taro"
-import { useDispatch, useSelector } from "@tarojs/redux"
-import { RootState } from "@/store/types";
+import { useDidShow } from "@tarojs/taro";
 
-export const OrderView: FC = () => {
-  const dispatch = useDispatch();
-  const userInfo = useSelector((state: RootState) => state.meb.userInfo);
-
+export function WalletView() {
+  useDidShow(() => {
+    if (typeof this.$scope.getTabBar === 'function' &&
+      this.$scope.getTabBar()) {
+      this.$scope.getTabBar().$component.setState({
+        selected: 1,
+      });
+    }
+  });
   return (
     <View>
       wallet
@@ -14,6 +17,6 @@ export const OrderView: FC = () => {
   )
 }
 
-OrderView.config = {
+WalletView.config = {
   navigationBarTitleText: '钱包'
 }

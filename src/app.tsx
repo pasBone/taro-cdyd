@@ -83,8 +83,6 @@ class App extends Component {
     )
   }
 
-  componentDidShow() { }
-
   componentDidHide() { }
 
   componentDidCatchError() { }

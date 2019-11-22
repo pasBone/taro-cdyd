@@ -1,49 +1,44 @@
 import './style.scss'
 import { View, Image } from "@tarojs/components"
-import { FC, navigateTo, useEffect, useCallback, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading } from "@tarojs/taro"
+import { navigateTo, useEffect, useCallback, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading, useDidShow } from "@tarojs/taro"
 import { useSelector, useDispatch } from "@tarojs/redux"
 import { RootState } from "@/store/types"
 import { ListCell } from '@/components/list-cell'
-import { getUserInfoByOpenIdAsync, getCarVerifyStatusAsync } from '@/store/module/meb/meb.actions'
-import { OPEN_ID } from '@/constant'
+import { getCarVerifyStatusAsync } from '@/store/module/meb/meb.actions'
 
-export const MineView: FC = () => {
+export function MineView() {
   const userProtocol = 'https://wx.youdaocharge.com/#/mine/user-protocol';
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
   const carVerifyStatus = useSelector((state: RootState) => state.meb.carVerifyStatus);
   const dispatch = useDispatch();
 
-  const getUserInfoByOpenId = useCallback(() => {
-    showNavigationBarLoading();
-    dispatch(
-      getUserInfoByOpenIdAsync({
-        open_id: OPEN_ID
-      })
-    ).then(() => {
-      getCarVerifyStatus();
-    })
-      .finally(() => {
-        hideNavigationBarLoading();
-        stopPullDownRefresh();
-      });
-  }, []);
-
   const getCarVerifyStatus = useCallback(() => {
+    showNavigationBarLoading();
     dispatch(
       getCarVerifyStatusAsync({
         meb_id: userInfo.meb_id
       })
-    )
+    ).finally(_ => {
+      hideNavigationBarLoading();
+      stopPullDownRefresh();
+    });
   }, [userInfo]);
 
   useEffect(() => {
     getCarVerifyStatus();
-    // getUserInfoByOpenId();
   }, [userInfo.meb_id]);
 
   usePullDownRefresh(() => {
     getCarVerifyStatus();
-    // getUserInfoByOpenId();
+  });
+
+  useDidShow(() => {
+    if (typeof this.$scope.getTabBar === 'function' &&
+      this.$scope.getTabBar()) {
+      this.$scope.getTabBar().$component.setState({
+        selected: 4,
+      });
+    }
   });
 
   return (
