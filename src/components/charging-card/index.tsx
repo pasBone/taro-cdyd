@@ -1,5 +1,5 @@
 import './style.scss';
-import { CoverView, Text, View } from '@tarojs/components';
+import { View } from '@tarojs/components';
 import { useSelector, useDispatch } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { navigateTo, useEffect } from '@tarojs/taro';
@@ -40,27 +40,27 @@ export const ChargingCard = () => {
 
   return (
     useHasOngoingOrder().hasOngoingOrder ?
-      <CoverView className="charging-card" onClick={() => navigateTo({ url: '/pages/charging/index' })}>
-        <CoverView className="charging-card__ball">
-          <CoverView className="water w1"></CoverView>
-          <CoverView className="water w2"></CoverView>
-          <CoverView className="water"></CoverView>
-        </CoverView>
+      <View className="charging-card" onClick={() => navigateTo({ url: '/pages/charging/index' })}>
+        <View className="charging-card__ball">
+          <View className="water w1"></View>
+          <View className="water w2"></View>
+          <View className="water"></View>
+        </View>
 
-        <CoverView className="charging-card__block">
-          <CoverView className="charging-card__status">
-            <CoverView className="charging-card__state">正在充电中</CoverView>
-            <CoverView className="charging-card__price">
-              <CoverView>￥{chargeInfo.total_fee || 0.00}</CoverView>
-            </CoverView>
-          </CoverView>
+        <View className="charging-card__block">
+          <View className="charging-card__status">
+            <View className="charging-card__state">正在充电中</View>
+            <View className="charging-card__price">
+              <View>￥{chargeInfo.total_fee || 0.00}</View>
+            </View>
+          </View>
 
-          <CoverView className="charging-card__time">
-            <CoverView>{durationTime}　|　{chargeInfo.electricity || 0}度</CoverView>
-            <CoverView className="current-money">当前费用</CoverView>
-          </CoverView>
-        </CoverView>
-      </CoverView>
+          <View className="charging-card__time">
+            <View>{durationTime}　|　{chargeInfo.electricity || 0}度</View>
+            <View className="current-money">当前费用</View>
+          </View>
+        </View>
+      </View>
       :
       <View></View>
   )
