@@ -1,5 +1,5 @@
 import './style.scss';
-import { FC, createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle, useDidShow } from "@tarojs/taro"
+import { createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle, useDidShow } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
 import { View, Map, CoverImage } from "@tarojs/components"
@@ -44,7 +44,7 @@ export function HomeView() {
   const getLocation = useCallback(() => {
     dispatch(getLocationAsync(true));
     createMapContext('homeMap').moveToLocation();
-  }, []);
+  }, [latitude, longitude]);
 
   /** 地图站点标记打点 */
   const markers = useMemo(() => {

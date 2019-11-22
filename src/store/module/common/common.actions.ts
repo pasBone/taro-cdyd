@@ -18,11 +18,13 @@ export const setTabbarId = (payload) => ({ type: types.SET_TAB_BAR_ID, payload }
  */
 export const getLocationAsync = (retry: boolean = false): any => {
   return (dispatch: Dispatch) => {
-    getLocation().then(res => dispatch(
+    getLocation({
+      type: 'gcj02'
+    }).then(res => dispatch(
       setLocation(res)
     )).catch(async (res: wxApiError) => {
       // 用户拒绝过授权，则需要重新拉起授权
-      if (retry && res.errMsg === WX_API_ERROR["位置-用户拒绝授权位置信息"]) {
+      if (retry && (res.errMsg === WX_API_ERROR["位置-用户拒绝授权位置信息"] || res.errMsg === WX_API_ERROR["位置-用户关闭该小程序的定位"])) {
         try {
           await reAuthorize('scope.userLocation');
           dispatch(

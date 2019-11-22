@@ -33,7 +33,9 @@ export type BaseList<T> = {
 export enum WX_API_ERROR {
     "扫码-用户取消扫码" = "scanCode:fail cancel",
     "扫码-成功" = "scanCode:ok",
-    "位置-用户拒绝授权位置信息" = "getLocation:fail auth deny"
+    "位置-用户拒绝授权位置信息" = "getLocation:fail auth deny",
+    "位置-用户关闭该小程序的定位" = "authorize:fail:auth deny"
+    
 }
 /** 微信API常用错误信息 */
 export interface wxApiError {
