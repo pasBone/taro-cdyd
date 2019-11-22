@@ -11,7 +11,7 @@ class CircleProgressCanvas {
   /** canvas context */
   private ctx;
   /** 进度值 */
-  private progress = 0.001;
+  private progress = 0.0001;
 
   private config = {
     canvaswidth: 420,

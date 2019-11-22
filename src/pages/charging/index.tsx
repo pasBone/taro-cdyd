@@ -1,7 +1,7 @@
 import './style.scss';
 import { View } from '@tarojs/components';
 import { AtButton, AtNavBar } from 'taro-ui';
-import { FC, useCallback, usePullDownRefresh, useEffect, navigateBack, switchTab, useDidHide } from '@tarojs/taro';
+import { FC, useCallback, usePullDownRefresh, useEffect, navigateBack, switchTab, useDidHide, navigateTo } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { stopChargeAsync, chargeInfoPollingAsync, clearChargeInfoPollingTimer } from '@/store/module/charge/charge.actions';
 import { RootState } from '@/store/types';
@@ -69,7 +69,9 @@ export const ChargingView: FC = () => {
         color='#fff'
         fixed
         border={false}
-        onClickLeftIcon={() => navigateBack()}
+        onClickLeftIcon={() => navigateBack({
+          fail: () => navigateTo({ url: '/pages/home/index' })
+        })}
         customStyle={{ backgroundColor: 'rgba(255,255,255,0)', top: '36rpx' }}
       />
 

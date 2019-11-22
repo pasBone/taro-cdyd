@@ -7,6 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .progress-ball {
@@ -17,9 +18,18 @@
   text-align: center;
   .progress-content {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 270px;
+    width: 270px;
+    border-radius: 50%;
+    box-sizing: border-box;
+    background: #fff;
     left: 0;
     right: 0;
-    top: 120px;
+    top: 76px;
     z-index: 99;
     margin: 0 auto;
   }
