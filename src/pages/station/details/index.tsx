@@ -1,5 +1,5 @@
 import './style.scss';
-import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, useRef, setNavigationBarTitle, createRef } from '@tarojs/taro';
+import { FC, usePullDownRefresh, useRouter, useCallback, useEffect, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, useMemo, useReachBottom, useRef, setNavigationBarTitle, createRef, showLoading, hideLoading } from '@tarojs/taro';
 import { View, Image, Text, Block } from '@tarojs/components';
 import { IMAGE_MAP } from '@/assets';
 import { getStationDetailsAsync } from '@/store/module/station/station.actions'
@@ -23,6 +23,7 @@ export const StationDetails: FC = () => {
   /** 获取站点详情信息 */
   const getStationDetails = useCallback(() => {
     showNavigationBarLoading();
+    showLoading();
     dispatch(
       getStationDetailsAsync({
         station_id: stationId,
@@ -30,6 +31,7 @@ export const StationDetails: FC = () => {
         longitude
       })
     ).finally(_ => {
+      hideLoading();
       stopPullDownRefresh();
       hideNavigationBarLoading();
     });

@@ -1,5 +1,5 @@
 import './style.scss'
-import { FC, usePullDownRefresh, useEffect, hideNavigationBarLoading, stopPullDownRefresh, showNavigationBarLoading, useCallback, useRouter, setNavigationBarTitle } from '@tarojs/taro'
+import { FC, usePullDownRefresh, useEffect, hideNavigationBarLoading, stopPullDownRefresh, showNavigationBarLoading, useCallback, useRouter, setNavigationBarTitle, showLoading, hideLoading } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { CardBox } from '@/components/card'
 import { ListCell } from '@/components/list-cell'
@@ -26,12 +26,14 @@ export const OrderDetailsView: FC = () => {
 
   const getOrderDetails = useCallback(() => {
     setNavigationBarTitle({ title: '订单详情' });
+    showLoading();
     showNavigationBarLoading();
     dispatch(
       getOrderDetailsAsync({
         order_id: orderId
       })
     ).finally(_ => {
+      hideLoading();
       stopPullDownRefresh();
       hideNavigationBarLoading();
     });

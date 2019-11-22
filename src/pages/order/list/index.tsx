@@ -1,7 +1,7 @@
 import './style.scss'
 import { View, Text } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
-import { useReachBottom, useEffect, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow } from '@tarojs/taro';
+import { useReachBottom, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
@@ -40,11 +40,8 @@ export function OrderListView() {
     getOrderList();
   });
 
-  useEffect(() => {
-    getOrderList(true);
-  }, []);
-
   useDidShow(() => {
+    getOrderList(true);
     if (typeof this.$scope.getTabBar === 'function' &&
       this.$scope.getTabBar()) {
       this.$scope.getTabBar().$component.setState({

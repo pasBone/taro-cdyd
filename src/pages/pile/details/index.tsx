@@ -1,5 +1,5 @@
 import './style.scss'
-import { FC, useRouter, useCallback, useEffect, usePullDownRefresh, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, setNavigationBarTitle, navigateTo, useDidHide, useDidShow } from "@tarojs/taro";
+import { FC, useRouter, useCallback, useEffect, usePullDownRefresh, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, setNavigationBarTitle, navigateTo, useDidHide, useDidShow, showLoading, hideLoading } from "@tarojs/taro";
 import { View } from "@tarojs/components";
 import { AtButton, AtIcon } from "taro-ui";
 import { RootState } from "@/store/types";
@@ -20,6 +20,7 @@ export const PileDetailsView: FC = () => {
 
   const getPileDetails = useCallback(() => {
     showNavigationBarLoading();
+    showLoading();
     dispatch(
       getPileDetailsAsync({
         pile_id: pileId
@@ -27,6 +28,7 @@ export const PileDetailsView: FC = () => {
     ).finally(_ => {
       setNavigationBarTitle({ title: pileDetails.station_name });
       stopPullDownRefresh();
+      hideLoading();
       hideNavigationBarLoading();
     });
   }, [pileId]);
@@ -56,7 +58,7 @@ export const PileDetailsView: FC = () => {
   });
 
   const applyCharge = useCallback(() => {
-    if (pileDetails.loading) return;  
+    if (pileDetails.loading) return;
     dispatch(
       applyChargeAsync({
         meb_id: userInfo.meb_id,
