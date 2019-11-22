@@ -103,5 +103,5 @@ export function HomeView() {
 }
 
 HomeView.config = {
-  navigationStyle: 'custom'
+  // navigationStyle: 'custom'
 }

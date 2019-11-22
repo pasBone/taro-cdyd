@@ -11,7 +11,7 @@ export function WalletView() {
     }
   });
   return (
-    <View>
+    <View className="wallet-view">
       wallet
     </View>
   )
