@@ -78,3 +78,6 @@ export const px2rpx = (px: number) => {
   var systemInfo = getSystemInfoSync();
   return px / 750 * systemInfo.windowWidth;
 }
+
+/** 空函数 */
+export const loop = (params?: any) => { };

@@ -15,6 +15,7 @@ export const ChargingView: FC = () => {
   const dispatch = useDispatch();
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
   const chargeInfo = useSelector((state: RootState) => state.charge.chargeInfo);
+  const stopChargeInfo = useSelector((state: RootState) => state.charge.stopCharge);
   const { order_status, pile_sn } = chargeInfo;
   const { meb_id } = userInfo;
 
@@ -22,17 +23,17 @@ export const ChargingView: FC = () => {
     return dispatch(
       chargeInfoPollingAsync({
         meb_id,
-        frequency: 3000,
+        frequency: 30000,
         pollingTimes: 100
+      }, (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+        if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
+          data.stopPolling();
+          switchTab({
+            url: '/pages/home/index'
+          });
+        }
       })
-    ).then((data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
-      if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
-        data.stopPolling();
-        switchTab({
-          url: '/pages/home/index'
-        });
-      }
-    });
+    )
   }, [meb_id, order_status]);
 
   /** 结束充电 */
@@ -79,7 +80,7 @@ export const ChargingView: FC = () => {
           <ChargingInfo />
         </View>
       </View>
-      {chargeInfo.order_status === 1 && <AtButton onClick={() => stopCharge} className="charging-btn">结束充电</AtButton>}
+      {chargeInfo.order_status === 1 && <AtButton disabled={stopChargeInfo.loading} loading={stopChargeInfo.loading} onClick={() => stopCharge()} className="charging-btn">结束充电</AtButton>}
       {chargeInfo.order_status === 2 && <AtButton className="charging-btn">已结束充电，请拔枪</AtButton>}
     </View>
   )

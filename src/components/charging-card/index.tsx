@@ -21,15 +21,19 @@ export const ChargingCard = () => {
     dispatch(
       chargeInfoPollingAsync({
         meb_id,
-        pollingTimes: 3000,
-        frequency: 100
-      })
-    ).then((data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
-      if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
-        data.stopPolling();
-      }
-    });
+        pollingTimes: 100,
+        frequency: 3000
+      },
+        (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+          if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
+            data.stopPolling();
+          }
+        },
+        () => {
 
+        }
+      )
+    );
   }, [order_status, meb_id]);
 
   const durationTime = useDuration();

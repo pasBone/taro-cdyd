@@ -4,7 +4,7 @@ import Toast from '@/utils/toast';
 import { OPERATE_CODE } from '@/types';
 import { showModal, navigateTo, switchTab } from '@tarojs/taro';
 import { ORDER_STATUS } from '@/constant';
-import { IAction } from '@/store/types';
+import { loop } from '@/utils/common';
 
 /** modal 按钮颜色 */
 const confirmColor = '#f00';
@@ -53,7 +53,8 @@ export const retry = () => {
   return showModal({
     title: "提示信息",
     content: "启动失败，请重试",
-    confirmText: "重试"
+    confirmText: "重试",
+    confirmColor
   });
 }
 
@@ -62,7 +63,8 @@ export const confirmStop = () => {
   return showModal({
     title: "请确认是否结束充电",
     content: "确认结束充电后系统将会停止充电， 若需继续冲充电需重新插枪启动充电。启动失败，请重试",
-    confirmText: "确认结束"
+    confirmText: "确认结束",
+    confirmColor
   });
 }
 
@@ -71,7 +73,8 @@ export const stopRetry = () => {
   return showModal({
     title: "提示",
     content: "结束失败请重试",
-    confirmText: "重试"
+    confirmText: "重试",
+    confirmColor
   });
 }
 
@@ -81,33 +84,36 @@ export const applyChargeAsync = (params: chargeApi.ApplyChargeReq) => {
   return async (dispatch) => {
     try {
       dispatch(applyCharge());
-      const response = await chargeApi.applyCharge(params);
 
-      const chargeInfoParams = { meb_id: params.meb_id, frequency: 3000, pollingTimes: 20 };
+      /** 启动充电 */
+      await chargeApi.applyCharge(params);
 
+      /** 轮询充电信息 */
       dispatch(
-        chargeInfoPollingAsync(chargeInfoParams)
-      ).then((data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
-        const payload = data.payload;
-        if ([ORDER_STATUS.正在充电, ORDER_STATUS.暂停中].includes(payload.order_status)) {
-          dispatch(
-            applyChargeSuccess()
-          );
-          data.stopPolling();
-          return navigateTo({ url: '/pages/charging/index' });
-        }
-      }).catch(_ => {
-        dispatch(clearChargeInfoPollingTimer());
-        dispatch(applyChargeError());
-        retry().then((res) => {
-          /** 轮询结束提示失败,点击重试 */
-          if (res.confirm) {
-            dispatch(
-              chargeInfoPollingAsync(chargeInfoParams)
-            );
+        chargeInfoPollingAsync(
+          { meb_id: params.meb_id, frequency: 3000, pollingTimes: 30 },
+          (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+            const payload = data.payload;
+            if ([ORDER_STATUS.正在充电, ORDER_STATUS.暂停中].includes(payload.order_status)) {
+              dispatch(
+                applyChargeSuccess()
+              );
+              data.stopPolling();
+              return navigateTo({ url: '/pages/charging/index' });
+            }
+          },
+          () => {
+            dispatch(clearChargeInfoPollingTimer());
+            dispatch(applyChargeError());
+            retry().then((res) => {
+              /** 轮询结束提示失败,点击重试 */
+              res.confirm && dispatch(
+                applyChargeAsync(params)
+              );
+            })
           }
-        })
-      });
+        )
+      );
 
     } catch (error) {
       if (error.code === OPERATE_CODE.充电枪未连接) {
@@ -141,36 +147,33 @@ export const applyChargeAsync = (params: chargeApi.ApplyChargeReq) => {
   }
 }
 
-export const chargeInfoPollingAsync = (params: IChargeInfoPollingParams) => {
+export const chargeInfoPollingAsync = (params: IChargeInfoPollingParams, resolve = loop, reject = loop) => {
   /** 获取启动充电结果频率 */
   const frequency = params.frequency;
   /** 最大轮询次数 */
   let pollingTimes = params.pollingTimes;
-
   return async (dispatch) => {
-    const pollingFn = async () => {
-      return new Promise((resolve, reject) => {
-        const stopPolling = () => {
-          clearTimeout(chargeInfoPollingTimer);
+    const pollingFn = () => {
+      const stopPolling = () => {
+        clearTimeout(chargeInfoPollingTimer);
+      }
+      return dispatch(
+        getChargeInfoAsync({
+          meb_id: params.meb_id
+        })
+      ).then(data => {
+        if (pollingTimes > 0) {
+          chargeInfoPollingTimer = setTimeout(_ => {
+            pollingFn();
+          }, frequency);
+        } else {
+          stopPolling();
+          return reject();
         }
-        dispatch(
-          getChargeInfoAsync({
-            meb_id: params.meb_id
-          })
-        ).then(data => {
-          if (pollingTimes >= 0) {
-            chargeInfoPollingTimer = setTimeout(_ => {
-              pollingFn();
-            }, frequency);
-          } else {
-            stopPolling();
-            reject();
-          }
-          pollingTimes--;
-          resolve({
-            stopPolling,
-            payload: data.payload
-          });
+        pollingTimes--;
+        resolve({
+          stopPolling,
+          payload: data.payload
         });
       });
     }
@@ -206,38 +209,52 @@ export const getChargeInfoSuccess = (payload) => ({ type: types.GET_CHARGE_INFO_
 /** 结束充电 */
 export const stopChargeAsync = (params: chargeApi.StopChargeReq) => {
   return async (dispatch) => {
+
+    /** 确认结束 */
     confirmStop().then(async (res) => {
-      if (res.confirm) {
-        try {
-          dispatch(clearChargeInfoPollingTimer());
-          dispatch(stopCharge());
-          const response = await chargeApi.stopCharge(params);
-          const chargeInfoParams = { meb_id: params.meb_id, frequency: 3000, pollingTimes: 20 };
-          dispatch(
-            chargeInfoPollingAsync(chargeInfoParams)
-          ).then((data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
-            const { order_status } = data.payload;
-            if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
-              data.stopPolling();
-              switchTab({
-                url: '/pages/home/index'
+      res.confirm && stopChargeFn();
+    });
+
+    async function stopChargeFn() {
+      try {
+        dispatch(clearChargeInfoPollingTimer());
+        dispatch(stopCharge());
+        const response = await chargeApi.stopCharge(params);
+        dispatch(
+          chargeInfoPollingAsync(
+            { meb_id: params.meb_id, frequency: 3000, pollingTimes: 20 },
+            (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+              if (data.payload !== null) {
+                const { order_status } = data.payload;
+                if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
+                  data.stopPolling();
+                  dispatch(stopChargeSuccess(response.data));
+                  switchTab({
+                    url: '/pages/home/index'
+                  });
+                }
+              } else {
+                data.stopPolling();
+                dispatch(stopChargeSuccess(response.data));
+                switchTab({
+                  url: '/pages/home/index'
+                });
+              }
+            },
+            () => {
+              dispatch(stopChargeError());
+              stopRetry().then(res => {
+                if (res.confirm) {
+                  stopChargeFn();
+                }
               });
             }
-          }).catch(_ => {
-            stopRetry().then(res => {
-              if (res.confirm) {
-                dispatch(
-                  stopChargeAsync(params)
-                )
-              }
-            });
-          });
-          dispatch(stopChargeSuccess(response.data));
-        } catch (error) {
-          dispatch(stopChargeError());
-        }
+          )
+        )
+      } catch (error) {
+        dispatch(stopChargeError());
       }
-    })
+    }
   }
 }
 
