@@ -4,6 +4,7 @@ import { Provider } from '@tarojs/redux'
 import configStore from './store'
 import { getLocationAsync } from '@/store/module/common/common.actions'
 import './app.scss'
+import { APP_NAME } from './constant'
 
 // 如果需要在 h5 环境中开启 React Devtools
 // 取消以下注释：
@@ -63,9 +64,9 @@ class App extends Component {
       ]
     },
     window: {
-      backgroundTextStyle: 'light',
+      backgroundTextStyle: 'dark',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
+      navigationBarTitleText: APP_NAME,
       navigationBarTextStyle: 'black'
     },
     permission: {
