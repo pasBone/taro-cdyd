@@ -23,6 +23,11 @@
   background-color: rgba(0, 0, 0, 0);
 }
 
+.at-load-more .at-button--full {
+  border: none;
+  font-size: 26px;
+}
+
 /**自定义toast样式 */
 .cdyd-toast {
   .toast-body {
