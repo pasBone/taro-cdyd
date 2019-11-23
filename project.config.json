@@ -1,8 +1,8 @@
 {
   "miniprogramRoot": "./dist",
-  "projectname": "taro",
-  "description": "taro demo",
-  "appid": "wx6c6423c9efb44c75",
+  "projectname": "充电有道",
+  "description": "充电有道小程序版本",
+  "appid": "wx69e561068d62bb9f",
   "setting": {
     "urlCheck": true,
     "es6": false,
