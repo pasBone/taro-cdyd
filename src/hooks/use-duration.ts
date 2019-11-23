@@ -10,21 +10,24 @@ export const useDuration = () => {
   const [durationStr, setDurationStr] = useState(() => getDurationFull(0));
   const timer = useRef<any>();
 
+  // useEffect(() => {
+  //   if (order_status !== ORDER_STATUS.正在充电) {
+  //     clearInterval(timer.current);
+  //   }
+  // }, [order_status, update_time]);
+
   useEffect(() => {
-    if (order_status !== ORDER_STATUS.正在充电) {
+    if (order_status === ORDER_STATUS.暂停中 || order_status === ORDER_STATUS.正在充电) {
+      let times = duration;
+      timer.current = setInterval(_ => {
+        times += 1000;
+        setDurationStr(getDurationFull(times));
+      }, 1000);
+    } else {
       clearInterval(timer.current);
     }
-  }, [order_status, update_time]);
-
-  useEffect(() => {
-    let times = duration;
-    timer.current = setInterval(_ => {
-      times += 1000;
-      setDurationStr(getDurationFull(times));
-    }, 1000);
-
     return () => clearInterval(timer.current);
-  }, [duration, update_time]);
+  }, [duration, order_status, update_time]);
 
   return durationStr;
 }
