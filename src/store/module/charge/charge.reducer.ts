@@ -23,9 +23,9 @@ const chargeInfoState: chargeApi.GetChargingInfoRes & LoadingType & ErrorType = 
 	/** 充电时长 */
 	duration: 0,
 	/** 钱包余额 */
-	balance: '',
+	balance: '0',
 	/** 当前电价 */
-	price: '',
+	price: '0',
 	/** 充电时长描述 */
 	duration_desc: {
 		/** 充电天数	 */
@@ -38,23 +38,23 @@ const chargeInfoState: chargeApi.GetChargingInfoRes & LoadingType & ErrorType = 
 		second: 0
 	},
 	/** 桩号位置 */
-	order_num: '',
+	order_num: '-',
 	/** 充电电量 */
-	electricity: '',
+	electricity: '-',
 	/** 订单费用 */
-	total_fee: '',
+	total_fee: '-',
 	/** 实时充电数据 */
 	charging_data: {
 		/** 当前电压 */
-		voltage: '',
+		voltage: '-',
 		/** 当前电流 */
-		currentFlow: '',
+		currentFlow: '-',
 		/** 电池使用率 */
 		soc: 0,
 		/** 电桩状态 */
-		pileStatus: '',
+		pileStatus: '-',
 		/** 功率 */
-		power: '',
+		power: '-',
 		/** 剩余时间 */
 		restTime: 0
 	},

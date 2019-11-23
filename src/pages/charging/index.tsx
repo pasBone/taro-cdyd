@@ -28,6 +28,7 @@ export const ChargingView: FC = () => {
       }, (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
         if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
           data.stopPolling();
+          /** 没有正在充电的信息则跳转到首页 */
           switchTab({
             url: '/pages/home/index'
           });
@@ -38,6 +39,7 @@ export const ChargingView: FC = () => {
 
   /** 结束充电 */
   const stopCharge = useCallback(() => {
+    if (stopChargeInfo.loading) return;
     dispatch(
       stopChargeAsync({
         meb_id,
@@ -82,7 +84,7 @@ export const ChargingView: FC = () => {
           <ChargingInfo />
         </View>
       </View>
-      {chargeInfo.order_status === 1 && <AtButton disabled={stopChargeInfo.loading} loading={stopChargeInfo.loading} onClick={() => stopCharge()} className="charging-btn">结束充电</AtButton>}
+      {chargeInfo.order_status === 1 && <AtButton loading={stopChargeInfo.loading} onClick={() => stopCharge()} className="charging-btn">结束充电</AtButton>}
       {chargeInfo.order_status === 2 && <AtButton className="charging-btn">已结束充电，请拔枪</AtButton>}
     </View>
   )
