@@ -1,9 +1,9 @@
+import './app.scss'
 import Taro, { Component, Config } from '@tarojs/taro'
 import '@tarojs/async-await'
 import { Provider } from '@tarojs/redux'
 import configStore from './store'
 import { getLocationAsync } from '@/store/module/common/common.actions'
-import './app.scss'
 import { APP_NAME } from './constant'
 
 // 如果需要在 h5 环境中开启 React Devtools
