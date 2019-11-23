@@ -2,9 +2,9 @@ import './style.scss';
 import { View } from '@tarojs/components';
 import { useSelector, useDispatch } from '@tarojs/redux';
 import { RootState } from '@/store/types';
-import { navigateTo, useEffect } from '@tarojs/taro';
+import { navigateTo, useEffect, useDidHide, useState, useDidShow } from '@tarojs/taro';
 import { useHasOngoingOrder } from '@/hooks/use-has-ongoing-order';
-import { chargeInfoPollingAsync } from '@/store/module/charge/charge.actions';
+import { chargeInfoPollingAsync, clearChargeInfoPollingTimer } from '@/store/module/charge/charge.actions';
 import { ORDER_STATUS } from '@/constant';
 import { useDuration } from '@/hooks/use-duration';
 import { chargeApi } from '@/api/charge';
@@ -15,6 +15,7 @@ export const ChargingCard = () => {
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
   const { order_status } = chargeInfo;
   const { meb_id } = userInfo;
+  const [start, setStart] = useState(true);
 
   /** 定时请求接口 */
   useEffect(() => {
@@ -22,19 +23,27 @@ export const ChargingCard = () => {
       chargeInfoPollingAsync({
         meb_id,
         pollingTimes: 100,
-        frequency: 3000
+        frequency: 30000
       },
         (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+          console.log('首页>充电悬浮块>获取充电信息>>>');
           if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
             data.stopPolling();
           }
         },
-        () => {
-
-        }
+        () => { }
       )
     );
-  }, [order_status, meb_id]);
+  }, [order_status, meb_id, start]);
+
+  useDidHide(() => {
+    setStart(false);
+    dispatch(clearChargeInfoPollingTimer());
+  });
+
+  useDidShow(() => {
+    setStart(true);
+  });
 
   const durationTime = useDuration();
 

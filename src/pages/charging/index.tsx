@@ -26,6 +26,7 @@ export const ChargingView: FC = () => {
         frequency: 30000,
         pollingTimes: 100
       }, (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+        console.log('实时计费>获取充电信息>>>');
         if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
           data.stopPolling();
           /** 没有正在充电的信息则跳转到首页 */
@@ -71,10 +72,10 @@ export const ChargingView: FC = () => {
         color='#fff'
         fixed
         border={false}
+        customStyle={{ backgroundColor: 'rgba(255,255,255,0)', top: '36rpx' }}
         onClickLeftIcon={() => navigateBack({
           fail: () => navigateTo({ url: '/pages/home/index' })
         })}
-        customStyle={{ backgroundColor: 'rgba(255,255,255,0)', top: '36rpx' }}
       />
 
       <View className="charging-box">
