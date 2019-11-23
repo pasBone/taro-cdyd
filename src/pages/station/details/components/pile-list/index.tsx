@@ -1,12 +1,13 @@
+import './style.scss'
 import { View, Image } from "@tarojs/components"
 import { CardBox } from "@/components/card"
-import { useCallback, FC, eventCenter, useEffect, useState, navigateTo, useImperativeHandle, } from "@tarojs/taro";
+import { useCallback, FC, useEffect, useState, navigateTo, useImperativeHandle } from "@tarojs/taro";
 import { useDispatch, useSelector } from "@tarojs/redux";
 import { getPileListAsync } from '@/store/module/pile/pile.actions';
 import { RootState } from "@/store/types";
 import { PILE_STATUS, PILE_SHOW_MAP } from "@/constant";
 import { AtProgress, AtLoadMore } from "taro-ui";
-import './style.scss'
+import { useLoadMore } from '@/hooks/use-load-more';
 
 type IProps = {
   stationId: string,
@@ -16,6 +17,7 @@ type IProps = {
 export const PileList: FC<IProps> = (props) => {
   const dispatch = useDispatch();
   const pileList = useSelector((state: RootState) => state.pile.pileList);
+  const { loading, lastPage } = pileList;
   const [pageNumber, setPageNumber] = useState(1);
 
   /** 获取列表 */
@@ -30,7 +32,7 @@ export const PileList: FC<IProps> = (props) => {
       setPageNumber(pageNumber + 1);
     })
 
-  }, [pageNumber]);
+  }, [pageNumber, props.stationId]);
 
   useImperativeHandle(props.cRef, () => {
     return ({
@@ -41,7 +43,6 @@ export const PileList: FC<IProps> = (props) => {
   });
 
   useEffect(() => {
-    eventCenter.on('GET_PILE_LIST', getPileList);
     getPileList();
   }, []);
 
@@ -78,8 +79,7 @@ export const PileList: FC<IProps> = (props) => {
             ))
           }
         </View>
-        {pileList.loading && <AtLoadMore status={'loading'} />}
-        {pileList.lastPage && <AtLoadMore status={'noMore'} />}
+        {<AtLoadMore noMoreText="没有更多了噢" moreText="上拉加载更多" loadingText="加载中..." status={useLoadMore({ loading, lastPage })} />}
       </View>
     </CardBox>
   )
