@@ -3,6 +3,7 @@ import { pileApi } from './pile'
 import { stationApi } from './station'
 import { orderApi } from './order'
 import { chargeApi } from './charge'
+import { walletApi } from './wallet'
 import * as todosApi from './todos'
 
 export const api = {
@@ -11,5 +12,6 @@ export const api = {
   pile: pileApi,
   station: stationApi,
   order: orderApi,
-  charge: chargeApi
+  charge: chargeApi,
+  wallet: walletApi
 }
