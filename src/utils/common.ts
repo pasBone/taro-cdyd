@@ -81,3 +81,13 @@ export const px2rpx = (px: number) => {
 
 /** 空函数 */
 export const loop = (params?: any) => { };
+
+/** 设置小程序tabbar选中 */
+export const setTabbarSelected = (id: number, vm) => {
+  if (typeof vm.$scope.getTabBar === 'function' &&
+    vm.$scope.getTabBar()) {
+    vm.$scope.getTabBar().$component.setState({
+      selected: id,
+    });
+  }
+}
