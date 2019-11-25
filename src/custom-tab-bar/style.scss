@@ -12,6 +12,7 @@
     border-top: 1px solid #f2f2f2;
   }
   .tab-bar__item {
+    position: relative;
     height: 98px;
     box-sizing: border-box;
     flex: 1;
@@ -26,6 +27,19 @@
       height: 40px;
       width: 40px;
       margin-bottom: 8px;
+    }
+  }
+  .tab-bar__item.dot {
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: 999;
+      top: 14px;
+      left: 80px;
+      height: 12px;
+      width: 12px;
+      background: red;
+      border-radius: 50%;
     }
   }
   .tab-bar__scan {

@@ -2,8 +2,9 @@ import './style.scss';
 import { CoverView, CoverImage } from "@tarojs/components";
 import { IMAGE_MAP } from "@/assets";
 import { switchTab } from "@tarojs/taro";
-import { useDispatch } from "@tarojs/redux";
+import { useDispatch, useSelector } from "@tarojs/redux";
 import { scanCodeWithPileAsync } from "@/store/module/common/common.actions";
+import { RootState } from '@/store/types';
 
 export default class Tabbar extends Taro.Component {
 
@@ -19,6 +20,7 @@ export default class Tabbar extends Taro.Component {
       pagePath: '/pages/wallet/index',
       iconPath: IMAGE_MAP.tabWalletIcon,
       selectedIconPath: IMAGE_MAP.tabWalletIconFill,
+      dot: true
     }, {
       text: '扫码',
       icon: IMAGE_MAP.tabScanIconFill,
@@ -46,6 +48,12 @@ export default class Tabbar extends Taro.Component {
     switchTab({ url: item.pagePath });
   }
 
+  showDot(item) {
+    // const walletDetails = useSelector((state: RootState) => state.wallet.walletDetails);
+    // return walletDetails.totalAmount < 20 && item.dot;
+    return false
+  }
+
   render() {
     return (
       <CoverView className="tab-bar__view">
@@ -58,7 +66,7 @@ export default class Tabbar extends Taro.Component {
                   <CoverImage className="tab-bar__scan" src={item.icon} />
                 </CoverView>
                 :
-                <CoverView className="tab-bar__item" onClick={() => this.switchTab(item)} key={item.pagePath}>
+                <CoverView className={`tab-bar__item ${this.showDot(item) && 'dot'}`} onClick={() => this.switchTab(item)} key={item.pagePath}>
                   <CoverImage className="icon" src={iconPath} />
                   <CoverView className="text">{item.text}</CoverView>
                 </CoverView>
