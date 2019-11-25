@@ -19,21 +19,23 @@ export const ChargingCard = () => {
 
   /** 定时请求接口 */
   useEffect(() => {
-    dispatch(
-      chargeInfoPollingAsync({
-        meb_id,
-        pollingTimes: 100,
-        frequency: 30000
-      },
-        (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
-          console.log('首页>充电悬浮块>获取充电信息>>>');
-          if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
-            data.stopPolling();
-          }
+    if (userInfo.meb_id && userInfo.token) {
+      dispatch(
+        chargeInfoPollingAsync({
+          meb_id,
+          pollingTimes: 100,
+          frequency: 30000
         },
-        () => { }
-      )
-    );
+          (data: { stopPolling: Function, payload: chargeApi.GetChargingInfoRes }) => {
+            console.log('首页>充电悬浮块>获取充电信息>>>');
+            if (order_status != ORDER_STATUS.正在充电 && order_status != ORDER_STATUS.暂停中) {
+              data.stopPolling();
+            }
+          },
+          () => { }
+        )
+      );
+    }
   }, [order_status, meb_id, start]);
 
   useDidHide(() => {
