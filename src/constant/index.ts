@@ -125,3 +125,12 @@ export enum ORDER_STATUS {
     已关闭,
     已作废
 }
+
+/** 充电卡状态 0待使用 1-使用中 2-冻结 3-已作废 4-已销卡 */
+export enum RECHARGE_CARD_STATUS {
+    未绑定 = 0,
+    已启用,
+    已冻结,
+    已作废,
+    已销卡
+}
