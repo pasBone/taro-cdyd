@@ -1,15 +1,15 @@
 import './style.scss'
-import { View, Text } from "@tarojs/components"
+import { View, Text, Block } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
 import { useReachBottom, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
 import { AtLoadMore } from 'taro-ui';
-import { formatDate } from '@/utils/common';
+import { formatDate, setTabbarSelected } from '@/utils/common';
+import { useHasLogin } from '@/hooks/use-has-login';
 
 export function OrderListView() {
-
   const orderList = useSelector((state: RootState) => state.order.orderList);
   const userInfo = useSelector((state: RootState) => state.meb.userInfo);
   const dispatch = useDispatch();
@@ -41,11 +41,12 @@ export function OrderListView() {
   });
 
   useDidShow(() => {
-    getOrderList(true);
-    if (typeof this.$scope.getTabBar === 'function' &&
-      this.$scope.getTabBar()) {
-      this.$scope.getTabBar().$component.setState({
-        selected: 3,
+    setTabbarSelected(3, this);
+    if (userInfo.token && userInfo.meb_id) {
+      getOrderList(true);
+    } else {
+      return navigateTo({
+        url: '/pages/login/index'
       });
     }
   });
@@ -57,30 +58,36 @@ export function OrderListView() {
   return (
     <View className="order-list__view">
       {
-        isEmpty
-          ?
-          <EmptyData />
-          :
-          <View>
+        useHasLogin() ?
+          <Block>
             {
-              orderList.list.map(item => (
-                <View className="order-list" key={item.order_id} onClick={() => navigateTo({ url: `/pages/order/details/index?id=${item.order_id}&stationId=${item.station_id}` })}>
-                  <View className="order-list__item">
-                    <View className="order-list__title">
-                      <View className="desc">{item.station_name}</View>
-                      <Text>￥{item.total_fee}</Text>
-                    </View>
-                    <View className="order-list__time">
-                      <Text>{formatDate(item.end_time)}</Text>
-                      <Text>充电电量{item.electricity}kWh</Text>
-                    </View>
-                  </View>
+              isEmpty ?
+                <EmptyData />
+                :
+                <View>
+                  {
+                    orderList.list.map(item => (
+                      <View className="order-list" key={item.order_id} onClick={() => navigateTo({ url: `/pages/order/details/index?id=${item.order_id}&stationId=${item.station_id}` })}>
+                        <View className="order-list__item">
+                          <View className="order-list__title">
+                            <View className="desc">{item.station_name}</View>
+                            <Text>￥{item.total_fee}</Text>
+                          </View>
+                          <View className="order-list__time">
+                            <Text>{formatDate(item.end_time)}</Text>
+                            <Text>充电电量{item.electricity}kWh</Text>
+                          </View>
+                        </View>
+                      </View>
+                    ))
+                  }
+                  {orderList.loading && <AtLoadMore status={'loading'} />}
+                  {orderList.lastPage && <AtLoadMore status={'noMore'} />}
                 </View>
-              ))
             }
-            {orderList.loading && <AtLoadMore status={'loading'} />}
-            {orderList.lastPage && <AtLoadMore status={'noMore'} />}
-          </View>
+          </Block>
+          :
+          <View></View>
       }
     </View>
   )

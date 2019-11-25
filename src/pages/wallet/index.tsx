@@ -1,14 +1,10 @@
 import { View } from "@tarojs/components"
 import { useDidShow } from "@tarojs/taro";
+import { setTabbarSelected } from "@/utils/common";
 
 export function WalletView() {
   useDidShow(() => {
-    if (typeof this.$scope.getTabBar === 'function' &&
-      this.$scope.getTabBar()) {
-      this.$scope.getTabBar().$component.setState({
-        selected: 1,
-      });
-    }
+    setTabbarSelected(1, this);
   });
   return (
     <View className="wallet-view">

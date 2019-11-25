@@ -1,10 +1,12 @@
 import './style.scss'
-import { View, Image } from "@tarojs/components"
+import { View, Image, Block } from "@tarojs/components"
 import { navigateTo, useEffect, useCallback, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading, useDidShow } from "@tarojs/taro"
 import { useSelector, useDispatch } from "@tarojs/redux"
 import { RootState } from "@/store/types"
 import { ListCell } from '@/components/list-cell'
-import { getCarVerifyStatusAsync } from '@/store/module/meb/meb.actions'
+import { getCarVerifyStatusAsync, clearUserInfo } from '@/store/module/meb/meb.actions'
+import { setTabbarSelected } from '@/utils/common'
+import { useHasLogin } from '@/hooks/use-has-login'
 
 export function MineView() {
   const userProtocol = 'https://wx.youdaocharge.com/#/mine/user-protocol';
@@ -12,17 +14,28 @@ export function MineView() {
   const carVerifyStatus = useSelector((state: RootState) => state.meb.carVerifyStatus);
   const dispatch = useDispatch();
 
+  /** 获取车主认证状态 */
   const getCarVerifyStatus = useCallback(() => {
-    showNavigationBarLoading();
-    dispatch(
-      getCarVerifyStatusAsync({
-        meb_id: userInfo.meb_id
-      })
-    ).finally(_ => {
-      hideNavigationBarLoading();
-      stopPullDownRefresh();
-    });
+    if (userInfo.token && userInfo.meb_id) {
+      showNavigationBarLoading();
+      dispatch(
+        getCarVerifyStatusAsync({
+          meb_id: userInfo.meb_id
+        })
+      ).finally(_ => {
+        hideNavigationBarLoading();
+        stopPullDownRefresh();
+      });
+    }
   }, [userInfo]);
+
+  /*** 退出登录 */
+  const logOut = useCallback(() => {
+    dispatch(clearUserInfo());
+    return navigateTo({
+      url: '/pages/login/index'
+    });
+  }, []);
 
   useEffect(() => {
     getCarVerifyStatus();
@@ -33,20 +46,25 @@ export function MineView() {
   });
 
   useDidShow(() => {
-    if (typeof this.$scope.getTabBar === 'function' &&
-      this.$scope.getTabBar()) {
-      this.$scope.getTabBar().$component.setState({
-        selected: 4,
-      });
-    }
+    setTabbarSelected(4, this);
   });
 
   return (
     <View className="mine-view">
-      <ListCell label="头像" renderValue={<Image className="avatar" src={userInfo.avatar} />} showArrow />
-      <ListCell label="手机号码" value={userInfo.tel} showArrow />
-      <ListCell label="车主认证" value={carVerifyStatus.status_desc} showArrow />
+      {
+        useHasLogin() ?
+          <Block>
+            <ListCell label="头像" renderValue={<Image className="avatar" src={userInfo.avatar} />} showArrow />
+            <ListCell label="手机号码" value={userInfo.tel} showArrow />
+            <ListCell label="车主认证" value={carVerifyStatus.status_desc} showArrow />
+          </Block>
+          :
+          <ListCell label="登录/注册" onClick={() => navigateTo({ url: '/pages/login/index' })} value='' showArrow />
+      }
       <ListCell label="用户协议" onClick={() => navigateTo({ url: `/pages/webview/index?url=${userProtocol}` })} showArrow />
+      {
+        useHasLogin() && <ListCell label="退出登录" onClick={() => logOut()} showArrow />
+      }
     </View>
   )
 }

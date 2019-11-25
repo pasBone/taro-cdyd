@@ -9,7 +9,7 @@ import { RootState } from '@/store/types'
 import CurrentStationCard from './components/current-station-card'
 import { stationApi } from '@/api/station'
 import { getLocationAsync } from '@/store/module/common/common.actions'
-import { gcoordTransform } from "@/utils/common";
+import { gcoordTransform, setTabbarSelected } from "@/utils/common";
 import { ChargingCard } from '@/components/charging-card';
 
 const initStationDetails = { station_id: 'none' } as stationApi.ListItem;
@@ -72,12 +72,7 @@ export function HomeView() {
   }, [stationList]);
 
   useDidShow(() => {
-    if (typeof this.$scope.getTabBar === 'function' &&
-      this.$scope.getTabBar()) {
-      this.$scope.getTabBar().$component.setState({
-        selected: 0,
-      });
-    }
+    setTabbarSelected(0, this);
   });
 
   return (
