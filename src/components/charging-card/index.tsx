@@ -19,7 +19,7 @@ export const ChargingCard = () => {
 
   /** 定时请求接口 */
   useEffect(() => {
-    if (userInfo.meb_id && userInfo.token) {
+    if (userInfo.meb_id && userInfo.token && start) {
       dispatch(
         chargeInfoPollingAsync({
           meb_id,
