@@ -22,7 +22,6 @@ export interface IAction<T=any> {
 }
 
 export type RootState = StateType<typeof import('./root-reducer').default>;
-export type RootAction = ActionType<typeof import('./root-action')>;
 export type RootServices = typeof import('../api/index');
 
 
