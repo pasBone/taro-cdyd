@@ -1,9 +1,12 @@
 import './style.scss';
 import { View, Text, Image } from "@tarojs/components"
-import { useDidShow, useMemo, useCallback, useState, setNavigationBarTitle } from "@tarojs/taro";
+import { useDidShow, useCallback, useState, setNavigationBarTitle, navigateTo, usePullDownRefresh, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading } from "@tarojs/taro";
 import { setTabbarSelected } from "@/utils/common";
 import { AtTag, AtInput, AtIcon } from 'taro-ui';
 import { IMAGE_MAP } from '@/assets';
+import { useSelector, useDispatch } from '@tarojs/redux';
+import { RootState } from '@/store/types';
+import { getWalletDetailsAsync } from '@/store/module/wallet/wallet.actions';
 
 const initTagList = [{
   value: 300,
@@ -20,8 +23,10 @@ const initTagList = [{
 }]
 
 export function WalletView() {
-
   const [tagList, setTagList] = useState(initTagList);
+  const dispatch = useDispatch();
+  const userInfo = useSelector((state: RootState) => state.meb.userInfo);
+  const walletDetails = useSelector((state: RootState) => state.wallet.walletDetails);
 
   const tagChange = useCallback((current) => {
     const result = initTagList.map(item => ({
@@ -31,9 +36,34 @@ export function WalletView() {
     setTagList(result);
   }, []);
 
+  /** 获取钱包详情 */
+  const getWalletDetails = useCallback(() => {
+    showNavigationBarLoading();
+    dispatch(
+      getWalletDetailsAsync({
+        meb_id: userInfo.meb_id,
+        operator_id: userInfo.operator_id
+      })
+    ).finally(_ => {
+      hideNavigationBarLoading();
+      stopPullDownRefresh();
+    });
+  }, []);
+
+  usePullDownRefresh(() => {
+    getWalletDetails();
+  });
+
   useDidShow(() => {
-    setNavigationBarTitle({ title: '我的钱包' });
-    setTabbarSelected(1, this);
+    if (userInfo.meb_id && userInfo.token) {
+      setNavigationBarTitle({ title: '我的钱包' });
+      setTabbarSelected(1, this);
+      getWalletDetails();
+    } else {
+      return navigateTo({
+        url: '/pages/login/index'
+      });
+    }
   });
 
   return (
@@ -41,7 +71,7 @@ export function WalletView() {
 
       <View className="wallet-balance">
         <View className="wallet-balance__number">
-          <View>20.00</View>
+          <View>{walletDetails.totalAmount}</View>
           <View className="wallet-balance__label">当前余额(元)</View>
         </View>
       </View>
@@ -87,4 +117,8 @@ export function WalletView() {
 
     </View>
   )
+}
+
+WalletView.config = {
+  enablePullDownRefresh: true
 }
