@@ -3,7 +3,7 @@ import { OPERATOR_CODE } from '@/constant';
 import Taro, { getStorageSync, navigateTo } from '@tarojs/taro';
 import Toast from './toast';
 
-const BASE_URL = 'https://wx.succtime.com/wx';
+export const BASE_URL = 'https://wx.succtime.com/wx';
 // const BASE_URL = "https://wx.youdaocharge.com/wx"
 
 enum RequestType {
@@ -38,6 +38,7 @@ const throwError = (url: string, response: object): Res<any> => {
 	};
 };
 
+/** 不需要自动提示的code码 */
 const NotToast = (code: OPERATE_CODE) => {
 	return [OPERATE_CODE.车主认证未通过_充电中, OPERATE_CODE.车主未认证_充电中, OPERATE_CODE.充电枪未连接, OPERATE_CODE.余额不足请充值].includes(
 		code
@@ -73,7 +74,7 @@ const genReqestMethods = (type: RequestType) => {
 					}
 
 					if (response.code === OPERATE_CODE.登录信息失效) {
-						Toast.info({ title: '服务异常', mask: false, icon: 'none' });
+						Toast.info({ title: '登录信息失效', mask: false, icon: 'none' });
 						return navigateTo({
 							url: '/pages/login/index'
 						});
