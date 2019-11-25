@@ -17,6 +17,8 @@ export const IMAGE_MAP = {
     detailsIcon: require(path + '/details@2x.png'),
     /** 首页电站详情 */
     navigationIcon: require(path + '/navigation@2x.png'),
+    /** 微信支付 */
+    wxPay: require(path + '/wx-pay@2x.png'),
     // /** 成功 */
     // success: require(`${path}/successed@2x.png`),
     // /** 钱包界面背景 */
@@ -41,8 +43,6 @@ export const IMAGE_MAP = {
     gps: require('./images/gps@2x.png'),
     /** list */
     list: require('./images/list@2x.png'),
-    // /** map */
-    // map: require(`./images/map@2x.png`),
     /** mine */
     mine: require('./images/mine@2x.png'),
     // /** nodata */
@@ -84,5 +84,5 @@ export const IMAGE_MAP = {
     tabOrderIconFill: require("./images/tab-order-fill.png"),
     tabScanIconFill: require("./images/tab-scan.png"),
     emptyDataIcon: require('./images/empty-data.png'),
-    
+
 }
