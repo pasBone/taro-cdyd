@@ -60,9 +60,9 @@ export function WalletView() {
       setTabbarSelected(1, this);
       getWalletDetails();
     } else {
-      // return navigateTo({
-      //   url: '/pages/login/index'
-      // });
+      return navigateTo({
+        url: '/pages/login/index'
+      });
     }
   });
 
