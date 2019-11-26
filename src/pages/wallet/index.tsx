@@ -60,9 +60,9 @@ export function WalletView() {
       setTabbarSelected(1, this);
       getWalletDetails();
     } else {
-      return navigateTo({
-        url: '/pages/login/index'
-      });
+      // return navigateTo({
+      //   url: '/pages/login/index'
+      // });
     }
   });
 
@@ -109,7 +109,7 @@ export function WalletView() {
           <Image className="pay-icon" src={IMAGE_MAP.wxPay} />
           <Text className="pay-text">微信支付</Text>
           <View className="check-box checked">
-            <AtIcon value='check' size='12' color='#fff'></AtIcon>
+            <AtIcon value='check' size='14' color='#fff'></AtIcon>
           </View>
         </View>
         <View></View>
