@@ -3,8 +3,8 @@ import { OPERATOR_CODE } from '@/constant';
 import Taro, { getStorageSync, navigateTo } from '@tarojs/taro';
 import Toast from './toast';
 
-export const BASE_URL = 'https://wx.succtime.com/wx';
-// const BASE_URL = "https://wx.youdaocharge.com/wx"
+// export const BASE_URL = 'https://wx.succtime.com/wx';
+const BASE_URL = "https://wx.youdaocharge.com/wx"
 
 enum RequestType {
 	'请求数据',
