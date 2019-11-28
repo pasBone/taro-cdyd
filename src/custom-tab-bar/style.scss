@@ -3,6 +3,7 @@
   width: 100vw;
   bottom: 0;
   left: 0;
+  box-shadow: 0px -6px 8px 0 rgba(128, 128, 128, 0.1);
   .tab-bar__list {
     width: 100%;
     position: relative;
@@ -10,6 +11,7 @@
     justify-content: center;
     background: #fff;
     border-top: 1px solid #f2f2f2;
+    
   }
   .tab-bar__item {
     position: relative;
