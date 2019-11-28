@@ -1,7 +1,7 @@
 import './style.scss'
 import { View, Text, Block } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
-import { useReachBottom, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow } from '@tarojs/taro';
+import { useReachBottom, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow, showModal, switchTab } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
@@ -45,9 +45,19 @@ export function OrderListView() {
     if (userInfo.token && userInfo.meb_id) {
       getOrderList(true);
     } else {
-      return navigateTo({
-        url: '/pages/login/index'
-      });
+      showModal({
+        title: '提示',
+        content: '您还没有登录，请登录后再查看',
+      }).then(res => {
+        if (res.confirm) {
+          return navigateTo({
+            url: '/pages/login/index'
+          });
+        }
+        switchTab({
+          url: '/pages/home/index'
+        })
+      })
     }
   });
 

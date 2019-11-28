@@ -1,6 +1,6 @@
 import './style.scss';
 import { View, Text, Image } from "@tarojs/components"
-import { useDidShow, useCallback, useState, setNavigationBarTitle, navigateTo, usePullDownRefresh, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading } from "@tarojs/taro";
+import { useDidShow, useCallback, useState, setNavigationBarTitle, navigateTo, usePullDownRefresh, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, showModal, switchTab } from "@tarojs/taro";
 import { setTabbarSelected } from "@/utils/common";
 import { AtTag, AtInput, AtIcon } from 'taro-ui';
 import { IMAGE_MAP } from '@/assets';
@@ -60,9 +60,19 @@ export function WalletView() {
       setTabbarSelected(1, this);
       getWalletDetails();
     } else {
-      return navigateTo({
-        url: '/pages/login/index'
-      });
+      showModal({
+        title: '提示',
+        content: '您还没有登录，请登录后再查看',
+      }).then(res => {
+        if (res.confirm) {
+          return navigateTo({
+            url: '/pages/login/index'
+          });
+        }
+        switchTab({
+          url: '/pages/home/index'
+        })
+      })
     }
   });
 
