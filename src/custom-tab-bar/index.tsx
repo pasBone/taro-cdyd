@@ -2,11 +2,11 @@ import './style.scss';
 import { CoverView, CoverImage } from "@tarojs/components";
 import { IMAGE_MAP } from "@/assets";
 import { switchTab } from "@tarojs/taro";
-import { useDispatch, useSelector } from "@tarojs/redux";
+import { connect } from "@tarojs/redux";
 import { scanCodeWithPileAsync } from "@/store/module/common/common.actions";
-import { RootState } from '@/store/types';
+import { Dispatch } from 'redux';
 
-export default class Tabbar extends Taro.Component {
+class Tabbar extends Taro.Component<{ dispatch: Dispatch<any> }> {
 
   state = {
     selected: 0,
@@ -38,10 +38,9 @@ export default class Tabbar extends Taro.Component {
   }
 
   handleScanCode() {
-    const dispatch = useDispatch();
-    dispatch(
+    this.props.dispatch(
       scanCodeWithPileAsync()
-    );
+    )
   }
 
   switchTab(item) {
@@ -77,3 +76,5 @@ export default class Tabbar extends Taro.Component {
     )
   }
 }
+
+export default connect(() => ({}), dispatch => ({dispatch}))(Tabbar);
