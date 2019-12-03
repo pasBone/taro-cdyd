@@ -1,5 +1,5 @@
 import './style.scss';
-import { View, Text, Image } from "@tarojs/components"
+import { View, Text, Image, Block } from "@tarojs/components"
 import { useDidShow, useCallback, useState, setNavigationBarTitle, navigateTo, usePullDownRefresh, stopPullDownRefresh, showNavigationBarLoading, hideNavigationBarLoading, showModal, switchTab } from "@tarojs/taro";
 import { setTabbarSelected } from "@/utils/common";
 import { AtTag, AtInput, AtIcon } from 'taro-ui';
@@ -48,7 +48,7 @@ export function WalletView() {
       hideNavigationBarLoading();
       stopPullDownRefresh();
     });
-  }, []);
+  }, [userInfo.meb_id]);
 
   usePullDownRefresh(() => {
     getWalletDetails();
@@ -56,7 +56,7 @@ export function WalletView() {
 
   useDidShow(() => {
     if (userInfo.meb_id && userInfo.token) {
-      setNavigationBarTitle({ title: '我的钱包' });
+      setNavigationBarTitle({ title: '我的卡包' });
       setTabbarSelected(1, this);
       getWalletDetails();
     } else {
@@ -78,53 +78,55 @@ export function WalletView() {
 
   return (
     <View className="wallet-view">
-
-      <View className="wallet-balance">
-        <View className="wallet-balance__number">
-          <View>{walletDetails.totalAmount}</View>
-          <View className="wallet-balance__label">当前余额(元)</View>
-        </View>
-      </View>
-
-      <View className="wallet-recharge">
-        <View className="wallet-recharge__name">充值金额</View>
-
-        <View className="wallet-recharge__list">
-          {tagList.map(item => (
-            <AtTag
-              type='primary'
-              onClick={tagChange}
-              active={item.active}
-              name={`${item.value}`}
-              key={item.value}
-            >{item.value}元</AtTag>
-          ))}
-        </View>
-
-        <View className="wallet-recharge__input">
-          <Text className="wallet-recharge__label">￥</Text>
-          <AtInput
-            border={false}
-            name='value'
-            type='text'
-            placeholder='其他金额（元）'
-            onChange={() => { }}
-          />
-        </View>
-      </View>
-
-      <View className="recharge-way">
-        <View className="recharge-way__label">充值方式</View>
-        <View className="recharge-way__list">
-          <Image className="pay-icon" src={IMAGE_MAP.wxPay} />
-          <Text className="pay-text">微信支付</Text>
-          <View className="check-box checked">
-            <AtIcon value='check' size='14' color='#fff'></AtIcon>
+      {
+        userInfo.meb_id && <Block>
+          <View className="wallet-balance">
+            <View className="wallet-balance__number">
+              <View>{walletDetails.totalAmount}</View>
+              <View className="wallet-balance__label">当前余额(元)</View>
+            </View>
           </View>
-        </View>
-        <View></View>
-      </View>
 
+          <View className="wallet-recharge">
+            <View className="wallet-recharge__name">充值金额</View>
+
+            <View className="wallet-recharge__list">
+              {tagList.map(item => (
+                <AtTag
+                  type='primary'
+                  onClick={tagChange}
+                  active={item.active}
+                  name={`${item.value}`}
+                  key={item.value}
+                >{item.value}元</AtTag>
+              ))}
+            </View>
+
+            <View className="wallet-recharge__input">
+              <Text className="wallet-recharge__label">￥</Text>
+              <AtInput
+                border={false}
+                name='value'
+                type='text'
+                placeholder='其他金额（元）'
+                onChange={() => { }}
+              />
+            </View>
+          </View>
+
+          <View className="recharge-way">
+            <View className="recharge-way__label">充值方式</View>
+            <View className="recharge-way__list">
+              <Image className="pay-icon" src={IMAGE_MAP.wxPay} />
+              <Text className="pay-text">微信支付</Text>
+              <View className="check-box checked">
+                <AtIcon value='check' size='14' color='#fff'></AtIcon>
+              </View>
+            </View>
+            <View></View>
+          </View>
+        </Block>
+      }
     </View>
   )
 }

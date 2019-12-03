@@ -28,7 +28,7 @@ export function OrderListView() {
       stopPullDownRefresh();
       hideNavigationBarLoading();
     })
-  }, [orderList.pageNumber, orderList.lastPage]);
+  }, [userInfo.meb_id, orderList.pageNumber, orderList.lastPage]);
 
   /** 下拉刷新 */
   usePullDownRefresh(() => {

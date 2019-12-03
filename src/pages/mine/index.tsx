@@ -27,7 +27,7 @@ export function MineView() {
         stopPullDownRefresh();
       });
     }
-  }, [userInfo]);
+  }, [userInfo.meb_id]);
 
   /*** 退出登录 */
   const logOut = useCallback(() => {
