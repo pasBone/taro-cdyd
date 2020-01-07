@@ -2,9 +2,11 @@
 
 var path = require("path");
 var theme = require('./../theme.config');
+var appConfig = require('./../src/config/index');
+
 var config = {
-  projectName: 'taro',
-  date: '2019-8-26',
+  projectName: appConfig.APP_NAME,
+  date: '2019-08-26',
   designWidth: 750,
   deviceRatio: {
     '640': 1.17,
@@ -44,7 +46,8 @@ var config = {
   },
   copy: {
     patterns: [
-      { from: "src/custom-tab-bar/", to: "dist/custom-tab-bar/" }
+      { from: "src/custom-tab-bar/", to: "dist/custom-tab-bar/" },
+      { from: `/project.${appConfig.ENV}.config.json`, to: "dist/project.config.json" }
     ],
     options: {}
   },
