@@ -1,11 +1,9 @@
 import { OPERATE_CODE, Res } from '@/types';
 import { OPERATOR_CODE } from '@/constant';
-import Taro, { getStorageSync, navigateTo } from '@tarojs/taro';
+import Taro, { getStorageSync } from '@tarojs/taro';
 import Toast from './toast';
-
-// export const BASE_URL = 'https://wx.succtime.com/wx';
-const BASE_URL = "https://wx.youdaocharge.com/wx"
-
+import appConfig from './../config';
+import { reLogin } from './common';
 enum RequestType {
 	'请求数据',
 	'上传文件'
@@ -50,7 +48,7 @@ const genReqestMethods = (type: RequestType) => {
 
 	return <Q = void, P = void>(url: string) => {
 		return (params?: Q): Promise<Res<P>> => {
-			const requestUrl = `${BASE_URL}${url}`;
+			const requestUrl = `${appConfig.API_URL}${url}`;
 			return Taro.request({
 				url: requestUrl,
 				method: 'POST',
@@ -74,10 +72,8 @@ const genReqestMethods = (type: RequestType) => {
 					}
 
 					if (response.code === OPERATE_CODE.登录信息失效) {
-						Toast.info({ title: '登录信息失效', mask: false, icon: 'none' });
-						return navigateTo({
-							url: '/pages/login/index'
-						});
+						reLogin();
+						// Toast.info({ title: '登录信息失效', mask: false, icon: 'none' });
 					}
 
 					/** 业务异常 */
