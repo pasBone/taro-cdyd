@@ -15,8 +15,7 @@ const storageUserInfo = (data) => {
 /** 获取缓存用户信息 */
 const getorageUserInfo = () => getStorageSync('userInfo');
 
-/** 用户基本信息 */
-const userInfoState: UserInfo = getorageUserInfo() || {
+const initUserInfo = {
 	loading: false,
 	meb_id: '',
 	operator_id: '',
@@ -26,6 +25,9 @@ const userInfoState: UserInfo = getorageUserInfo() || {
 	avatar: '',
 	plate_number: ''
 }
+
+/** 用户基本信息 */
+const userInfoState: UserInfo = getorageUserInfo() || initUserInfo;
 
 /** 短信验证码发送状态 */
 const sendCodeState = {
@@ -49,9 +51,10 @@ export const userInfo = (state = userInfoState, action: IAction<mebApi.LoginRes>
 			storageUserInfo(action.payload);
 			return { ...state, ...action.payload, loading: false }
 
-		case types.LOG_IN_ERROR || types.CLEAR_USER_INFO:
-			storageUserInfo(state);
-			return { ...userInfoState, loading: false }
+		case types.LOG_IN_ERROR:
+		case types.CLEAR_USER_INFO:
+			storageUserInfo(initUserInfo);
+			return { ...initUserInfo, loading: false }
 
 		default:
 			return state

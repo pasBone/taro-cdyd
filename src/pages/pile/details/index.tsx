@@ -9,6 +9,7 @@ import { StationRulesTable } from "@/components/station-rules-table";
 import { PileDetailsRow } from "./components/pile-details-row";
 import { applyChargeAsync, getChargeInfoAsync, clearChargeInfoPollingTimer } from '@/store/module/charge/charge.actions';
 import { useHasOngoingOrder } from '@/hooks/use-has-ongoing-order';
+import { reLogin } from '@/utils/common';
 
 export const PileDetailsView: FC = () => {
   const $router = useRouter();
@@ -58,6 +59,7 @@ export const PileDetailsView: FC = () => {
   });
 
   const applyCharge = useCallback(() => {
+    if (!userInfo.meb_id) return reLogin();
     if (pileDetails.loading) return;
     dispatch(
       applyChargeAsync({
