@@ -1,6 +1,6 @@
 import './style.scss'
 import { View, Image, Block } from "@tarojs/components"
-import { navigateTo, useEffect, useCallback, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading, useDidShow } from "@tarojs/taro"
+import { navigateTo, useEffect, useCallback, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, showNavigationBarLoading, useDidShow, redirectTo, showModal } from "@tarojs/taro"
 import { useSelector, useDispatch } from "@tarojs/redux"
 import { RootState } from "@/store/types"
 import { ListCell } from '@/components/list-cell'
@@ -31,10 +31,17 @@ export function MineView() {
 
   /*** 退出登录 */
   const logOut = useCallback(() => {
-    dispatch(clearUserInfo());
-    return navigateTo({
-      url: '/pages/login/index'
-    });
+    showModal({
+      title: '提示',
+      content: '确定要退出吗?'
+    }).then(res => {
+      if (res.confirm) {
+        dispatch(clearUserInfo());
+        return redirectTo({
+          url: '/pages/login/index'
+        });
+      }
+    })
   }, []);
 
   useEffect(() => {
@@ -62,9 +69,7 @@ export function MineView() {
           <ListCell label="登录/注册" onClick={() => navigateTo({ url: '/pages/login/index' })} value='' showArrow />
       }
       <ListCell label="用户协议" onClick={() => navigateTo({ url: `/pages/webview/index?url=${userProtocol}` })} showArrow />
-      {
-        useHasLogin() && <ListCell label="退出登录" onClick={() => logOut()} showArrow />
-      }
+      {useHasLogin() && <ListCell label="退出登录" onClick={() => logOut()} showArrow />}
     </View>
   )
 }

@@ -1,12 +1,12 @@
 import './style.scss'
 import { View, Text, Block } from "@tarojs/components"
 import { EmptyData } from '@/components/empty-data';
-import { useReachBottom, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, FC, navigateTo, useMemo, useDidShow, showModal, switchTab } from '@tarojs/taro';
+import { useReachBottom, usePullDownRefresh, stopPullDownRefresh, hideNavigationBarLoading, useCallback, showNavigationBarLoading, navigateTo, useMemo, useDidShow, switchTab } from '@tarojs/taro';
 import { useDispatch, useSelector } from '@tarojs/redux';
 import { RootState } from '@/store/types';
 import { getOrderListAsync } from '@/store/module/order/order.actions';
 import { AtLoadMore } from 'taro-ui';
-import { formatDate, setTabbarSelected } from '@/utils/common';
+import { formatDate, setTabbarSelected, reLogin } from '@/utils/common';
 import { useHasLogin } from '@/hooks/use-has-login';
 
 export function OrderListView() {
@@ -45,18 +45,12 @@ export function OrderListView() {
     if (userInfo.token && userInfo.meb_id) {
       getOrderList(true);
     } else {
-      showModal({
-        title: '提示',
-        content: '您还没有登录，请登录后再查看',
-      }).then(res => {
-        if (res.confirm) {
-          return navigateTo({
-            url: '/pages/login/index'
-          });
+      reLogin().then((res) => {
+        if (res.cancel) {
+          switchTab({
+            url: '/pages/home/index'
+          })
         }
-        switchTab({
-          url: '/pages/home/index'
-        })
       })
     }
   });
