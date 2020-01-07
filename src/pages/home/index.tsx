@@ -1,5 +1,5 @@
 import './style.scss';
-import { createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle, useDidShow } from "@tarojs/taro"
+import { createMapContext, useEffect, useMemo, useCallback, useState, navigateTo, setNavigationBarTitle, useDidShow, useShareAppMessage } from "@tarojs/taro"
 import { IMAGE_MAP } from "@/assets"
 import { APP_NAME } from "@/constant"
 import { View, Map, CoverImage } from "@tarojs/components"
@@ -75,13 +75,18 @@ export function HomeView() {
     setTabbarSelected(0, this);
   });
 
+  useShareAppMessage((res) => {
+    if (res.from === 'menu') {
+      return {
+        title: APP_NAME,
+        path: '/pages/home/index'
+      }
+    }
+  });
+
   return (
     <View className="home-view">
       <View className="map-view">
-        <CoverImage onClick={getLocation} className="gps-icon" src={IMAGE_MAP.gps} />
-        <CoverImage onClick={() => navigateTo({ url: '/pages/station/list/index' })} className="station-list-icon" src={IMAGE_MAP.code} />
-        <CurrentStationCard  {...stationDetails} />
-        <ChargingCard />
         <Map
           id="homeMap"
           markers={markers}
@@ -92,6 +97,10 @@ export function HomeView() {
           onTap={mapTap}
           scale={12}
         />
+        <CoverImage onClick={getLocation} className="gps-icon" src={IMAGE_MAP.gps} />
+        <CoverImage onClick={() => navigateTo({ url: '/pages/station/list/index' })} className="station-list-icon" src={IMAGE_MAP.code} />
+        <CurrentStationCard  {...stationDetails} />
+        <ChargingCard />
       </View>
     </View>
   )
