@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "./",
-  "projectname": "甜瓜充电",
-  "description": "甜瓜充电小程序",
+  "projectname": "充电有道",
+  "description": "充电有道小程序",
   "appid": "wxfb97f20c872d34a2",
   "setting": {
     "urlCheck": true,
