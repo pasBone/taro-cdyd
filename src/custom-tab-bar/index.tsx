@@ -16,7 +16,7 @@ class Tabbar extends Taro.Component<{ dispatch: Dispatch<any> }> {
       iconPath: IMAGE_MAP.tabHomeIcon,
       selectedIconPath: IMAGE_MAP.tabHomeIconFill,
     }, {
-      text: '卡包',
+      text: '钱包',
       pagePath: '/pages/wallet/index',
       iconPath: IMAGE_MAP.tabWalletIcon,
       selectedIconPath: IMAGE_MAP.tabWalletIconFill,
