@@ -1,15 +1,14 @@
-import { IMAGE_MAP } from "@/assets"
+import { IMAGE_MAP } from "@/assets";
+import appConfig from './../config';
 
 /** 默认登录途径（1表示APP， 2表示微信公众号）	 */
 export const DEFAULT_REG_WAY = 1
+
 /** 运营商code */
 export const OPERATOR_CODE = "byd"
 
 /** openId-tg */
 export const OPEN_ID = 'obC_NwYCFZPSHAThFZ0z_1nSlQbc'
-
-/** openId-tg */
-// export const OPEN_ID = 'osMUR1GF_9KNXuabZx3E7T1dQUKA'
 
 /** 收费模式(peak：峰，flat：平，valley：谷，unit：统一单价) */
 export enum RULE_MODE {
@@ -35,8 +34,7 @@ export enum RULE_MODE_NAME {
 }
 
 /** 应用名 */
-export const APP_NAME = "充电有道"
-// export const APP_NAME = "首页"
+export const APP_NAME = appConfig.APP_NAME
 
 /** 正则 map */
 export const REG_MAP = {
