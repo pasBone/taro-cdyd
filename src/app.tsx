@@ -71,7 +71,7 @@ class App extends Component {
     },
     permission: {
       "scope.userLocation": {
-        "desc": "你的位置信息将用于小程序地图导航"
+        "desc": "你的位置信息将用于地图导航"
       }
     },
     usingComponents: {}
