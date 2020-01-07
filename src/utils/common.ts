@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import gcoord from 'gcoord'
-import { getSetting, authorize, getSystemInfoSync } from '@tarojs/taro';
+import { getSetting, authorize, getSystemInfoSync, navigateTo, showModal } from '@tarojs/taro';
 
 /**
  * @description 适用于小程序内所有需要授权的地方，在用户拒绝授权之后重新要求用户授权
@@ -90,4 +90,21 @@ export const setTabbarSelected = (id: number, vm) => {
       selected: id,
     });
   }
+}
+
+/** 提示重新登录 */
+export const reLogin = () => {
+  return showModal({
+    title: '提示',
+    content: '您还没有登录,请先登录',
+    confirmText: '立即登录',
+    cancelText: '取消'
+  }).then((res) => {
+    if (res.confirm) {
+      return navigateTo({
+        url: '/pages/login/index'
+      });
+    }
+    return res;
+  });
 }
